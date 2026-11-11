@@ -3,7 +3,7 @@ import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import path from "path";
 import { checkInvariantRule } from "./checkInvariantRule.js";
-import { assignIdsToNodes } from "./assignIdsToNodes";
+import { assignIdsToNodes } from "./assignIdsToNodes.js";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -33,13 +33,10 @@ const validateNarrative = async (narrative_name) => {
 
     // Load the narrative
     const NARRATIVE_PATH = path.join(__dirname,"..","narratives",narrative_name);
-    const narrative = JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8"));
+    const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
 
     // Validate the narrative
     const validate = ajv.compile(schema);
-
-    // Set ID for each object before visiting the nodes
-    narrative = assignIdsToNodes(narrative);
 
     // Check if the validation passed
     if (validate(narrative)) {

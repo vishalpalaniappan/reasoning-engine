@@ -4,7 +4,7 @@ import crypto from "crypto";
  * Recursively traverses an object or array and assigns a unique ID 
  * to any plain object that lacks one.
  */
-export function assignIdsToNodes(data) {
+export const assignIdsToNodes = (data) => {
     if (data === null || typeof data !== "object") {
         return data;
     }

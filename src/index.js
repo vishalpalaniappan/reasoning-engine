@@ -13,22 +13,19 @@ const validateNarrative = async () => {
     const schemaPath = path.join(__dirname, "..", "schema", "artha.schema.json");
     const schema = JSON.parse(fs.readFileSync(schemaPath, "utf8"));
 
-
     ajv.addKeyword({
         keyword: "x-invariant-metadata",
-        type: "object",
         validate: customRule,
         error: {
-            message: (ctx) => `${ctx})`
+            message: (ctx) => `Custom Error: ${ctx.message})`
         }
     });
-    
 
     const NARRATIVE_PATH = path.join(
         __dirname,
         "..",
         "narratives",
-        "testNarrative.json",
+        "coffee_shop.json",
     );
     const narrative = JSON.parse(
         fs.readFileSync(NARRATIVE_PATH, "utf8"),

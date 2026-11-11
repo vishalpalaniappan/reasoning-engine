@@ -716,8 +716,7 @@
             "attributes",
             "body",
             "name",
-            "behaviorName",
-            "id"
+            "behaviorName"
           ]
         }
       ]

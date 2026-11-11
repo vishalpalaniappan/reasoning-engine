@@ -30,6 +30,11 @@
                     "alias": "test",
                     "value1": "a",
                     "value2": "b"
+                },
+                {
+                    "name": "insert_at_end_of_list",
+                    "item": "test",
+                    "list": []
                 }
             ]
         },

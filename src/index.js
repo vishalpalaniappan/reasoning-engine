@@ -13,7 +13,6 @@ const validateNarrative = async () => {
     const schemaPath = path.join(__dirname, "..", "schema", "artha.schema.json");
     const schema = JSON.parse(fs.readFileSync(schemaPath, "utf8"));
 
-    ajv.addKeyword({ keyword: "x-custom-rule" });
 
     ajv.addKeyword({
         keyword: "x-invariant-metadata",

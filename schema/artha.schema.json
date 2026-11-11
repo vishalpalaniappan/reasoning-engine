@@ -248,7 +248,6 @@
                           },
                           "list": {}
                         },
-                        "x-custom-rule": "validate-narrative",
                         "x-invariant-metadata": [
                           {
                             "id": "1",
@@ -314,8 +313,6 @@
                           "value1": {},
                           "value2": {}
                         },
-                        "x-custom-rule": "validate-narrative",
-                        "x-invariant-metadata": [],
                         "required": [
                           "name",
                           "alias",
@@ -363,7 +360,6 @@
                           "item": {},
                           "list": {}
                         },
-                        "x-custom-rule": "validate-narrative",
                         "x-invariant-metadata": [
                           {
                             "id": "1",
@@ -428,8 +424,6 @@
                           },
                           "message": {}
                         },
-                        "x-custom-rule": "validate-narrative",
-                        "x-invariant-metadata": [],
                         "required": [
                           "name",
                           "message"
@@ -474,8 +468,6 @@
                           },
                           "alias": {}
                         },
-                        "x-custom-rule": "validate-narrative",
-                        "x-invariant-metadata": [],
                         "required": [
                           "name",
                           "alias"
@@ -520,7 +512,6 @@
                           },
                           "condition": {}
                         },
-                        "x-custom-rule": "validate-narrative",
                         "x-invariant-metadata": [
                           {
                             "id": "inv_1",

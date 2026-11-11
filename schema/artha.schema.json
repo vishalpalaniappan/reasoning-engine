@@ -126,11 +126,11 @@
                             "description": "Type of the primitive.",
                             "const": "meta-primitive"
                           },
-                          "values": {}
+                          "value": {}
                         },
                         "required": [
                           "name",
-                          "values"
+                          "value"
                         ]
                       },
                       {
@@ -173,11 +173,11 @@
                             "description": "Type of the primitive.",
                             "const": "meta-primitive"
                           },
-                          "type": {}
+                          "value": {}
                         },
                         "required": [
                           "name",
-                          "type"
+                          "value"
                         ]
                       },
                       {
@@ -385,11 +385,11 @@
                                 "participants": [
                                   "list"
                                 ],
-                                "property": "structuralType",
+                                "property": "structural_type",
                                 "condition": [
                                   "list"
                                 ],
-                                "description": "list must have structuralType List.",
+                                "description": "list must have structural_type List.",
                                 "invalidValues": [
                                   {
                                     "value": "string_value",

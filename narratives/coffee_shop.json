@@ -26,11 +26,11 @@
             "body": [
                 {
                     "name": "structural_type",
-                    "type": "list"
+                    "value": "list"
                 },
                 {
                     "name": "list_contains",
-                    "values": ["Coffee", "Bagel"]
+                    "value": ["Coffee", "Bagel"]
                 }
             ]
         }

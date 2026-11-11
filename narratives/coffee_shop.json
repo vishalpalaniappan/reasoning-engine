@@ -3,16 +3,6 @@
     "metadata": "Meaning of Coffee Shop (simplified state for testing, will expand it later).",
     "narrative": [
         {
-            "name": "import",
-            "file": "./testBehaviorMeaning.ar",
-            "alias": "testBehaviorMeaning"
-        },
-        {
-            "name": "import",
-            "file": "./sample.ar",
-            "alias": "sample"
-        },
-        {
             "name": "behavior",
             "behaviorName": "coffee_shop",
             "attributes": [],

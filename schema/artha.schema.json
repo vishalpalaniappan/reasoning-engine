@@ -6,6 +6,7 @@
   "type": "object",
   "required": [
     "metadata",
+    "initialBehavior",
     "narrative"
   ],
   "additionalProperties": false,
@@ -17,6 +18,9 @@
       "type": "string"
     },
     "id": {
+      "type": "string"
+    },
+    "initialBehavior": {
       "type": "string"
     },
     "narrative": {

@@ -2,6 +2,7 @@ import Ajv from "ajv/dist/2020.js";
 import fs from "node:fs";
 import fsPromises from "node:fs/promises";
 import path from "path";
+import { customRule } from "./customRule.js";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -13,7 +14,16 @@ const validateNarrative = async () => {
     const schema = JSON.parse(fs.readFileSync(schemaPath, "utf8"));
 
     ajv.addKeyword({ keyword: "x-custom-rule" });
-    ajv.addKeyword({ keyword: "x-invariant-metadata" });
+
+    ajv.addKeyword({
+        keyword: "x-invariant-metadata",
+        type: "object",
+        validate: customRule,
+        error: {
+            message: (ctx) => `${ctx})`
+        }
+    });
+    
 
     const NARRATIVE_PATH = path.join(
         __dirname,

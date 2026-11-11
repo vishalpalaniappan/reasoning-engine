@@ -19,9 +19,14 @@
             "body": [
                 {
                     "name": "introduce",
-                    "alias": "test",
+                    "alias": "shopping_cart",
                     "participant": "Cart",
                     "role": "shopping_cart"
+                },
+                {
+                    "name": "insert_at_end_of_list",
+                    "item": "Coffee",
+                    "list": "shopping_cart"
                 }
             ]
         },

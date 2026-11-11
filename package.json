@@ -1,0 +1,22 @@
+{
+    "name": "reasoning-engine",
+    "version": "0.0.0",
+    "type": "module",
+    "description": "Engine that uses schema to reason about the constructed narratives.",
+    "main": "./src/index.js",
+    "scripts": {
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/vishalpalaniappan/reasoning-engine.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/vishalpalaniappan/reasoning-engine/issues"
+    },
+    "homepage": "https://github.com/vishalpalaniappan/reasoning-engine#readme",
+    "dependencies": {
+        "ajv": "^8.20.0"
+    }
+}

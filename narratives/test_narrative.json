@@ -18,6 +18,16 @@
                     "name": "insert_at_end_of_list",
                     "item": "Coffee",
                     "list": "shopping_cart"
+                },
+                {
+                    "name": "invoke",
+                    "behaviorName": "anotherBehavior",
+                    "args": [
+                        {
+                            "name": "testArg",
+                            "value": "testValue"
+                        }
+                    ]
                 }
             ]
         },

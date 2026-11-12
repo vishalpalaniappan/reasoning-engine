@@ -22,6 +22,9 @@ const validateNarrative = async (narrative_name) => {
     const schemaPath = path.join(__dirname, "..", "schema", "artha.schema.json");
     const schema = JSON.parse(fs.readFileSync(schemaPath, "utf8"));
 
+    // Add manifest keyword so strict mode won't complain
+    ajv.addKeyword("manifest")
+
     // Add keyword to schema for checking the invariant
     ajv.addKeyword({
         keyword: "x-invariant-metadata",

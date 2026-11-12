@@ -52,4 +52,4 @@ const validateNarrative = async (narrative_name) => {
     }
 };
 
-validateNarrative("coffee_shop.json");
+validateNarrative("test_narrative.json");

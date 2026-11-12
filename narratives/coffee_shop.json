@@ -1,6 +1,6 @@
 {
     "$schema": "../schema/artha.schema.json",
-    "metadata": "Meaning of Coffee Shop (simplified state for testing, will expand it later).",
+    "metadata": "Meaning of Coffee Shop.",
     "initialBehavior": "coffee_shop",
     "narrative": [
         {
@@ -15,9 +15,25 @@
                     "role": "shopping_cart"
                 },
                 {
-                    "name": "insert_at_end_of_list",
-                    "item": "Coffee",
-                    "list": "shopping_cart"
+                    "name": "invoke",
+                    "behaviorName": "visitShop",
+                    "args": []
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "visitShop",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "invoke",
+                    "behaviorName": "baristaPresentsMenu",
+                    "args": []
+                },
+                {
+                    "name": "terminal_input",
+                    "alias": "user_choice"
                 }
             ]
         },

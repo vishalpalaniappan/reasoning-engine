@@ -546,11 +546,15 @@
                     "description": "Type of the primitive.",
                     "const": "functional-primitive"
                   },
-                  "condition": {}
+                  "condition": {},
+                  "body": {
+                    "type": "array"
+                  }
                 },
                 "required": [
                   "name",
-                  "condition"
+                  "condition",
+                  "body"
                 ]
               }
             },

@@ -27,13 +27,41 @@
             "attributes": [],
             "body": [
                 {
-                    "name": "invoke",
-                    "behaviorName": "baristaPresentsMenu",
-                    "args": []
+                    "name": "terminal_display",
+                    "message": "enter c for coffee, anything else to exit"
                 },
                 {
                     "name": "terminal_input",
                     "alias": "user_choice"
+                },
+                {
+                    "name": "invoke",
+                    "behaviorName": "checkIfUserChoseCoffee",
+                    "args": [
+                        {
+                            "name": "alias",
+                            "value": "user_chose_coffee"
+                        },
+                        {
+                            "name": "choice",
+                            "value": "user_choice"
+                        }
+                    ]
+                },
+                {
+                    "name": "if",
+                    "condition": "user_chose_coffee",
+                    "body": [
+                        {
+                            "name": "terminal_display",
+                            "message": "User Chose Coffee"
+                        },
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
+                        }
+                    ]
                 }
             ]
         },

@@ -70,14 +70,10 @@
                     "items": {
                       "type": "object",
                       "required": [
-                        "name",
-                        "value"
+                        "name"
                       ],
                       "properties": {
                         "name": {
-                          "type": "string"
-                        },
-                        "value": {
                           "type": "string"
                         }
                       }
@@ -121,16 +117,32 @@
                   "id": {
                     "type": "string"
                   },
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
                   "args": {
                     "type": "array",
                     "items": {
                       "type": "object",
                       "required": [
-                        "name",
+                        "argName",
                         "value"
                       ],
                       "properties": {
-                        "name": {
+                        "argName": {
                           "type": "string"
                         },
                         "value": {
@@ -217,7 +229,20 @@
                     "type": "string"
                   },
                   "alias": {
-                    "type": "string"
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
                   }
                 },
                 "required": [
@@ -245,6 +270,10 @@
                 "description": "Structural schema for terminal_display primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -263,12 +292,47 @@
                     "description": "Type of the primitive.",
                     "const": "computable-legacy-primitive"
                   },
-                  "message": {}
-                },
-                "required": [
-                  "name",
-                  "message"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "message"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -289,6 +353,10 @@
                 "description": "Structural schema for terminal_input primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -307,12 +375,28 @@
                     "description": "Type of the primitive.",
                     "const": "computable-legacy-primitive"
                   },
-                  "alias": {}
-                },
-                "required": [
-                  "name",
-                  "alias"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 0,
+                    "maxItems": 0
+                  }
+                }
               }
             },
             {
@@ -333,6 +417,10 @@
                 "description": "Structural schema for clear_list primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -370,12 +458,47 @@
                     "description": "Type of the primitive.",
                     "const": "computable-primitive"
                   },
-                  "list": {}
-                },
-                "required": [
-                  "name",
-                  "list"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "list"
+                          },
+                          "value": {
+                            "type": "array"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -396,6 +519,10 @@
                 "description": "Structural schema for equals primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -414,16 +541,60 @@
                     "description": "Type of the primitive.",
                     "const": "computable-primitive"
                   },
-                  "alias": {},
-                  "value1": {},
-                  "value2": {}
-                },
-                "required": [
-                  "name",
-                  "alias",
-                  "value1",
-                  "value2"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value1"
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value2"
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -444,6 +615,10 @@
                 "description": "Structural schema for insert_at_end_of_list primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -481,14 +656,60 @@
                     "description": "Type of the primitive.",
                     "const": "computable-primitive"
                   },
-                  "item": {},
-                  "list": {}
-                },
-                "required": [
-                  "name",
-                  "item",
-                  "list"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "item"
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "list"
+                          },
+                          "value": {}
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -509,6 +730,11 @@
                 "description": "Structural schema for if primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args",
+                  "body"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -546,16 +772,50 @@
                     "description": "Type of the primitive.",
                     "const": "functional-primitive"
                   },
-                  "condition": {},
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "condition"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  },
                   "body": {
                     "type": "array"
                   }
-                },
-                "required": [
-                  "name",
-                  "condition",
-                  "body"
-                ]
+                }
               }
             },
             {
@@ -576,6 +836,10 @@
                 "description": "Structural schema for initial_value primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -594,12 +858,47 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "value": {}
-                },
-                "required": [
-                  "name",
-                  "value"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -620,6 +919,10 @@
                 "description": "Structural schema for introduce primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -638,16 +941,64 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "alias": {},
-                  "role": {},
-                  "participant": {}
-                },
-                "required": [
-                  "name",
-                  "alias",
-                  "role",
-                  "participant"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "role"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      },
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "participant"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -668,6 +1019,10 @@
                 "description": "Structural schema for list_contains primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -686,12 +1041,47 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "value": {}
-                },
-                "required": [
-                  "name",
-                  "value"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value"
+                          },
+                          "value": {
+                            "type": "array"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -712,6 +1102,10 @@
                 "description": "Structural schema for structural_type primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -730,12 +1124,47 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "value": {}
-                },
-                "required": [
-                  "name",
-                  "value"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "value"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             },
             {
@@ -756,6 +1185,10 @@
                 "description": "Structural schema for yield primitive.",
                 "type": "object",
                 "additionalProperties": false,
+                "required": [
+                  "name",
+                  "args"
+                ],
                 "properties": {
                   "$schema": {
                     "type": "string",
@@ -774,12 +1207,47 @@
                     "description": "Type of the primitive.",
                     "const": "meta-primitive"
                   },
-                  "alias": {}
-                },
-                "required": [
-                  "name",
-                  "alias"
-                ]
+                  "alias": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [
+                      "name"
+                    ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "introduce": {
+                        "type": "boolean",
+                        "default": false
+                      }
+                    }
+                  },
+                  "args": {
+                    "type": "array",
+                    "minItems": 1,
+                    "maxItems": 1,
+                    "prefixItems": [
+                      {
+                        "type": "object",
+                        "properties": {
+                          "argName": {
+                            "type": "string",
+                            "const": "alias"
+                          },
+                          "value": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "argName",
+                          "value"
+                        ],
+                        "additionalProperties": false
+                      }
+                    ]
+                  }
+                }
               }
             }
           ],

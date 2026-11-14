@@ -70,55 +70,6 @@
                 },
                 {
                     "name": "if",
-                    "args": [],
-                    "body": [
-                        {
-                            "name": "terminal_display",
-                            "args": [
-                                {
-                                    "argName": "message",
-                                    "value": "User Chose Coffee"
-                                }   
-                            ]
-                        },
-                        {
-                            "name": "invoke",
-                            "behaviorName": "visitShop",
-                            "args": []
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "name": "behavior",
-            "behaviorName": "checkIfUserChoseCoffee",
-            "attributes": [
-                {
-                    "name": "user_choice",
-                    "value": ""
-                }
-            ],
-            "body": [
-                {
-                    "name": "equals",
-                    "alias": {
-                        "name": "userChoseCoffee",
-                        "introduce": true
-                    },
-                    "args": [
-                        {
-                            "argName": "value1",
-                            "value": "user_choice"
-                        },
-                        {
-                            "argName": "value2",
-                            "value": "c"
-                        }
-                    ]
-                },
-                {
-                    "name": "if",
                     "args": [
                         {
                             "argName": "condition",
@@ -132,7 +83,7 @@
                                 {
                                     "argName": "message",
                                     "value": "User Chose Coffee"
-                                }
+                                }   
                             ]
                         },
                         {

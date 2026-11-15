@@ -17,10 +17,12 @@
                     "args": [
                         {
                             "argName": "role",
+                            "argType": "const",
                             "value": "Cart"
                         },
                         {
                             "argName": "participant",
+                            "argType": "const",
                             "value": "shopping_cart"
                         }
                     ]
@@ -42,7 +44,8 @@
                     "args": [
                         {
                             "argName": "message",
-                            "value": "Message to display"
+                            "argType": "const",
+                            "value": "Enter c to select coffee, anything else to exit."
                         }
                     ]
                 },
@@ -63,11 +66,13 @@
                     "args": [
                         {
                             "argName": "value1",
+                            "argType": "name",
                             "value": "user_choice"
                         },
                         {
                             "argName": "value2",
-                            "value": "coffee"
+                            "argType": "const",
+                            "value": "c"
                         }
                     ]
                 },
@@ -76,6 +81,7 @@
                     "args": [
                         {
                             "argName": "condition",
+                            "argType": "name",
                             "value": "user_chose_coffee"
                         }
                     ],
@@ -85,7 +91,8 @@
                             "args": [
                                 {
                                     "argName": "message",
-                                    "value": "User Chose Coffee"
+                                    "argType": "const",
+                                    "value": "User chose to add coffee to cart."
                                 }   
                             ]
                         },
@@ -107,7 +114,8 @@
                     "args": [
                         {
                             "argName": "value",
-                            "value": "string"
+                            "argType": "const",
+                            "value": "list"
                         }
                     ]
                 },
@@ -116,6 +124,7 @@
                     "args": [
                         {
                             "argName": "value",
+                            "argType": "const",
                             "value": ["Coffee", "Bagel"]
                         }
                     ]
@@ -131,6 +140,7 @@
                     "args": [
                         {
                             "argName": "value",
+                            "argType": "const",
                             "value": "string"
                         }
                     ]
@@ -140,6 +150,7 @@
                     "args": [
                         {
                             "argName": "value",
+                            "argType": "const",
                             "value": "Choose from: 1.Coffee 2.Bagel, 3.View, 4.Clear."
                         }
                     ]

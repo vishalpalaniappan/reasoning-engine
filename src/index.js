@@ -23,6 +23,8 @@ const validateNarrative = async (narrative_name) => {
     if (!schema) {
         throw "Unable to load schema.";
     }
+    
+    await fsPromises.writeFile("./temp/schema.json", JSON.stringify(schema, null, 4));
 
     // Add manifest keyword so strict mode won't complain
     ajv.addKeyword("manifest");
@@ -41,7 +43,7 @@ const validateNarrative = async (narrative_name) => {
     const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
 
     // Write to temp file for inspection
-    // await fsPromises.writeFile("./temp.json", JSON.stringify(narrative, null, 4));
+    await fsPromises.writeFile("./temp/temp.json", JSON.stringify(narrative, null, 4));
 
     // Validate the narrative
     const validate = ajv.compile(schema);

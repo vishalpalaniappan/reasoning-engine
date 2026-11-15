@@ -3,7 +3,7 @@
  * Fetch doesn't throw on all errors, need to check response.ok manually and throw.
  * @returns {Object|null}
  */
-export async function fetchSchema() {
+export async function fetchArthaSchema() {
     const response = await fetch('https://vishalpalaniappan.github.io/artha-primitives/img/artha.schema.json');
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);

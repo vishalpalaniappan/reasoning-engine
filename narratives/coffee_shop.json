@@ -11,7 +11,7 @@
                 {
                     "name": "introduce",
                     "alias": {
-                        "name": "shopping_cart",
+                        "aliasName": "shopping_cart",
                         "introduce": true
                     },
                     "args": [
@@ -49,22 +49,25 @@
                 {
                     "name": "terminal_input",
                     "alias": {
-                        "name": "user_choice",
+                        "aliasName": "user_choice",
                         "introduce": true
                     },
                     "args": []
                 },
                 {
-                    "name": "invoke",
-                    "behaviorName": "checkIfUserChoseCoffee",
+                    "name": "equals",
                     "alias": {
-                        "name": "user_chose_coffee",
+                        "aliasName": "user_chose_coffee",
                         "introduce": true
                     },
                     "args": [
                         {
-                            "argName": "choice",
+                            "argName": "value1",
                             "value": "user_choice"
+                        },
+                        {
+                            "argName": "value2",
+                            "value": "coffee"
                         }
                     ]
                 },

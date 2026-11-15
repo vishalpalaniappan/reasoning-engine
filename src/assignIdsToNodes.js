@@ -18,7 +18,7 @@ export const assignIdsToNodes = (data) => {
     }
 
     // Handle Plain Objects (Nodes)
-    if (!data.id) {
+    if (!data.id && data?.name) {
         data.id = crypto.randomUUID();
     }
 

@@ -1,12 +1,13 @@
 import jsonata from 'jsonata';
 import fs from "node:fs";
 import path from "path";
+import { NarrativeFinder } from './NarrativeFinder';
 
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
- * Searches schema for primitive. This will be optimized later.
+ * Searches schema for primitive. This is obviously inefficient, will be optimized later.
  * 
  * @param {String} primitiveName 
  * @return {Object}
@@ -44,7 +45,7 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
     const foundNode = await expression.evaluate(dataCxt.rootData);
 
-    findPath(foundNode.id, dataCxt.parentData.id);
+    new NarrativeFinder(dataCxt.rootData, foundNode.id, dataCxt.parentData.id)
 
     // Will add this later after path finding
     // if (foundNode.name === "introduce") {
@@ -58,9 +59,4 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     // }
 
     return true;
-}
-
-
-const findPath = (fromId, toId) => {
-    console.log(`Finding paths from ${fromId} to ${toId}`);
 }

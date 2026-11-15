@@ -13,7 +13,9 @@
  */
 export class NarrativeFinder {
 
-    constructor () {
-
+    constructor (narrative, fromId, toId) {
+        this.narrative = narrative;
+        this.startId = fromId;
+        this.endId = toId;
     }
 }

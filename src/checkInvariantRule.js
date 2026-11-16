@@ -45,7 +45,7 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
     const foundNode = await expression.evaluate(dataCxt.rootData);
 
-    new NarrativeFinder(dataCxt.rootData, foundNode.id, dataCxt.parentData.id)
+    new NarrativeFinder(dataCxt.rootData.narrative, foundNode.id, dataCxt.parentData.id)
 
     // Will add this later after path finding
     // if (foundNode.name === "introduce") {

@@ -1,3 +1,5 @@
+import jsonata from 'jsonata';
+
 /**
  * Given a start and end ID, this class will find the unique narratives.
  * 
@@ -17,5 +19,44 @@ export class NarrativeFinder {
         this.narrative = narrative;
         this.startId = fromId;
         this.endId = toId;
+        this.init();
     }
+
+    async init () {
+        this.startNarrative = await this.findNarrativeArrayFromId(this.startId);
+        console.log(this.startNarrative);
+    }
+
+    /**
+     * Given the id, this method returns an array of nodes which
+     * contains the narrative starting at the provided id. From this
+     * node, the algorithm can walk forward to reach the end node.
+     * 
+     * @param {String} id 
+     * @returns 
+     */
+    async findNarrativeArrayFromId (id) {
+        const expression = jsonata(`**[body[id = '${id}']]`);
+        const parentNode =  await expression.evaluate(this.narrative);
+        const index = parentNode.body.findIndex((item) => item.id === id);
+        const sliced = index !== -1 ? parentNode.body.slice(index) : [];
+        return sliced;
+    }
+
+    /**
+     * Find the invoked behavior given the behavior name. This is called when
+     * a node in the narrative being walked invokes a new behavior. If there are
+     * nodes still remaining in the narrative being walked, this gets added to the
+     * stack and when the invoked behaviors narrative is done, it is removed from
+     * the stack and it continues in the behavior below it in the stack. 
+     * 
+     * @param {String} behaviorName The behavior to find
+     */
+    async findInvokedBehaviorNode (behaviorName) {
+
+    }
+    
+
+    
+
 }

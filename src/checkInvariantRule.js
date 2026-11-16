@@ -1,7 +1,7 @@
 import jsonata from 'jsonata';
 import fs from "node:fs";
 import path from "path";
-import { NarrativeFinder } from './NarrativeFinder';
+import { NarrativeFinder } from './NarrativeFinder.js';
 
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));

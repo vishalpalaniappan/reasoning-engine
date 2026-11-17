@@ -19,12 +19,16 @@ export class NarrativeFinder {
         this.narrative = narrative;
         this.startId = fromId;
         this.endId = toId;
+        this.narrativeStack = [];
+        this.invokeStack = [];
         this.init();
     }
 
     async init () {
-        this.startNarrative = await this.findNarrativeArrayFromId(this.startId);
-        console.log(this.startNarrative);
+        this.narrativeStack.push(await this.findNarrativeArrayFromId(this.startId));
+        console.log("");
+        console.log("Walking");
+        this.walk();
     }
 
     /**
@@ -41,6 +45,40 @@ export class NarrativeFinder {
         const index = parentNode.body.findIndex((item) => item.id === id);
         const sliced = index !== -1 ? parentNode.body.slice(index) : [];
         return sliced;
+    }
+
+    getCurrNarrative () {
+        return this.narrativeStack[this.narrativeStack.length - 1];
+    }
+
+    /**
+     * Walk the narrative.
+     */
+    async walk () {
+        const currNarrative = this.getCurrNarrative();
+
+        // No more nodes, done walking.
+        if (currNarrative.length === 0) {
+            console.log("Done walking.");
+            return;
+        }
+
+        const currNode = currNarrative.shift();
+        console.log("--->",currNode.name);
+        
+        // Reached end
+        if (currNode.id === this.endId) {
+            console.log("Reached end, current narrative path is done");
+            return;
+        }
+
+        // Branch
+        if (currNode.name === "if") {
+
+        }       
+
+
+        this.walk();
     }
 
     /**

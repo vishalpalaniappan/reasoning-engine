@@ -15,7 +15,7 @@ export class Narratives {
         if (this.narrativeStack.length == 0) {
             return null;
         } else {
-            return this.narrativeStack[this.narrativeStack.length - 1]
+            return this.narrativeStack[this.narrativeStack.length - 1];
         }
     }
 
@@ -25,10 +25,15 @@ export class Narratives {
         );
     }
 
-    branch() {
-        this.narrativeStack.push(
-            new Narrative([...this.getCurrentNarrative()])
-        );
+    branch(nodes) {
+        const narrative = this.narrativeStack[this.narrativeStack.length - 1];
+        const stackCopy = structuredClone(narrative.behaviorStack);
+        stackCopy[stackCopy.length - 1] = [...nodes];
+
+        const newNarrative = new Narrative();
+        newNarrative.behaviorStack = stackCopy;
+
+        this.narrativeStack.push(newNarrative);
     }
 
     readCurrentNarrative() {
@@ -54,8 +59,7 @@ export class Narratives {
 
     isBranchDone() {
         const currNarrative = this.getCurrentNarrative();
-        if(currNarrative.get().length === 0) {
-            this.narrativeStack.pop();
+        if(currNarrative.get().length === 0 && currNarrative.behaviorStack.length === 1) {
             return true;
         }
         return false;

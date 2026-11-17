@@ -3,13 +3,13 @@
 export class Narrative {
 
     constructor (currNarrative) {
-        this.behaviorStack = [[...currNarrative]];
+        this.behaviorStack = [];
+        if (currNarrative) {
+            this.behaviorStack.push([...currNarrative]);
+        }
     }
 
     add (node) {
-        if (this.behaviorStack.length == 0) {
-            this.behaviorStack.push([]);
-        }
         this.behaviorStack[this.behaviorStack.length - 1].push({...node});
     }
 
@@ -24,8 +24,7 @@ export class Narrative {
 
     get() {
         const currNarrative = this.behaviorStack[this.behaviorStack.length - 1];
-        if (currNarrative.length == 0 && this.behaviorStack.length > 0) {
-            console.log("Moving down behavior stack");
+        if (currNarrative.length == 0 && this.behaviorStack.length > 1) {
             this.behaviorStack.pop();
         }
         return this.behaviorStack[this.behaviorStack.length - 1];

@@ -31,6 +31,16 @@
                     "name": "invoke",
                     "behaviorName": "visitShop",
                     "args": []
+                },
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "Goodbye"
+                        }
+                    ]
                 }
             ]
         },
@@ -98,9 +108,26 @@
                         },
                         {
                             "name": "invoke",
-                            "behaviorName": "visitShop",
+                            "behaviorName": "sample",
                             "args": []
                         }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "sample",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "in sample."
+                        }   
                     ]
                 }
             ]

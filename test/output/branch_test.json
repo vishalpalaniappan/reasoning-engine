@@ -1,0 +1,27 @@
+{
+    "narrativeStack": [],
+    "narratives": [
+        [
+            "introduce",
+            "invoke",
+            "terminal_display,Enter c to select coffee, anything else to exit.",
+            "terminal_input",
+            "equals",
+            "if",
+            "terminal_display,User chose to add coffee to cart.",
+            "invoke",
+            "terminal_display,in sample.",
+            "terminal_display,Goodbye"
+        ],
+        [
+            "introduce",
+            "invoke",
+            "terminal_display,Enter c to select coffee, anything else to exit.",
+            "terminal_input",
+            "equals",
+            "if",
+            "terminal_display,Goodbye"
+        ]
+    ],
+    "currNarrative": []
+}

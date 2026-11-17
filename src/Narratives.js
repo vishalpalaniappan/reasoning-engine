@@ -34,9 +34,13 @@ export class Narratives {
     readCurrentNarrative() {
         const currNarrative = this.getCurrentNarrative();
         const currNode = currNarrative.shift();
-        console.log(currNode, currNarrative);
         console.log("--->",currNode.name);
         return currNode;
+    }
+
+    stackCurrentNarrative(nodes) {
+        this.currNarrative = this.getCurrentNarrative();
+        this.currNarrative.addStack([...nodes]);
     }
 
     areAllBranchesDone() {

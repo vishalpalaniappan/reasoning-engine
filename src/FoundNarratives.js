@@ -9,12 +9,13 @@ export class FoundNarratives {
     }
 
     completeNarrative() {
+        if (this.currNarrative.length === 0) return;
         console.log("Reached end, current narrative path is done");
-        this.narratives.push([this.currNarrative]);
+        this.narratives.push([...this.currNarrative]);
         this.currNarrative = [];
     }
 
-    addToCurrNarrative(node) {
+    addToCurrentNarrative(node) {
         this.currNarrative.push(node);
     }
 }

@@ -3,6 +3,7 @@ import { assignIdsToNodes } from "./assignIdsToNodes.js";
 import jsonata from 'jsonata';
 import path from "path";
 import fs from "node:fs";
+import fsPromises from "node:fs/promises";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -21,7 +22,11 @@ const run = async () => {
     console.log(startNode, endNode);
 
     const finder = new NarrativeFinder(narrative, startNode.id, endNode.id);
-
+    
+        
+    console.log("");
+    console.log("Walking");
+    await finder.run();
 }
 
 

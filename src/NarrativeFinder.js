@@ -25,16 +25,11 @@ export class NarrativeFinder {
 
         this.narratives = new Narratives();
         this.foundNarratives = new FoundNarratives();
-
-        this.init();
     }
 
-    async init () {
+    async run () {
         this.narratives.addNarrative(await this.findNarrativeArrayFromId(this.startId));
-        
-        console.log("");
-        console.log("Walking");
-        this.walk();
+        await this.walk();
 
         await fsPromises.writeFile(
             "./temp/foundNarratives.json",
@@ -71,16 +66,14 @@ export class NarrativeFinder {
             this.foundNarratives.completeNarrative();
             return;
         } else if (this.narratives.isBranchDone()) {
-            this.foundNarratives.completeNarrative();
             this.narratives.completeBranch();
-            this.walk();
+            this.foundNarratives.completeNarrative();
+            await this.walk();
             return;
         }
 
-        console.log(this.narratives.getCurrentNarrative());
-
         const currNode = this.narratives.readCurrentNarrative();
-        this.foundNarratives.addToCurrNarrative(currNode);
+        this.foundNarratives.addToCurrentNarrative(currNode);
         
         if (this.reachedEndNode(currNode)) {
             this.foundNarratives.completeNarrative();
@@ -95,13 +88,13 @@ export class NarrativeFinder {
         if (currNode.name === "if") {
             this.narratives.branch();
         } else if (currNode.name === "invoke") {
-            // Behavior Stack
-            // this.behaviorStack.push();
-            console.log(`Invoking ${currNode.name}`);
+            const invokedBehavior = await this.findInvokedBehaviorNode(currNode.behaviorName);
+            this.narratives.stackCurrentNarrative(invokedBehavior.body);
+            console.log(`Invoking ${currNode.behaviorName}`);
         }
         
         
-        this.walk();
+        await this.walk();
     }
 
     /**
@@ -114,7 +107,8 @@ export class NarrativeFinder {
      * @param {String} behaviorName The behavior to find
      */
     async findInvokedBehaviorNode (behaviorName) {
-
+        const expression = jsonata(`**[name = 'behavior' and behaviorName = '${behaviorName}']`);
+        return  await expression.evaluate(this.narrative);
     }
     
 

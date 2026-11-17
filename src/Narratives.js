@@ -11,6 +11,11 @@ export class Narratives {
         this.narrativeStack = [];
     }
 
+    /**
+     * Get the current narrative;
+     * 
+     * @returns {null|Array}
+     */
     getCurrentNarrative () {
         if (this.narrativeStack.length == 0) {
             return null;
@@ -19,35 +24,61 @@ export class Narratives {
         }
     }
 
+    /**
+     * Add the nodes of the narrative to the stack.
+     * 
+     * @param {Array} narrative 
+     */
     addNarrative(narrative) {
         this.narrativeStack.push(
             new Narrative([...narrative])
         );
     }
 
+    /**
+     * Branch the narrative from the current position and load the new narrative
+     * being processed.
+     * 
+     * @param {Array} nodes 
+     */
     branch(nodes) {
-        const narrative = this.narrativeStack[this.narrativeStack.length - 1];
-        const stackCopy = structuredClone(narrative.behaviorStack);
+        // Copy curr narrative but replace top of behavior stack with conditional nodes
+        const stackCopy = structuredClone(this.getCurrentNarrative().behaviorStack);
         stackCopy[stackCopy.length - 1] = [...nodes];
 
+        // Create new narrative and copy the behavior stack over
         const newNarrative = new Narrative();
         newNarrative.behaviorStack = stackCopy;
 
         this.narrativeStack.push(newNarrative);
     }
 
+    /**
+     * Reads the current step in the narrative. 
+     * 
+     * @returns {String}
+     */
     readCurrentNarrative() {
-        const currNarrative = this.getCurrentNarrative();
-        const currNode = currNarrative.shift();
+        const currNode = this.getCurrentNarrative().shift();
         console.log("--->",currNode.name);
         return currNode;
     }
 
+    /**
+     * Adds the provided nodes to the narratives behavior stack.
+     * 
+     * @param {Array} nodes 
+     */
     stackCurrentNarrative(nodes) {
         this.currNarrative = this.getCurrentNarrative();
         this.currNarrative.addStack([...nodes]);
     }
 
+    /**
+     * Check if the current narrative and all the branches are done.
+     * 
+     * @returns {Boolean}
+     */
     areAllBranchesDone() {
         const currNarrative = this.getCurrentNarrative();
         if (!currNarrative || (currNarrative.get().length === 0 && this.narrativeStack.length === 0)) {
@@ -57,6 +88,11 @@ export class Narratives {
         return false;
     }
 
+    /**
+     * Check if the current branch is done.
+     * 
+     * @returns {Boolean}
+     */
     isBranchDone() {
         const currNarrative = this.getCurrentNarrative();
         if(currNarrative.get().length === 0 && currNarrative.behaviorStack.length === 1) {
@@ -65,6 +101,9 @@ export class Narratives {
         return false;
     }
 
+    /**
+     * Complete the branch by popping the narrative stack.
+     */
     completeBranch() {
         this.narrativeStack.pop();
     }

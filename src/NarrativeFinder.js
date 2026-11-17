@@ -55,13 +55,18 @@ export class NarrativeFinder {
      * Walk the narrative.
      */
     async walk () {
-        const currNarrative = this.getCurrNarrative();
-
-        // No more nodes, done walking.
-        if (currNarrative.length === 0) {
+        if (currNarrative.length === 0 && this.narrativeStack.length === 0) {
+            // No more nodes, done walking.
             console.log("Done walking.");
             return;
+        } else if (currNarrative.length === 0) {
+            // Current stack is done but more to walk.
+            this.narrativeStack.pop();
+            this.walk();
+            return;
         }
+
+        const currNarrative = this.getCurrNarrative();
 
         const currNode = currNarrative.shift();
         console.log("--->",currNode.name);

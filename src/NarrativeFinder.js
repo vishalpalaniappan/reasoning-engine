@@ -82,9 +82,9 @@ export class NarrativeFinder {
             console.log("Looped")
             this.narratives.completeBranch();
             this.foundNarratives.completeNarrative();
+            await this.walk();
             return;
         }
-
 
         // Classify node name to select behavior
         if (currNode.name === "if") {

@@ -15,7 +15,7 @@ const run = async () => {
     const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
 
     const startNode =  await jsonata(`**[name = 'introduce']`).evaluate(narrative);
-    const endNode =  await jsonata(`**[name = 'terminal_display'].args[value = 'Goodbye']`).evaluate(narrative);
+    const endNode =  await jsonata(`**[name = 'terminal_display' and args[0].value = 'Goodbye']`).evaluate(narrative);
 
     console.log(startNode, endNode);
 

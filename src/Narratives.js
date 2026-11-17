@@ -44,7 +44,11 @@ export class Narratives {
     branch(nodes) {
         // Copy curr narrative but replace top of behavior stack with conditional nodes
         const stackCopy = structuredClone(this.getCurrentNarrative().behaviorStack);
-        stackCopy[stackCopy.length - 1] = [...nodes];
+
+        if (stackCopy[stackCopy.length - 1].length === 0) {
+            stackCopy.pop();
+        }
+        stackCopy.push([...nodes]);
 
         // Create new narrative and copy the behavior stack over
         const newNarrative = new Narrative();

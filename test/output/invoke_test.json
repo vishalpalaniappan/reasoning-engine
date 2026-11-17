@@ -1,0 +1,89 @@
+{
+    "narratives": [
+        [
+            {
+                "name": "introduce",
+                "alias": {
+                    "aliasName": "shopping_cart",
+                    "introduce": true
+                },
+                "args": [
+                    {
+                        "argName": "role",
+                        "argType": "const",
+                        "value": "Cart"
+                    },
+                    {
+                        "argName": "participant",
+                        "argType": "const",
+                        "value": "shopping_cart"
+                    }
+                ],
+                "id": "070cb4ea-02e0-489b-92da-7bd2f8b432ca"
+            },
+            {
+                "name": "invoke",
+                "behaviorName": "visitShop",
+                "args": [],
+                "id": "745f516f-7059-4c04-b771-1cbe716d16aa"
+            },
+            {
+                "name": "terminal_display",
+                "args": [
+                    {
+                        "argName": "message",
+                        "argType": "const",
+                        "value": "Enter c to select coffee, anything else to exit."
+                    }
+                ],
+                "id": "adc98f05-9e0f-43da-8795-9eb451f82299"
+            },
+            {
+                "name": "terminal_input",
+                "alias": {
+                    "aliasName": "user_choice",
+                    "introduce": true
+                },
+                "args": [],
+                "id": "6cb8efd4-5ec0-4d35-9254-d5a103f29a66"
+            },
+            {
+                "name": "equals",
+                "alias": {
+                    "aliasName": "user_chose_coffee",
+                    "introduce": true
+                },
+                "args": [
+                    {
+                        "argName": "value1",
+                        "argType": "name",
+                        "value": "user_choice"
+                    },
+                    {
+                        "argName": "value2",
+                        "argType": "const",
+                        "value": "c"
+                    }
+                ],
+                "id": "8821ce38-1a7b-44d5-af02-c5c7b764f68e"
+            },
+            {
+                "name": "insert_at_end_of_list",
+                "args": [
+                    {
+                        "argName": "item",
+                        "argType": "const",
+                        "value": "Cart"
+                    },
+                    {
+                        "argName": "list",
+                        "argType": "const",
+                        "value": "shopping_cart"
+                    }
+                ],
+                "id": "effbcb59-4e0a-401a-86d0-2bc2a8f088dc"
+            }
+        ]
+    ],
+    "currNarrative": []
+}

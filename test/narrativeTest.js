@@ -1,9 +1,9 @@
-import { NarrativeFinder } from './NarrativeFinder.js';
-import { assignIdsToNodes } from "./assignIdsToNodes.js";
+import { NarrativeFinder } from '../src/NarrativeFinder.js';
+import { assignIdsToNodes } from "../src/assignIdsToNodes.js";
 import jsonata from 'jsonata';
 import path from "path";
 import fs from "node:fs";
-import fsPromises from "node:fs/promises";
+import fsPromises, {mkdir} from "node:fs/promises";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -25,8 +25,11 @@ const run = async () => {
     console.log("Walking");
     await finder.run();
 
+    
+    await mkdir('./test/output', { recursive: true });
+
     await fsPromises.writeFile(
-        "./temp/invoke_test.json",
+        "./test/output/invoke_test.json",
         JSON.stringify(finder.foundNarratives, null, 4)
     );
 }

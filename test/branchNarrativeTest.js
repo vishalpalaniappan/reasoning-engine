@@ -14,12 +14,11 @@ const run = async () => {
     const NARRATIVE_PATH = path.join(__dirname, "..", "narratives", "coffee_shop.json");
     const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
 
-    const startNode =  await jsonata(`**[name = 'introduce']`).evaluate(narrative);
-    const endNode =  await jsonata(`**[name = 'terminal_display' and args[0].value = 'Goodbye']`).evaluate(narrative);
+    const startBehaviorName =  await jsonata(`**[initialBehavior].initialBehavior`).evaluate(narrative);
+    const startBehavior =  await jsonata(`narrative[behaviorName = '${startBehaviorName}']`).evaluate(narrative);
 
-    console.log(startNode, endNode);
-
-    const finder = new NarrativeFinder(narrative, startNode.id, endNode.id);
+    const startNode = startBehavior.body[0];
+    const finder = new NarrativeFinder(narrative, startNode.id, null);
         
     console.log("");
     console.log("Walking");

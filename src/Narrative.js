@@ -15,4 +15,7 @@ export class Narrative {
         return this.currNarrative.shift();
     }
 
+    get() {
+        return this.currNarrative;
+    }
 }

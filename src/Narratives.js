@@ -34,20 +34,23 @@ export class Narratives {
     readCurrentNarrative() {
         const currNarrative = this.getCurrentNarrative();
         const currNode = currNarrative.shift();
+        console.log(currNode, currNarrative);
         console.log("--->",currNode.name);
         return currNode;
     }
 
     areAllBranchesDone() {
         const currNarrative = this.getCurrentNarrative();
-        const isDone = (currNarrative.length === 0 && this.narrativeStack.length === 0);
-        if(isDone) console.log("Done walking.");
-        return ;
+        if (!currNarrative || (currNarrative.get().length === 0 && this.narrativeStack.length === 0)) {
+            console.log("Done walking.");
+            return true;
+        }
+        return false;
     }
 
     isBranchDone() {
         const currNarrative = this.getCurrentNarrative();
-        if(currNarrative.length === 0) {
+        if(currNarrative.get().length === 0) {
             this.narrativeStack.pop();
             return true;
         }

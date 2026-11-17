@@ -68,7 +68,7 @@ export class NarrativeFinder {
      */
     async walk () {
         if (this.narratives.areAllBranchesDone()) {
-            this.narratives.completeFoundNarrative();
+            this.foundNarratives.completeNarrative();
             return;
         } else if (this.narratives.isBranchDone()) {
             this.foundNarratives.completeNarrative();
@@ -77,9 +77,9 @@ export class NarrativeFinder {
             return;
         }
 
+        console.log(this.narratives.getCurrentNarrative());
 
         const currNode = this.narratives.readCurrentNarrative();
-        
         this.foundNarratives.addToCurrNarrative(currNode);
         
         if (this.reachedEndNode(currNode)) {

@@ -2,13 +2,12 @@
     "narrativeStack": [],
     "narratives": [
         [
-            "introduce",
-            "invoke",
-            "terminal_display,Enter c to select coffee, anything else to exit.",
-            "terminal_input",
-            "equals",
-            "insert_at_end_of_list"
+            "589128b2:introduce",
+            "d9c09246:invoke",
+            "1f997b62:terminal_display,Enter c to select coffee, anything else to exit.",
+            "14f97d7c:terminal_input",
+            "d5e89d5c:equals",
+            "47786bfb:insert_at_end_of_list"
         ]
-    ],
-    "currNarrative": []
+    ]
 }

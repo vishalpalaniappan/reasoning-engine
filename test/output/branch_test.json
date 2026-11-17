@@ -2,25 +2,25 @@
     "narrativeStack": [],
     "narratives": [
         [
-            "introduce",
-            "invoke",
-            "terminal_display,Enter c to select coffee, anything else to exit.",
-            "terminal_input",
-            "equals",
-            "if",
-            "terminal_display,User chose to add coffee to cart.",
-            "invoke",
-            "terminal_display,in sample.",
-            "terminal_display,Goodbye"
+            "c91bcef3:introduce",
+            "a2fd984f:invoke",
+            "225d6dc0:terminal_display,Enter c to select coffee, anything else to exit.",
+            "a0e1db2c:terminal_input",
+            "3fabadc3:equals",
+            "1ebc514a:if",
+            "07693ffe:terminal_display,User chose to add coffee to cart.",
+            "24a3919b:invoke",
+            "1f086565:terminal_display,in sample.",
+            "40b0374a:terminal_display,Goodbye"
         ],
         [
-            "introduce",
-            "invoke",
-            "terminal_display,Enter c to select coffee, anything else to exit.",
-            "terminal_input",
-            "equals",
-            "if",
-            "terminal_display,Goodbye"
+            "c91bcef3:introduce",
+            "a2fd984f:invoke",
+            "225d6dc0:terminal_display,Enter c to select coffee, anything else to exit.",
+            "a0e1db2c:terminal_input",
+            "3fabadc3:equals",
+            "1ebc514a:if",
+            "40b0374a:terminal_display,Goodbye"
         ]
     ]
 }

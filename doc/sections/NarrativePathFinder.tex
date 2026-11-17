@@ -14,29 +14,38 @@ This section explores the algorithm to find unique narratives between two nodes 
 
 \subsubsection{Path A}
 
+In this path, the narrative begins at the start node and then branches at the first conditional node B and then branches at the conditional node C. Then the path loops back to the conditional node B. At this point, the path can be terminated because there are no new decisions that can be made that will lead out of this loop. The option to take the other branches will be addressed in the other branches that are taken in the path finding algorithm from this same node.
+
 \begin{figure}[htbp]
     \centering
     \includesvg[
         width=0.4\linewidth
     ]{assets/narrative_pathA.svg}
-    \caption{Path A that terminates in loop.}
+    \caption{Path A that terminates in a loop.}
     \label{fig:narrative_pathA}
 \end{figure}
 
 
-\subsubsection{Path B}
+\subsubsection{Path B and C}
+
+In path B, the design makes two decisions and arrives at the end node. THe narrative path is:
+
+Path B:
+Start -> B -> C -> E -> end
+
+Path C:
+Start -> B -> F -> G -> end
+
+Since all the nodes have unambiguous meaning and invariants, the semantic validity of the narrative can be estabished. 
 
 \begin{figure}[htbp]
     \centering
     \includesvg[
         width=0.4\linewidth
     ]{assets/narrative_pathB.svg}
-    \caption{First B that terminates at end node.}
+    \caption{Path B that terminates at end node.}
     \label{fig:narrative_pathB}
 \end{figure}
-
-
-\subsubsection{Path C}
 
 \begin{figure}[htbp]
     \centering

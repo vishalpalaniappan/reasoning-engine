@@ -60,4 +60,29 @@ export class FoundNarratives {
             return false;
         }
     }
+
+
+    /**
+     * Generates a report from the narratives.
+     */
+    generateReport() {
+        const report = [];
+        for (const narrative of this.narratives) {
+            const currNarrative = [];
+            for (const node of narrative) {
+                const _id = node.id.split("-")[0];
+                if (node.name === "introduce") 
+                    currNarrative.push(_id + ":" + node.name + "," + node.args[1].value);
+                else if (node.name === "if") 
+                    currNarrative.push(_id + ":" + node.name + "," + node.args[0].argName);
+                else if (node.name === "invoke") 
+                    currNarrative.push(_id + ":" + node.name + "," + node.behaviorName);
+                else 
+                    currNarrative.push(_id + ":" + node.name);
+               
+            }
+            report.push(currNarrative);
+        }
+        return report;
+    }
 }

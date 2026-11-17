@@ -30,7 +30,7 @@ const run = async () => {
 
     await fsPromises.writeFile(
         "./test/output/branch_test.json",
-        JSON.stringify(finder.foundNarratives, null, 4)
+        JSON.stringify(finder.foundNarratives.generateReport(), null, 4)
     );
 }
 

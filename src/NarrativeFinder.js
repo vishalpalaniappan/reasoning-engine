@@ -58,34 +58,31 @@ export class NarrativeFinder {
         return sliced;
     }
 
+    // Indicates if the end node has been reached.
+    reachedEndNode(node) {
+        return node.id === this.endId;
+    }
+
     /**
      * Walk the narrative.
      */
     async walk () {
-        const currNarrative = this.narratives.getCurrentNarrative();
-        if (!currNarrative) return;
-
-        if (this.narratives.isDone()) {
-            // No more nodes, done walking.
+        if (this.narratives.areAllBranchesDone()) {
             this.narratives.completeFoundNarrative();
-            console.log("Done walking.");
             return;
         } else if (this.narratives.isBranchDone()) {
-            // Current stack is done but more to walk.
+            this.foundNarratives.completeNarrative();
+            this.narratives.completeBranch();
             this.walk();
             return;
         }
 
 
         const currNode = this.narratives.readCurrentNarrative();
-        console.log("--->",currNode.name);
         
-        // Add the current node to the narrative
         this.foundNarratives.addToCurrNarrative(currNode);
         
-        // Reached end
-        if (currNode.id === this.endId) {
-            console.log("Reached end, current narrative path is done");
+        if (this.reachedEndNode(currNode)) {
             this.foundNarratives.completeNarrative();
             return;
         }
@@ -96,17 +93,15 @@ export class NarrativeFinder {
 
         // Classify node name to select behavior
         if (currNode.name === "if") {
-            // Branch
             this.narratives.branch();
-            this.walk();
         } else if (currNode.name === "invoke") {
             // Behavior Stack
             // this.behaviorStack.push();
             console.log(`Invoking ${currNode.name}`);
-        } else {
-            this.walk();
-        }       
-
+        }
+        
+        
+        this.walk();
     }
 
     /**

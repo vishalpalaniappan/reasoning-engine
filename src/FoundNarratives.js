@@ -9,6 +9,7 @@ export class FoundNarratives {
     }
 
     completeNarrative() {
+        console.log("Reached end, current narrative path is done");
         this.narratives.push([this.currNarrative]);
         this.currNarrative = [];
     }

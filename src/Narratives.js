@@ -33,12 +33,16 @@ export class Narratives {
 
     readCurrentNarrative() {
         const currNarrative = this.getCurrentNarrative();
-        return currNarrative.shift();
+        const currNode = currNarrative.shift();
+        console.log("--->",currNode.name);
+        return currNode;
     }
 
-    isDone() {
+    areAllBranchesDone() {
         const currNarrative = this.getCurrentNarrative();
-        return (currNarrative.length === 0 && this.narrativeStack.length === 0);
+        const isDone = (currNarrative.length === 0 && this.narrativeStack.length === 0);
+        if(isDone) console.log("Done walking.");
+        return ;
     }
 
     isBranchDone() {
@@ -48,5 +52,9 @@ export class Narratives {
             return true;
         }
         return false;
+    }
+
+    completeBranch() {
+        this.narrativeStack.pop();
     }
 }

@@ -72,13 +72,22 @@ export class NarrativeFinder {
             return;
         }
 
-        // Branch
-        if (currNode.name === "if") {
+        // TODO: Reached loop
+        // Terminate loop if same decision is revisited
 
+        // Classify node name to select behavior
+        if (currNode.name === "if") {
+            // Branch
+            this.narrativeStack.push([...currNarrative]);
+            this.walk();
+        } else if (currNode.name === "invoke") {
+            // Behavior Stack
+            // this.behaviorStack.push();
+            console.log(`Invoking ${currNode.name}`);
+        } else {
+            this.walk();
         }       
 
-
-        this.walk();
     }
 
     /**

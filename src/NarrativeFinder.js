@@ -1,4 +1,7 @@
 import jsonata from 'jsonata';
+import { Narratives } from './Narratives.js';
+import { FoundNarratives } from './FoundNarratives.js';
+import fsPromises from "node:fs/promises";
 
 /**
  * Given a start and end ID, this class will find the unique narratives.
@@ -19,18 +22,24 @@ export class NarrativeFinder {
         this.narrative = narrative;
         this.startId = fromId;
         this.endId = toId;
-        this.narrativeStack = [];
-        this.invokeStack = [];
-        this.narratives = [];
+
+        this.narratives = new Narratives();
+        this.foundNarratives = new FoundNarratives();
+
         this.init();
     }
 
     async init () {
-        this.narrativeStack.push(await this.findNarrativeArrayFromId(this.startId));
+        this.narratives.addNarrative(await this.findNarrativeArrayFromId(this.startId));
+        
         console.log("");
         console.log("Walking");
         this.walk();
-        console.log(this.narratives);
+
+        await fsPromises.writeFile(
+            "./temp/foundNarratives.json",
+            JSON.stringify(this.foundNarratives, null, 4)
+        );
     }
 
     /**
@@ -49,43 +58,35 @@ export class NarrativeFinder {
         return sliced;
     }
 
-    getCurrNarrative () {
-        if (this.narrativeStack.length === 0) {
-            return null;
-        } else {
-            return this.narrativeStack[this.narrativeStack.length - 1];
-        }
-    }
-
     /**
      * Walk the narrative.
      */
     async walk () {
-        const currNarrative = this.getCurrNarrative();
+        const currNarrative = this.narratives.getCurrentNarrative();
         if (!currNarrative) return;
 
-        if (currNarrative.length === 0 && this.narrativeStack.length === 0) {
+        if (this.narratives.isDone()) {
             // No more nodes, done walking.
+            this.narratives.completeFoundNarrative();
             console.log("Done walking.");
             return;
-        } else if (currNarrative.length === 0) {
+        } else if (this.narratives.isBranchDone()) {
             // Current stack is done but more to walk.
-            this.narrativeStack.pop();
             this.walk();
             return;
         }
 
 
-        const currNode = currNarrative.shift();
+        const currNode = this.narratives.readCurrentNarrative();
         console.log("--->",currNode.name);
         
         // Add the current node to the narrative
-        currNarrative.push({...currNode});
+        this.foundNarratives.addToCurrNarrative(currNode);
         
         // Reached end
         if (currNode.id === this.endId) {
             console.log("Reached end, current narrative path is done");
-            this.narratives.push([...currNarrative]);
+            this.foundNarratives.completeNarrative();
             return;
         }
 
@@ -96,7 +97,7 @@ export class NarrativeFinder {
         // Classify node name to select behavior
         if (currNode.name === "if") {
             // Branch
-            this.narrativeStack.push([...currNarrative]);
+            this.narratives.branch();
             this.walk();
         } else if (currNode.name === "invoke") {
             // Behavior Stack

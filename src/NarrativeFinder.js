@@ -30,11 +30,6 @@ export class NarrativeFinder {
     async run () {
         this.narratives.addNarrative(await this.findNarrativeArrayFromId(this.startId));
         await this.walk();
-
-        await fsPromises.writeFile(
-            "./temp/foundNarratives.json",
-            JSON.stringify(this.foundNarratives, null, 4)
-        );
     }
 
     /**

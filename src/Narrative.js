@@ -15,11 +15,7 @@ export class Narrative {
 
     shift() {
         const currNarrative = this.behaviorStack[this.behaviorStack.length - 1];
-        if (currNarrative.length == 0 && this.behaviorStack.length > 0) {
-            this.behaviorStack.pop();
-        }
-        const node =  currNarrative.shift();
-        return node;
+        return currNarrative.shift();
     }
 
     addStack(nodes) {
@@ -27,6 +23,11 @@ export class Narrative {
     }
 
     get() {
+        const currNarrative = this.behaviorStack[this.behaviorStack.length - 1];
+        if (currNarrative.length == 0 && this.behaviorStack.length > 0) {
+            console.log("Moving down behavior stack");
+            this.behaviorStack.pop();
+        }
         return this.behaviorStack[this.behaviorStack.length - 1];
     }
 }

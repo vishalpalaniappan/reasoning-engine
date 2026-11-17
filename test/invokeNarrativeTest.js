@@ -1,4 +1,4 @@
-import { NarrativeFinder } from '../src/NarrativeFinder.js';
+import { NarrativeFinder } from '../src/narrative_processor/NarrativeFinder.js';
 import { assignIdsToNodes } from "../src/assignIdsToNodes.js";
 import jsonata from 'jsonata';
 import path from "path";

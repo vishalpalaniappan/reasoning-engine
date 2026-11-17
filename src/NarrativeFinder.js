@@ -72,7 +72,9 @@ export class NarrativeFinder {
         this.foundNarratives.addToCurrentNarrative(currNode);
         
         if (this.reachedEndNode(currNode)) {
-            console.log("Reached end node with expected id.");
+            this.narratives.completeBranch();
+            this.foundNarratives.completeNarrative();
+            console.log("Reached end");
             await this.walk();
             return;
         }

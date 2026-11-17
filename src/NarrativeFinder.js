@@ -21,6 +21,7 @@ export class NarrativeFinder {
         this.endId = toId;
         this.narrativeStack = [];
         this.invokeStack = [];
+        this.narratives = [];
         this.init();
     }
 
@@ -29,6 +30,7 @@ export class NarrativeFinder {
         console.log("");
         console.log("Walking");
         this.walk();
+        console.log(this.narratives);
     }
 
     /**
@@ -48,13 +50,20 @@ export class NarrativeFinder {
     }
 
     getCurrNarrative () {
-        return this.narrativeStack[this.narrativeStack.length - 1];
+        if (this.narrativeStack.length === 0) {
+            return null;
+        } else {
+            return this.narrativeStack[this.narrativeStack.length - 1];
+        }
     }
 
     /**
      * Walk the narrative.
      */
     async walk () {
+        const currNarrative = this.getCurrNarrative();
+        if (!currNarrative) return;
+
         if (currNarrative.length === 0 && this.narrativeStack.length === 0) {
             // No more nodes, done walking.
             console.log("Done walking.");
@@ -66,19 +75,23 @@ export class NarrativeFinder {
             return;
         }
 
-        const currNarrative = this.getCurrNarrative();
 
         const currNode = currNarrative.shift();
         console.log("--->",currNode.name);
         
+        // Add the current node to the narrative
+        currNarrative.push({...currNode});
+        
         // Reached end
         if (currNode.id === this.endId) {
             console.log("Reached end, current narrative path is done");
+            this.narratives.push([...currNarrative]);
             return;
         }
 
         // TODO: Reached loop
         // Terminate loop if same decision is revisited
+
 
         // Classify node name to select behavior
         if (currNode.name === "if") {

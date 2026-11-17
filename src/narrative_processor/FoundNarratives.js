@@ -36,15 +36,7 @@ export class FoundNarratives {
      * @param {Object} node 
      */
     addToCurrentNarrative(node) {
-        if (node.name == "terminal_display") {
-            this.getCurrNarrative().push(
-                node.id.split("-")[0] + ":" + node.name + "," + node.args[0].value
-            );
-        } else {
-            this.getCurrNarrative().push(
-                node.id.split("-")[0] + ":" + node.name
-            );
-        }
+        this.getCurrNarrative().push(node);
     }
 
     /**

@@ -69,15 +69,6 @@ export class NarrativeFinder {
         }
 
         const currNode = this.narratives.readCurrentNarrative();
-        this.foundNarratives.addToCurrentNarrative(currNode);
-        
-        if (this.reachedEndNode(currNode)) {
-            this.narratives.completeBranch();
-            this.foundNarratives.completeNarrative();
-            console.log("Reached end");
-            await this.walk();
-            return;
-        }
 
         // TODO: Reached loop
         // Terminate loop if same decision is revisited
@@ -88,6 +79,16 @@ export class NarrativeFinder {
             await this.walk();
             return;
         }
+
+        this.foundNarratives.addToCurrentNarrative(currNode);
+        if (this.reachedEndNode(currNode)) {
+            this.narratives.completeBranch();
+            this.foundNarratives.completeNarrative();
+            console.log("Reached end");
+            await this.walk();
+            return;
+        }
+
 
         // Classify node name to select behavior
         if (currNode.name === "if") {

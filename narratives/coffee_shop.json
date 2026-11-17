@@ -129,6 +129,24 @@
                             "value": "in sample."
                         }   
                     ]
+                },
+                {
+                    "name": "if",
+                    "args": [
+                        {
+                            "argName": "condition",
+                            "argType": "const",
+                            "value": "true"
+                        }
+                    ],
+                    "body": [
+                        {
+                            "name": "invoke",
+                            "behaviorName": "visitShop",
+                            "args": []
+                        }
+                    ]
+
                 }
             ]
         },

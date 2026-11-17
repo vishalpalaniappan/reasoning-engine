@@ -1,0 +1,28 @@
+import { NarrativeFinder } from './NarrativeFinder.js';
+import { assignIdsToNodes } from "./assignIdsToNodes.js";
+import jsonata from 'jsonata';
+import path from "path";
+import fs from "node:fs";
+
+import { fileURLToPath } from "url";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const run = async () => {
+
+    // Load the narrative
+    const NARRATIVE_PATH = path.join(__dirname, "..", "narratives", "coffee_shop.json");
+    const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
+
+
+    const startNode =  await jsonata(`**[name = 'introduce']`).evaluate(narrative);
+    const endNode =  await jsonata(`**[name = 'if']`).evaluate(narrative);
+
+    console.log(startNode, endNode);
+
+    const finder = new NarrativeFinder(narrative, startNode.id, endNode.id);
+
+}
+
+
+await run();

@@ -29,7 +29,7 @@ export class NarrativeFinder {
 
     async run () {
         this.narratives.addNarrative(await this.findNarrativeArrayFromId(this.startId));
-        this.walk();
+        await this.walk();
     }
 
     /**
@@ -75,7 +75,7 @@ export class NarrativeFinder {
         } else if (this.narratives.isBranchDone()) {
             console.log("Branch is done");
             this.completeBranch(true);
-            this.walk();
+            await this.walk();
             return;
         }
 
@@ -84,14 +84,14 @@ export class NarrativeFinder {
         // Terminate loop if same decision is revisited
         if (this.foundNarratives.has(currNode)) {
             this.completeBranch(false);
-            this.walk();
+            await this.walk();
             return;
         }
 
         this.foundNarratives.addToCurrentNarrative(currNode);
         if (this.reachedEndNode(currNode)) {
             this.completeBranch(true);
-            this.walk();
+            await this.walk();
             return;
         }
 
@@ -107,7 +107,7 @@ export class NarrativeFinder {
             console.log(`Invoking ${currNode.behaviorName}`);
         }
         
-        this.walk();
+        await this.walk();
     }
 
     /**

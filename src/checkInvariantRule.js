@@ -58,7 +58,8 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     // Process all the found narratives to check for semantic validity
     for (const narrativeInfo of finder.foundNarratives.narratives) {
         if (narrativeInfo.isValid) {
-            processNarrative(narrativeInfo.narrative, validaterInfo);
+            const isValid = await processNarrative(narrativeInfo.narrative, validaterInfo);
+            if (!isValid) return false;
         }
     }
 
@@ -120,8 +121,10 @@ const processNarrative = async (narrative, validaterInfo) => {
             
             if (validaterInfo.validValuesforProperty.includes(structType)){
                 console.log(`Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`);
+                return true;
             } else {
-                console.log(`Failure identified: ${invariantNode.name} will fail because of invalid structural type ${structType}`);
+                console.log(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`);
+                return false;
             }
         }
     }

@@ -41,7 +41,7 @@ export class NarrativeFinder {
      * @returns 
      */
     async findNarrativeArrayFromId (id) {
-        const expression = jsonata(`**[body[id = '${id}']]`);
+        const expression = jsonata(`**[body[$exists(name) and id = '${id}']]`);
         const parentNode =  await expression.evaluate(this.narrative);
         const index = parentNode.body.findIndex((item) => item.id === id);
         const sliced = index !== -1 ? parentNode.body.slice(index) : [];

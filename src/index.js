@@ -50,7 +50,7 @@ const validateNarrative = async (narrative_name) => {
     const validate = ajv.compile(schema);
 
     // Check if the validation passed
-    if (validate(narrative)) {
+    if (await validate(narrative)) {
         console.log("Validation passed successfully!");
     } else {
         console.error("Validation failed!");
@@ -63,4 +63,6 @@ const validateNarrative = async (narrative_name) => {
     }
 };
 
+
 validateNarrative("coffee_shop.json");
+validateNarrative("coffee_shop_fail.json");

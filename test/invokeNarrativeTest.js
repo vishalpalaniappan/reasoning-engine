@@ -11,7 +11,7 @@ const __dirname = path.dirname(__filename);
 
 const run = async () => {
     // TODO: Switch to using vitest
-    const NARRATIVE_PATH = path.join(__dirname, "..", "narratives", "invoke_test.json");
+    const NARRATIVE_PATH = path.join(__dirname, "test_narratives", "invoke_test.json");
     const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
 
     const startNode =  await jsonata(`**[name = 'introduce']`).evaluate(narrative);

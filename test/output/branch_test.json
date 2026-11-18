@@ -1,45 +1,45 @@
 [
     {
         "narrative": [
-            "0a4179d1:introduce,shopping_cart",
-            "c48a0fc2:invoke,visitShop",
-            "16617b74:terminal_display,Enter c to select coffee, anything else to exit.",
-            "6bfa6539:terminal_input",
-            "bbc3428d:equals",
-            "4c367d8c:if,condition",
-            "4cd349c7:terminal_display,User chose to add coffee to cart.",
-            "dc33df73:invoke,sample",
-            "53374cf5:terminal_display,in sample.",
-            "b0a94ca4:if,condition",
-            "899cd68c:invoke,visitShop"
+            "c6225e30:introduce,shopping_cart",
+            "e85e33a0:invoke,visitShop",
+            "b9fcb271:terminal_display,Enter c to select coffee, anything else to exit.",
+            "637eae30:terminal_input",
+            "d5e021c6:equals",
+            "04837bdc:if,condition",
+            "f26284bb:terminal_display,User chose to add coffee to cart.",
+            "64eec902:invoke,sample",
+            "48b0b67b:terminal_display,in sample.",
+            "59fbd529:if,condition",
+            "005814af:invoke,visitShop"
         ],
         "isValid": false
     },
     {
         "narrative": [
-            "0a4179d1:introduce,shopping_cart",
-            "c48a0fc2:invoke,visitShop",
-            "16617b74:terminal_display,Enter c to select coffee, anything else to exit.",
-            "6bfa6539:terminal_input",
-            "bbc3428d:equals",
-            "4c367d8c:if,condition",
-            "4cd349c7:terminal_display,User chose to add coffee to cart.",
-            "dc33df73:invoke,sample",
-            "53374cf5:terminal_display,in sample.",
-            "b0a94ca4:if,condition",
-            "c5471c32:terminal_display,Goodbye"
+            "c6225e30:introduce,shopping_cart",
+            "e85e33a0:invoke,visitShop",
+            "b9fcb271:terminal_display,Enter c to select coffee, anything else to exit.",
+            "637eae30:terminal_input",
+            "d5e021c6:equals",
+            "04837bdc:if,condition",
+            "f26284bb:terminal_display,User chose to add coffee to cart.",
+            "64eec902:invoke,sample",
+            "48b0b67b:terminal_display,in sample.",
+            "59fbd529:if,condition",
+            "75cd0a12:terminal_display,Goodbye"
         ],
         "isValid": true
     },
     {
         "narrative": [
-            "0a4179d1:introduce,shopping_cart",
-            "c48a0fc2:invoke,visitShop",
-            "16617b74:terminal_display,Enter c to select coffee, anything else to exit.",
-            "6bfa6539:terminal_input",
-            "bbc3428d:equals",
-            "4c367d8c:if,condition",
-            "c5471c32:terminal_display,Goodbye"
+            "c6225e30:introduce,shopping_cart",
+            "e85e33a0:invoke,visitShop",
+            "b9fcb271:terminal_display,Enter c to select coffee, anything else to exit.",
+            "637eae30:terminal_input",
+            "d5e021c6:equals",
+            "04837bdc:if,condition",
+            "75cd0a12:terminal_display,Goodbye"
         ],
         "isValid": true
     }

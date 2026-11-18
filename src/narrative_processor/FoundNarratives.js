@@ -77,6 +77,8 @@ export class FoundNarratives {
                     currNarrative.push(_id + ":" + node.name + "," + node.args[0].argName);
                 else if (node.name === "invoke") 
                     currNarrative.push(_id + ":" + node.name + "," + node.behaviorName);
+                else if (node.name === "terminal_display") 
+                    currNarrative.push(_id + ":" + node.name + "," + node.args[0].value);
                 else 
                     currNarrative.push(_id + ":" + node.name);
                

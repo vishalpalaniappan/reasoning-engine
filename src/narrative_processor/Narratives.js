@@ -86,7 +86,6 @@ export class Narratives {
     areAllBranchesDone() {
         const currNarrative = this.getCurrentNarrative();
         if (!currNarrative || (currNarrative.get().length === 0 && this.narrativeStack.length === 0)) {
-            console.log("Done walking.");
             return true;
         }
         return false;

@@ -1,37 +1,37 @@
 [
     [
-        "df3c727c:introduce,shopping_cart",
-        "55a3bed5:invoke,visitShop",
-        "973c322b:terminal_display",
-        "39db857a:terminal_input",
-        "818100ad:equals",
-        "68ce85fc:if,condition",
-        "6f2bbe44:terminal_display",
-        "e581ee8a:invoke,sample",
-        "2a4ed48b:terminal_display",
-        "1cad1d40:if,condition",
-        "184a84c8:invoke,visitShop"
+        "efbc1b2d:introduce,shopping_cart",
+        "0ee8246d:invoke,visitShop",
+        "eab18ff6:terminal_display,Enter c to select coffee, anything else to exit.",
+        "2c022028:terminal_input",
+        "e8615cc6:equals",
+        "3faf026d:if,condition",
+        "70c7f238:terminal_display,User chose to add coffee to cart.",
+        "10a8be37:invoke,sample",
+        "5bab15a6:terminal_display,in sample.",
+        "1fe994bc:if,condition",
+        "84fadef4:invoke,visitShop"
     ],
     [
-        "df3c727c:introduce,shopping_cart",
-        "55a3bed5:invoke,visitShop",
-        "973c322b:terminal_display",
-        "39db857a:terminal_input",
-        "818100ad:equals",
-        "68ce85fc:if,condition",
-        "6f2bbe44:terminal_display",
-        "e581ee8a:invoke,sample",
-        "2a4ed48b:terminal_display",
-        "1cad1d40:if,condition",
-        "c99afda6:terminal_display"
+        "efbc1b2d:introduce,shopping_cart",
+        "0ee8246d:invoke,visitShop",
+        "eab18ff6:terminal_display,Enter c to select coffee, anything else to exit.",
+        "2c022028:terminal_input",
+        "e8615cc6:equals",
+        "3faf026d:if,condition",
+        "70c7f238:terminal_display,User chose to add coffee to cart.",
+        "10a8be37:invoke,sample",
+        "5bab15a6:terminal_display,in sample.",
+        "1fe994bc:if,condition",
+        "23d8a621:terminal_display,Goodbye"
     ],
     [
-        "df3c727c:introduce,shopping_cart",
-        "55a3bed5:invoke,visitShop",
-        "973c322b:terminal_display",
-        "39db857a:terminal_input",
-        "818100ad:equals",
-        "68ce85fc:if,condition",
-        "c99afda6:terminal_display"
+        "efbc1b2d:introduce,shopping_cart",
+        "0ee8246d:invoke,visitShop",
+        "eab18ff6:terminal_display,Enter c to select coffee, anything else to exit.",
+        "2c022028:terminal_input",
+        "e8615cc6:equals",
+        "3faf026d:if,condition",
+        "23d8a621:terminal_display,Goodbye"
     ]
 ]

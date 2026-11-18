@@ -16,12 +16,21 @@ export class Narrative {
     }
 
     /**
+     * Gets the current narrative from the top of the stack.
+     * 
+     * @returns {Array}
+     */
+    getCurrentNarrative () {
+        return this.behaviorStack[this.behaviorStack.length - 1];
+    }
+
+    /**
      * Add a node to the behavior stack
      * 
      * @param {Object} node 
      */
     add (node) {
-        this.behaviorStack[this.behaviorStack.length - 1].push({...node});
+        this.getCurrentNarrative().push({...node});
     }
 
     /**
@@ -30,8 +39,7 @@ export class Narrative {
      * @returns {Object}
      */
     shift() {
-        const currNarrative = this.behaviorStack[this.behaviorStack.length - 1];
-        return currNarrative.shift();
+        return this.getCurrentNarrative().shift();
     }
 
     /**
@@ -50,10 +58,9 @@ export class Narrative {
      * @returns {Array}
      */
     get() {
-        const currNarrative = this.behaviorStack[this.behaviorStack.length - 1];
-        if (currNarrative.length == 0 && this.behaviorStack.length > 1) {
+        if (this.getCurrentNarrative().length == 0 && this.behaviorStack.length > 1) {
             this.behaviorStack.pop();
         }
-        return this.behaviorStack[this.behaviorStack.length - 1];
+        return this.getCurrentNarrative();
     }
 }

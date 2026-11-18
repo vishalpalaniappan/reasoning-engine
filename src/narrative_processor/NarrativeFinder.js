@@ -29,7 +29,7 @@ export class NarrativeFinder {
 
     async run () {
         this.narratives.addNarrative(await this.findNarrativeArrayFromId(this.startId));
-        await this.walk();
+        this.walk();
     }
 
     /**
@@ -54,45 +54,50 @@ export class NarrativeFinder {
     }
 
     /**
+     * Completes the current branch and also completes the corresponding
+     * narrative that was constructed.
+     */
+    completeBranch() {
+        this.narratives.completeBranch();
+        this.foundNarratives.completeNarrative();
+    }
+
+    /**
      * Walk the narrative.
      */
     async walk () {
         if (this.narratives.areAllBranchesDone()) {
-            this.foundNarratives.completeNarrative();
+            console.log("All branches are done");
+            this.completeBranch();
             return;
         } else if (this.narratives.isBranchDone()) {
             console.log("Branch is done");
-            this.narratives.completeBranch();
-            this.foundNarratives.completeNarrative();
-            await this.walk();
+            this.completeBranch();
+            this.walk();
             return;
         }
 
         const currNode = this.narratives.readCurrentNarrative();
 
-        // TODO: Reached loop
         // Terminate loop if same decision is revisited
         if (this.foundNarratives.has(currNode)) {
-            console.log("Looped")
-            this.narratives.completeBranch();
-            this.foundNarratives.completeNarrative();
-            await this.walk();
+            // TODO: Flag this branch as invalid (didn't reach end)
+            this.completeBranch();
+            this.walk();
             return;
         }
 
         this.foundNarratives.addToCurrentNarrative(currNode);
         if (this.reachedEndNode(currNode)) {
-            this.narratives.completeBranch();
-            this.foundNarratives.completeNarrative();
-            console.log("Reached end");
-            await this.walk();
+            this.completeBranch();
+            this.walk();
             return;
         }
 
 
         // Classify node name to select behavior
         if (currNode.name === "if") {
-            console.log("Branching");
+            console.log("\nBranching");
             this.foundNarratives.branchNarrative();
             this.narratives.branch(currNode.body);
         } else if (currNode.name === "invoke") {
@@ -101,7 +106,7 @@ export class NarrativeFinder {
             console.log(`Invoking ${currNode.behaviorName}`);
         }
         
-        await this.walk();
+        this.walk();
     }
 
     /**
@@ -117,8 +122,5 @@ export class NarrativeFinder {
         const expression = jsonata(`**[name = 'behavior' and behaviorName = '${behaviorName}']`);
         return  await expression.evaluate(this.narrative);
     }
-    
-
-    
 
 }

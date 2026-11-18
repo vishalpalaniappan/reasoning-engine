@@ -105,48 +105,8 @@
                                     "value": "User chose to add coffee to cart."
                                 }   
                             ]
-                        },
-                        {
-                            "name": "invoke",
-                            "behaviorName": "sample",
-                            "args": []
                         }
                     ]
-                }
-            ]
-        },
-        {
-            "name": "behavior",
-            "behaviorName": "sample",
-            "attributes": [],
-            "body": [
-                {
-                    "name": "terminal_display",
-                    "args": [
-                        {
-                            "argName": "message",
-                            "argType": "const",
-                            "value": "in sample."
-                        }   
-                    ]
-                },
-                {
-                    "name": "if",
-                    "args": [
-                        {
-                            "argName": "condition",
-                            "argType": "const",
-                            "value": "true"
-                        }
-                    ],
-                    "body": [
-                        {
-                            "name": "invoke",
-                            "behaviorName": "visitShop",
-                            "args": []
-                        }
-                    ]
-
                 }
             ]
         },

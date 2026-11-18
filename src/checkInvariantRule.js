@@ -4,6 +4,7 @@ import path from "path";
 import { NarrativeFinder } from './narrative_processor/NarrativeFinder.js';
 
 import { fileURLToPath } from "url";
+import { json } from 'node:stream/consumers';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**
@@ -45,7 +46,35 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
     const foundNode = await expression.evaluate(dataCxt.rootData);
 
-    new NarrativeFinder(dataCxt.rootData.narrative, foundNode.id, dataCxt.parentData.id).run();
+    const finder = new NarrativeFinder(dataCxt.rootData.narrative, foundNode.id, dataCxt.parentData.id);
+    await finder.run();
+
+    const validaterInfo = {
+        alias: alias,
+        propertyToCheck: propertyToCheck,
+        validValuesforProperty: validValuesforProperty
+    }
+
+    // Process all the found narratives to check for semantic validity
+    for (const narrativeInfo of finder.foundNarratives.narratives) {
+        if (narrativeInfo.isValid) {
+            processNarrative(narrativeInfo.narrative, validaterInfo);
+        }
+    }
+
+    return true;
+}
+
+/**
+ * Process the narrative with the invariant info to check if
+ * the narrative is semantically valid.
+ * 
+ * @param {Array} narrative 
+ * @param {Object} validaterInfo 
+ */
+const processNarrative = (narrative, validaterInfo) => {
+    console.log("Processing narrative:");
+    console.log(JSON.stringify(narrative, null, 4));
 
     // Will add this later after path finding
     // if (foundNode.name === "introduce") {
@@ -57,6 +86,4 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     //         throw ("unknown node type")
     //     }
     // }
-
-    return true;
 }

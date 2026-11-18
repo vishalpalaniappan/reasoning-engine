@@ -72,9 +72,10 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
  * @param {Array} narrative 
  * @param {Object} validaterInfo 
  */
-const processNarrative = (narrative, validaterInfo) => {
+const processNarrative = async (narrative, validaterInfo) => {
     console.log("\nProcessing narrative:");
 
+    // Find the last time this alias was updated in the narrative
     let aliasNode = null;
     for (const node of narrative) {
         if ("alias" in node && node.alias.aliasName === validaterInfo.alias) {
@@ -82,9 +83,27 @@ const processNarrative = (narrative, validaterInfo) => {
         }
     }
 
+    /**
+     * Note: in the previous step I find the last time that the alias was updated
+     * but in reality, I should be checking for the last time the relevant property
+     * was modified. So for example, in the case of structural type, when an alias
+     * is introduced, its structural type gets modified. In other cases, a particular
+     * property of an alias can get updated, for example, the length of an alias. In
+     * this case, the node that is relevant is the last one that modified the relevant
+     * property. I'll make these changes later.
+     */
+
     console.log(validaterInfo);
     console.log(aliasNode);
 
+    /**
+     * Note: I can make this more modular by establishing rules in documents and loading them
+     * to validate. In the same way that I create definitions for primitives, I can also create
+     * ways that each invariant type will have to be validated. I will explore this more when 
+     * I get there but the principle is the same and for now its fine to hardcode it. It would
+     * actually be kind of cool to allow the validation sequence itself to be scripted. It would
+     * create a very modular approach and I users can extend the engines functionality as needed.
+     */
     if (validaterInfo.propertyToCheck === "structuralType") {
 
         if (aliasNode.name === "introduce") {
@@ -95,21 +114,14 @@ const processNarrative = (narrative, validaterInfo) => {
             // Have to get the structural type from the node type
             // Ex. An add operation will result in an alias that has
             // the structural type float or int
+            const schema = await getSchema(aliasNode.name);
+            const structType = schema.properties.alias.properties.aliasStructuralType.const;
+            
+            if (validaterInfo.validValuesforProperty.includes(structType)){
+                console.log(`Struct type ${structType} satisfies the ${aliasNode.name} primitive's structural type invariant`);
+            } else {
+                console.log(`Failure identified: ${aliasNode.name} will fail because of invalid structural type ${structType}`);
+            }
         }
     }
-
-
 }
-
-
-
-// Will add this later after path finding
-// if (foundNode.name === "introduce") {
-//     // Check property from participant
-// } else {
-//     // Check property from transformation alias
-//     const foundSchema = await getSchema(foundNode.name);
-//     if (!foundSchema) {
-//         throw ("unknown node type")
-//     }
-// }

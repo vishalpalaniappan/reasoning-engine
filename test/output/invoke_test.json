@@ -1,10 +1,12 @@
 [
-    [
-        "31d96d2c:introduce,shopping_cart",
-        "65a956d5:invoke,visitShop",
-        "414aaadc:terminal_display,Enter c to select coffee, anything else to exit.",
-        "92372f85:terminal_input",
-        "3453952d:equals",
-        "7c8a934b:insert_at_end_of_list"
-    ]
+    {
+        "narrative": [
+            "2985b4fc:introduce,shopping_cart",
+            "b532dceb:invoke,visitShop",
+            "7fc7e181:terminal_display,Enter c to select coffee, anything else to exit.",
+            "6558e17b:terminal_input",
+            "ce577e5f:equals",
+            "70b5a590:insert_at_end_of_list"
+        ]
+    }
 ]

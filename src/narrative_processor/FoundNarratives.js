@@ -1,3 +1,5 @@
+import { str } from "ajv";
+
 /**
  * Stores all the narratives that have been found.
  */
@@ -16,12 +18,20 @@ export class FoundNarratives {
      * Completes the narrative but copying the current narrative
      * into the narratives array.
      * 
+     * @param {Boolean} Is the narrative valid (does it loop?)
+     * 
      * @returns {null}
      */
-    completeNarrative() {
+    completeNarrative(isValid) {
         if (this.narrativeStack.length === 0) return;
         console.log("Reached end, current narrative path is done");
-        this.narratives.push([...this.narrativeStack.pop()]);
+
+        const narrativeInfo = {
+            isValid: isValid,
+            narrative: [...this.narrativeStack.pop()]
+        }
+
+        this.narratives.push(narrativeInfo);
 
         if (this.narrativeStack.length > 0) {
             console.log("Resuming narrative")
@@ -68,8 +78,11 @@ export class FoundNarratives {
     generateReport() {
         const report = [];
         for (const narrative of this.narratives) {
+            const narrativeInfo = {};
             const currNarrative = [];
-            for (const node of narrative) {
+
+            // Summarize each narrative
+            for (const node of narrative.narrative) {
                 const _id = node.id.split("-")[0];
                 if (node.name === "introduce") 
                     currNarrative.push(_id + ":" + node.name + "," + node.args[1].value);
@@ -81,9 +94,12 @@ export class FoundNarratives {
                     currNarrative.push(_id + ":" + node.name + "," + node.args[0].value);
                 else 
                     currNarrative.push(_id + ":" + node.name);
-               
             }
-            report.push(currNarrative);
+
+            narrativeInfo.narrative = currNarrative;
+            narrativeInfo.isValid = narrative.isValid;
+
+            report.push(narrativeInfo);
         }
         return report;
     }

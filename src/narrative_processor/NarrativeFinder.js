@@ -56,10 +56,12 @@ export class NarrativeFinder {
     /**
      * Completes the current branch and also completes the corresponding
      * narrative that was constructed.
+     * 
+     * @param {Boolean} isValid 
      */
-    completeBranch() {
+    completeBranch(isValid) {
         this.narratives.completeBranch();
-        this.foundNarratives.completeNarrative();
+        this.foundNarratives.completeNarrative(isValid);
     }
 
     /**
@@ -68,11 +70,11 @@ export class NarrativeFinder {
     async walk () {
         if (this.narratives.areAllBranchesDone()) {
             console.log("All branches are done");
-            this.completeBranch();
+            this.completeBranch(true);
             return;
         } else if (this.narratives.isBranchDone()) {
             console.log("Branch is done");
-            this.completeBranch();
+            this.completeBranch(true);
             this.walk();
             return;
         }
@@ -81,15 +83,14 @@ export class NarrativeFinder {
 
         // Terminate loop if same decision is revisited
         if (this.foundNarratives.has(currNode)) {
-            // TODO: Flag this branch as invalid (didn't reach end)
-            this.completeBranch();
+            this.completeBranch(false);
             this.walk();
             return;
         }
 
         this.foundNarratives.addToCurrentNarrative(currNode);
         if (this.reachedEndNode(currNode)) {
-            this.completeBranch();
+            this.completeBranch(true);
             this.walk();
             return;
         }

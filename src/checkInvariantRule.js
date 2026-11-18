@@ -4,7 +4,6 @@ import path from "path";
 import { NarrativeFinder } from './narrative_processor/NarrativeFinder.js';
 
 import { fileURLToPath } from "url";
-import { json } from 'node:stream/consumers';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 /**

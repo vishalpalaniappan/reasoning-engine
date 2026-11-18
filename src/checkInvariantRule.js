@@ -77,6 +77,7 @@ const processNarrative = async (narrative, validaterInfo) => {
 
     // Find the last time this alias was updated in the narrative
     let aliasNode = null;
+    const invariantNode = narrative.pop();
     for (const node of narrative) {
         if ("alias" in node && node.alias.aliasName === validaterInfo.alias) {
             aliasNode = node;
@@ -118,9 +119,9 @@ const processNarrative = async (narrative, validaterInfo) => {
             const structType = schema.properties.alias.properties.aliasStructuralType.const;
             
             if (validaterInfo.validValuesforProperty.includes(structType)){
-                console.log(`Struct type ${structType} satisfies the ${aliasNode.name} primitive's structural type invariant`);
+                console.log(`Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`);
             } else {
-                console.log(`Failure identified: ${aliasNode.name} will fail because of invalid structural type ${structType}`);
+                console.log(`Failure identified: ${invariantNode.name} will fail because of invalid structural type ${structType}`);
             }
         }
     }

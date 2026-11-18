@@ -73,17 +73,43 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
  * @param {Object} validaterInfo 
  */
 const processNarrative = (narrative, validaterInfo) => {
-    console.log("Processing narrative:");
-    console.log(JSON.stringify(narrative, null, 4));
+    console.log("\nProcessing narrative:");
 
-    // Will add this later after path finding
-    // if (foundNode.name === "introduce") {
-    //     // Check property from participant
-    // } else {
-    //     // Check property from transformation alias
-    //     const foundSchema = await getSchema(foundNode.name);
-    //     if (!foundSchema) {
-    //         throw ("unknown node type")
-    //     }
-    // }
+    let aliasNode = null;
+    for (const node of narrative) {
+        if ("alias" in node && node.alias.aliasName === validaterInfo.alias) {
+            aliasNode = node;
+        }
+    }
+
+    console.log(validaterInfo);
+    console.log(aliasNode);
+
+    if (validaterInfo.propertyToCheck === "structuralType") {
+
+        if (aliasNode.name === "introduce") {
+            // Have to get the structural type from the participant
+            // definition in the design. This involves looking up the
+            // participant and accessing the structural type attribute.
+        } else {
+            // Have to get the structural type from the node type
+            // Ex. An add operation will result in an alias that has
+            // the structural type float or int
+        }
+    }
+
+
 }
+
+
+
+// Will add this later after path finding
+// if (foundNode.name === "introduce") {
+//     // Check property from participant
+// } else {
+//     // Check property from transformation alias
+//     const foundSchema = await getSchema(foundNode.name);
+//     if (!foundSchema) {
+//         throw ("unknown node type")
+//     }
+// }

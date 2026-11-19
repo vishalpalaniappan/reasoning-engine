@@ -24,6 +24,11 @@
                             "argName": "participant",
                             "argType": "const",
                             "value": "shopping_cart"
+                        },
+                        {
+                            "argName": "persist",
+                            "argType": "const",
+                            "value": true
                         }
                     ]
                 },

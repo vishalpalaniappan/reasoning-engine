@@ -24,6 +24,11 @@
                             "argName": "participant",
                             "argType": "const",
                             "value": "shopping_cart"
+                        },
+                        {
+                            "argName": "persist",
+                            "argType": "const",
+                            "value": true
                         }
                     ]
                 },
@@ -97,14 +102,47 @@
                     ],
                     "body": [
                         {
-                            "name": "terminal_display",
-                            "args": [
-                                {
-                                    "argName": "message",
-                                    "argType": "const",
-                                    "value": "User chose to add coffee to cart."
-                                }   
-                            ]
+                            "name": "invoke",
+                            "behaviorName": "addCoffeeToCart",
+                            "args": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "addCoffeeToCart",
+            "attributes": [
+                {
+                    "argName": "shopping_cart",
+                    "argType": "name",
+                    "value": ""
+                }
+            ],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "User chose to add coffee to cart."
+                        }   
+                    ]
+                },
+                {
+                    "name": "insert_at_end_of_list",
+                    "args": [
+                        {
+                            "argName": "item",
+                            "argType": "const",
+                            "value": "coffee"
+                        },
+                        {
+                            "argName": "list",
+                            "argType": "name",
+                            "value": "shopping_cart"
                         }
                     ]
                 }

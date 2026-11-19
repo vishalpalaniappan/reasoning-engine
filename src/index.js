@@ -65,4 +65,4 @@ const validateNarrative = async (narrative_name) => {
 
 
 // validateNarrative("coffee_shop.json");
-validateNarrative("coffee_shop_fail.json");
+validateNarrative("coffee_shop_inconsistent.json");

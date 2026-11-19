@@ -64,7 +64,7 @@ export class Narratives {
      */
     readCurrentNarrative() {
         const currNode = this.getCurrentNarrative().shift();
-        console.log("--->",currNode.name);
+        //console.log("--->",currNode.name);
         return currNode;
     }
 

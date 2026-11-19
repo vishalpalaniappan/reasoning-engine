@@ -69,12 +69,12 @@ export class NarrativeFinder {
      */
     async walk () {
         if (this.narratives.areAllBranchesDone()) {
-            console.log("All branches are done");
-            this.completeBranch(true);
+            //console.log("All branches are done");
+            this.completeBranch(false);
             return;
         } else if (this.narratives.isBranchDone()) {
-            console.log("Branch is done");
-            this.completeBranch(true);
+            //console.log("Branch is done");
+            this.completeBranch(false);
             await this.walk();
             return;
         }
@@ -98,13 +98,13 @@ export class NarrativeFinder {
 
         // Classify node name to select behavior
         if (currNode.name === "if") {
-            console.log("\nBranching");
+            //console.log("\nBranching");
             this.foundNarratives.branchNarrative();
             this.narratives.branch(currNode.body);
         } else if (currNode.name === "invoke") {
             const invokedBehavior = await this.findInvokedBehaviorNode(currNode.behaviorName);
             this.narratives.stackCurrentNarrative(invokedBehavior.body);
-            console.log(`Invoking ${currNode.behaviorName}`);
+            //console.log(`Invoking ${currNode.behaviorName}`);
         }
         
         await this.walk();

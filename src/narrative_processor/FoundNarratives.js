@@ -24,7 +24,7 @@ export class FoundNarratives {
      */
     completeNarrative(isValid) {
         if (this.narrativeStack.length === 0) return;
-        console.log("Reached end, current narrative path is done");
+        //console.log("Reached end, current narrative path is done");
 
         const narrativeInfo = {
             isValid: isValid,
@@ -34,7 +34,7 @@ export class FoundNarratives {
         this.narratives.push(narrativeInfo);
 
         if (this.narrativeStack.length > 0) {
-            console.log("Resuming narrative")
+            //console.log("Resuming narrative")
         }
     }
 

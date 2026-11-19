@@ -6,6 +6,10 @@ import { NarrativeFinder } from './narrative_processor/NarrativeFinder.js';
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+
+const SCHEMA_PATH = path.join(__dirname, "..", "temp", "schema.json");
+const schema = JSON.parse(fs.readFileSync(SCHEMA_PATH, "utf8"));
+
 /**
  * Searches schema for primitive. This is obviously inefficient, will be optimized later.
  * 
@@ -13,8 +17,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
  * @return {Object}
  */
 const getSchema = async (primitiveName) => {
-    const SCHEMA_PATH = path.join(__dirname, "..", "temp", "schema.json");
-    const schema = JSON.parse(fs.readFileSync(SCHEMA_PATH, "utf8"));
     const expression = jsonata("**[`$id` = './" + primitiveName + ".schema.json']");
     const foundPrimitive = await expression.evaluate(schema);
     return foundPrimitive;
@@ -39,13 +41,16 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     // Get the alias for the property being evaluated
     let expression = jsonata(`args[argName = "${participantToCheck}"].value`);
     const alias = await expression.evaluate(dataCxt.parentData);
-    console.log(alias);
 
     // Find when the alias was introduced
-    expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
+    expression = jsonata(
+        `**[name and alias[aliasName = '${alias}' and introduce = true]]`
+    );
     const foundNode = await expression.evaluate(dataCxt.rootData);
 
-    const finder = new NarrativeFinder(dataCxt.rootData.narrative, foundNode.id, dataCxt.parentData.id);
+    const finder = new NarrativeFinder(
+        dataCxt.rootData.narrative, foundNode.id, dataCxt.parentData.id
+    );
     await finder.run();
 
     const validaterInfo = {
@@ -57,7 +62,7 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     // Process all the found narratives to check for semantic validity
     for (const narrativeInfo of finder.foundNarratives.narratives) {
         if (narrativeInfo.isValid) {
-            const isValid = await processNarrative(narrativeInfo.narrative, validaterInfo);
+            const isValid = await processNarrative(narrativeInfo.narrative, validaterInfo, dataCxt.rootData);
             if (!isValid) return false;
         }
     }
@@ -71,10 +76,9 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
  * 
  * @param {Array} narrative 
  * @param {Object} validaterInfo 
+ * @param {Object} design
  */
-const processNarrative = async (narrative, validaterInfo) => {
-    console.log("\nProcessing narrative:");
-
+const processNarrative = async (narrative, validaterInfo, design) => {
     // Find the last time this alias was updated in the narrative
     let aliasNode = null;
     const invariantNode = narrative.pop();
@@ -94,9 +98,6 @@ const processNarrative = async (narrative, validaterInfo) => {
      * property. I'll make these changes later.
      */
 
-    console.log(validaterInfo);
-    console.log(aliasNode);
-
     /**
      * Note: I can make this more modular by establishing rules in documents and loading them
      * to validate. In the same way that I create definitions for primitives, I can also create
@@ -105,12 +106,22 @@ const processNarrative = async (narrative, validaterInfo) => {
      * actually be kind of cool to allow the validation sequence itself to be scripted. It would
      * create a very modular approach and I users can extend the engines functionality as needed.
      */
-    if (validaterInfo.propertyToCheck === "structuralType") {
+    if (validaterInfo.propertyToCheck === "structural_type") {
 
         if (aliasNode.name === "introduce") {
-            // Have to get the structural type from the participant
-            // definition in the design. This involves looking up the
-            // participant and accessing the structural type attribute.
+            const participantName = await jsonata(`**[argName= 'role'].value`).evaluate(aliasNode);
+            
+            // Query narrative for participant name and get the structural type argument
+            const query = `narrative[participantName='${participantName}'].body[name='${validaterInfo.propertyToCheck}'].args[argName='value'].value`;
+            const structType = await jsonata(query).evaluate(design);
+
+            if (validaterInfo.validValuesforProperty.includes(structType)) {
+                console.log(`Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`);
+                return true;
+            } else {
+                console.log(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for participant ${participantName}`);
+                return false;
+            }
         } else {
             // Have to get the structural type from the node type
             // Ex. An add operation will result in an alias that has

@@ -51,7 +51,7 @@ const validateNarrative = async (narrative_name) => {
 
     // Check if the validation passed
     if (await validate(narrative)) {
-        console.log("Validation passed successfully!");
+        console.log("Schema Validation passed successfully (custom narrative validation runs async, so it will complete on its own)!");
     } else {
         console.error("Validation failed!");
         validate.errors.forEach((err, index) => {

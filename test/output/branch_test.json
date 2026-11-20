@@ -1,0 +1,46 @@
+[
+    {
+        "narrative": [
+            "c6225e30:introduce,shopping_cart",
+            "e85e33a0:invoke,visitShop",
+            "b9fcb271:terminal_display,Enter c to select coffee, anything else to exit.",
+            "637eae30:terminal_input",
+            "d5e021c6:equals",
+            "04837bdc:if,condition",
+            "f26284bb:terminal_display,User chose to add coffee to cart.",
+            "64eec902:invoke,sample",
+            "48b0b67b:terminal_display,in sample.",
+            "59fbd529:if,condition",
+            "005814af:invoke,visitShop"
+        ],
+        "isValid": false
+    },
+    {
+        "narrative": [
+            "c6225e30:introduce,shopping_cart",
+            "e85e33a0:invoke,visitShop",
+            "b9fcb271:terminal_display,Enter c to select coffee, anything else to exit.",
+            "637eae30:terminal_input",
+            "d5e021c6:equals",
+            "04837bdc:if,condition",
+            "f26284bb:terminal_display,User chose to add coffee to cart.",
+            "64eec902:invoke,sample",
+            "48b0b67b:terminal_display,in sample.",
+            "59fbd529:if,condition",
+            "75cd0a12:terminal_display,Goodbye"
+        ],
+        "isValid": true
+    },
+    {
+        "narrative": [
+            "c6225e30:introduce,shopping_cart",
+            "e85e33a0:invoke,visitShop",
+            "b9fcb271:terminal_display,Enter c to select coffee, anything else to exit.",
+            "637eae30:terminal_input",
+            "d5e021c6:equals",
+            "04837bdc:if,condition",
+            "75cd0a12:terminal_display,Goodbye"
+        ],
+        "isValid": true
+    }
+]

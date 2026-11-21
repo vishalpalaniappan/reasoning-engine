@@ -63,7 +63,6 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     for (const narrativeInfo of finder.foundNarratives.narratives) {
         if (narrativeInfo.isValid) {
             const isValid = await processNarrative(narrativeInfo.narrative, validaterInfo, dataCxt.rootData);
-            if (!isValid) return false;
         }
     }
 

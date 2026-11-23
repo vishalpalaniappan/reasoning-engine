@@ -120,7 +120,7 @@ const processNarrative = async (narrative, validaterInfo, design) => {
     if (validaterInfo.propertyToCheck === "structural_type") {
 
         if (aliasNode.name === "introduce") {
-            const participantName = await jsonata(`**[argName= 'role'].value`).evaluate(aliasNode);
+            const participantName = await jsonata(`**[argName= 'participant'].value`).evaluate(aliasNode);
             
             // Query narrative for participant name and get the structural type argument
             const query = `narrative[participantName='${participantName}'].body[name='${validaterInfo.propertyToCheck}'].args[argName='value'].value`;

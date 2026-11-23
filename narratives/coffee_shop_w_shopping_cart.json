@@ -18,12 +18,12 @@
                         {
                             "argName": "role",
                             "argType": "const",
-                            "value": "Cart"
+                            "value": "shopping_cart"
                         },
                         {
                             "argName": "participant",
                             "argType": "const",
-                            "value": "shopping_cart"
+                            "value": "Cart"
                         },
                         {
                             "argName": "persist",
@@ -261,7 +261,7 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "Choose from: 1.Coffee 2.Bagel, 3.View, 4.Clear."
+                            "value": "Enter c to select coffee, d to display shopping cart, anything else to exit."
                         }
                     ]
                 }

@@ -18,12 +18,12 @@
                         {
                             "argName": "role",
                             "argType": "const",
-                            "value": "Cart"
+                            "value": "shopping_cart"
                         },
                         {
                             "argName": "participant",
                             "argType": "const",
-                            "value": "shopping_cart"
+                            "value": "Cart"
                         },
                         {
                             "argName": "persist",

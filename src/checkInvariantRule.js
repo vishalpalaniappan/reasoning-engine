@@ -62,8 +62,7 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     // Process all the found narratives to check for semantic validity
     for (const narrativeInfo of finder.foundNarratives.narratives) {
         if (narrativeInfo.isValid) {
-            const isValid = await processNarrative(narrativeInfo.narrative, validaterInfo, dataCxt.rootData);
-            if (!isValid) return false;
+            await processNarrative(narrativeInfo.narrative, validaterInfo, dataCxt.rootData);
         }
     }
 

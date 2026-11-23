@@ -23,7 +23,7 @@ const validateNarrative = async (narrative_name) => {
     if (!schema) {
         throw "Unable to load schema.";
     }
-    
+
     await mkdir('./temp', { recursive: true });
     await fsPromises.writeFile("./temp/schema.json", JSON.stringify(schema, null, 4));
 
@@ -33,6 +33,7 @@ const validateNarrative = async (narrative_name) => {
     // Add keyword to schema for checking the invariant
     ajv.addKeyword({
         keyword: "x-invariant-metadata",
+        async:true,
         validate: checkInvariantRule,
         error: {
             message: (ctx) => `Custom Error: ${ctx.message})`,

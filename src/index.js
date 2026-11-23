@@ -50,22 +50,15 @@ const validateNarrative = async (narrative_name) => {
     // Validate the narrative
     const validate = ajv.compile(schema);
     
-    try {
-        await validate(narrative)
+    await validate(narrative).then(() => {
         console.log("Validation Succeeded");
-    } catch (error) {
+    }).catch(() => {
         console.log("Validation Failed");
-        // if (error instanceof Ajv.ValidationError) {
-        //     console.log("Validation failed:", error.errors);
-        // }
-        // throw error;
-        return;
-    }
-
+    });
     
 };
 
 
-validateNarrative("coffee_shop.json");
+// validateNarrative("coffee_shop.json");
 // validateNarrative("coffee_shop_inconsistent.json");
-// validateNarrative("coffee_shop_w_shopping_cart.json");
+validateNarrative("coffee_shop_w_shopping_cart.json");

@@ -1,3 +1,4 @@
+import Ajv from "ajv/dist/2020.js";
 import jsonata from 'jsonata';
 import fs from "node:fs";
 import path from "path";
@@ -62,7 +63,18 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     // Process all the found narratives to check for semantic validity
     for (const narrativeInfo of finder.foundNarratives.narratives) {
         if (narrativeInfo.isValid) {
-            await processNarrative(narrativeInfo.narrative, validaterInfo, dataCxt.rootData);
+            const state = await processNarrative(narrativeInfo.narrative, validaterInfo, dataCxt.rootData);
+            console.log(state.message);
+            if (!state.success) {
+                throw new Ajv.ValidationError([
+                    {
+                        keyword: "invariant",
+                        message: state.message
+                    }
+                ]);
+            } else {
+                console.log(state.message);
+            }
         }
     }
 
@@ -115,11 +127,15 @@ const processNarrative = async (narrative, validaterInfo, design) => {
             const structType = await jsonata(query).evaluate(design);
 
             if (validaterInfo.validValuesforProperty.includes(structType)) {
-                console.log(`Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`);
-                return true;
+                return {
+                    success: true,
+                    message: `Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`
+                }
             } else {
-                console.log(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for participant ${participantName}`);
-                return false;
+                return {
+                    success: false,
+                    message: `Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`
+                }
             }
         } else {
             // Have to get the structural type from the node type
@@ -129,11 +145,15 @@ const processNarrative = async (narrative, validaterInfo, design) => {
             const structType = schema.properties.alias.properties.aliasStructuralType.const;
             
             if (validaterInfo.validValuesforProperty.includes(structType)){
-                console.log(`Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`);
-                return true;
+                return {
+                    success: true,
+                    message: `Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`
+                }
             } else {
-                console.log(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`);
-                return false;
+                return {
+                    success: false,
+                    message: `Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`
+                }
             }
         }
     }

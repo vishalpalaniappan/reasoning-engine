@@ -9,7 +9,7 @@ import { fetchArthaSchema } from "./fetchArthaSchema.js";
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const ajv = new Ajv({ strictMode: "true", allowUnionTypes: true });
+const ajv = new Ajv({ strictMode: "true", allowUnionTypes: true, allErrors: true });
 
 /**
  * Compiles the schema and validates the provided file using the schema. The results of the
@@ -49,22 +49,23 @@ const validateNarrative = async (narrative_name) => {
 
     // Validate the narrative
     const validate = ajv.compile(schema);
-
-    // Check if the validation passed
-    if (await validate(narrative)) {
-        console.log("Schema Validation passed successfully (custom narrative validation runs async, so it will complete on its own)!");
-    } else {
-        console.error("Validation failed!");
-        validate.errors.forEach((err, index) => {
-            console.log(`[${index + 1}] Property: ${err.instancePath}`);
-            console.log(`    Keyword:  ${err.keyword}`);
-            console.log(`    Message:  ${err.message}`);
-            console.log(`    Params:`, err.params);
-        });
+    
+    try {
+        await validate(narrative)
+        console.log("Validation Succeeded");
+    } catch (error) {
+        console.log("Validation Failed");
+        // if (error instanceof Ajv.ValidationError) {
+        //     console.log("Validation failed:", error.errors);
+        // }
+        // throw error;
+        return;
     }
+
+    
 };
 
 
-// validateNarrative("coffee_shop.json");
+validateNarrative("coffee_shop.json");
 // validateNarrative("coffee_shop_inconsistent.json");
-validateNarrative("coffee_shop_w_shopping_cart.json");
+// validateNarrative("coffee_shop_w_shopping_cart.json");

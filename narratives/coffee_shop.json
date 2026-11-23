@@ -225,7 +225,7 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "string"
+                            "value": "list"
                         }
                     ]
                 },

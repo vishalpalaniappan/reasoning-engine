@@ -55,12 +55,36 @@
             "attributes": [],
             "body": [
                 {
+                    "name": "introduce",
+                    "alias": {
+                        "aliasName": "menu",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "role",
+                            "argType": "const",
+                            "value": "menu"
+                        },
+                        {
+                            "argName": "participant",
+                            "argType": "const",
+                            "value": "Menu"
+                        },
+                        {
+                            "argName": "persist",
+                            "argType": "const",
+                            "value": false
+                        }
+                    ]
+                },
+                {
                     "name": "terminal_display",
                     "args": [
                         {
                             "argName": "message",
-                            "argType": "const",
-                            "value": "Enter c to select coffee, d to display shopping cart, anything else to exit."
+                            "argType": "name",
+                            "value": "menu"
                         }
                     ]
                 },

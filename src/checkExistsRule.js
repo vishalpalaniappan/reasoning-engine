@@ -35,7 +35,7 @@ const getSchema = async (primitiveName) => {
  */
 export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
 
-    const alias = schema[0];
+    const argName = schema[0];
     const initialBehavior = dataCxt.rootData.initialBehavior;
     const behavior = await jsonata(`**[behaviorName= '${initialBehavior}']`).evaluate(dataCxt.rootData);
     const startId = behavior.body[0].id;
@@ -45,18 +45,28 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
     await finder.run();
 
     for (let i = 0 ; i < finder.foundNarratives.narratives.length; i++) {
-        const narrativeInfo = finder.foundNarratives.narratives[i];
-        if (!narrativeInfo.isValid) continue;
-        const aliasValue = await jsonata(`**[argName = '${alias}'].value`).evaluate(data);
+        if (!finder.foundNarratives.narratives[i].isValid) continue;
 
-        // TODO: Check if the alias value is a constant (don't need to lookup)
+        // Find the argument that uses the argName
+        const argInfo = await jsonata(`**[argName = '${argName}']`).evaluate(data);
 
-        for (const node of narrativeInfo.narrative) {
+        // Skip lookup if the argType is a constant (no lookup needed)
+        if (argInfo.argType === "const") continue;
+
+        // If argType is name, we have valid alias value, so lookup needed
+        let aliasValue;
+        if (argInfo.argType === "name") {
+            aliasValue = argInfo.value;
+        }
+
+        // Go through each narrative and find the alias 
+        let found = false;
+        for (const node of finder.foundNarratives.narratives[i].narrative) {
             if (node.name === "introduce" && node.alias.aliasName === aliasValue) {
                 if (node.alias.persist) {
                     // Alias is persisted on the narrative path and will be avilable
                     console.log(`Alias ${aliasValue} is persisted and is available before transformation.`)
-
+                    found = true;
                     // TODO: The alias can be removed from the world, have to verify this.
                 } else {
                     // Check if the nodes behavior is the same as target behavior
@@ -68,9 +78,15 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
 
                     if (nodeBehavior === finalBehavior) {
                         console.log(`Alias ${aliasValue} that doesn't persist exsts in behavior before transformation`);
+                        found = true;
                     }
                 }
             }
+        }
+
+        if (!found) {
+            // Alias was not found
+            console.log("Alias was not found.");
         }
         
     }

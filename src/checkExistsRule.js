@@ -41,6 +41,10 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
     // - For aliases that persist, this involves checking the narrative leading to the transformation
     // - For aliases that don't persist, the alias has to be introduced before the transformation
 
+    // Note: A clean way to ensure the alias exists on every narrative leading to the transformation
+    // is to find all unique paths from the starting node to the transformation in question, then
+    // investigate whether the alias is introduced on that path.
+
     for (const arg of schema) {
         const alias = await jsonata(`**[argName = '${arg}'].value`).evaluate(data);
         // console.log(`Checking for the existence of ${alias}`)

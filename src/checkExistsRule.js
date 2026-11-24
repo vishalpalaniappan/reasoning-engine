@@ -34,13 +34,34 @@ const getSchema = async (primitiveName) => {
  * @returns 
  */
 export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
-    console.log("\nIn custom existence rule:");
-
     for (const arg of schema) {
-        const aliasName = await jsonata(`**[argName = '${arg}'].value`).evaluate(data);
-        console.log(`Checking for the existence of ${aliasName}`)
+        const alias = await jsonata(`**[argName = '${arg}'].value`).evaluate(data);
+        // console.log(`Checking for the existence of ${alias}`)
+
+        const expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
+        const foundNode = await expression.evaluate(dataCxt.rootData);
+
+        if (foundNode) {
+            const persists = await jsonata(`**[argName = 'persist'].value`).evaluate(foundNode);
+            if (persists) {
+                // Can be introduced anywhere in the narrative
+                console.log(`Found alias and it persists for transformation ${foundNode.name}`)
+                return true;
+            } else {
+                // TODO: Has to be introduced in the same behavior, validate
+                console.log(`Found alias and it doesn't persist for transformation ${foundNode.name}`)
+                return true;
+            }
+        } else {
+            // Failure diagnosed, alias was never introduced
+            throw new Ajv.ValidationError([
+                {
+                    keyword: "exists",
+                    message: `Alias ${alias} was not found for transformation ${foundNode.name}`
+                }
+            ]);
+        }
     }
 
-    console.log("");
     return true;
 }

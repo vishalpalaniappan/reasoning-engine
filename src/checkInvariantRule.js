@@ -154,7 +154,7 @@ const processNarrative = async (narrative, validaterInfo, design) => {
             if (validaterInfo.validValuesforProperty.includes(structType)) {
                 return {
                     success: true,
-                    message: `Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`
+                    message: `Struct type ${structType} of alias ${validaterInfo.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`
                 }
             } else {
                 return {
@@ -172,7 +172,7 @@ const processNarrative = async (narrative, validaterInfo, design) => {
             if (validaterInfo.validValuesforProperty.includes(structType)){
                 return {
                     success: true,
-                    message: `Struct type ${structType} satisfies the ${invariantNode.name} primitive's structural type invariant`
+                    message: `Struct type ${structType} of alias ${validaterInfo.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`
                 }
             } else {
                 return {

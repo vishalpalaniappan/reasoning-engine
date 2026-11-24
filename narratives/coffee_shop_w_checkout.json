@@ -12,7 +12,8 @@
                     "name": "introduce",
                     "alias": {
                         "aliasName": "shopping_cart",
-                        "introduce": true
+                        "introduce": true,
+                        "persist": true
                     },
                     "args": [
                         {

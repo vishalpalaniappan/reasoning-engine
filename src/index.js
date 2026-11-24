@@ -6,6 +6,7 @@ import path from "path";
 import { checkInvariantRule } from "./checkInvariantRule.js";
 import { assignIdsToNodes } from "./assignIdsToNodes.js";
 import { fetchArthaSchema } from "./fetchArthaSchema.js";
+import { checkExistsRule } from "./checkExistsRule.js";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +35,16 @@ const validateNarrative = async (narrative_name) => {
 
     // Add manifest keyword so strict mode won't complain
     ajv.addKeyword("manifest");
+
+    // Add keyword to schema for checking exists
+    ajv.addKeyword({
+        keyword: "$exists",
+        async:true,
+        validate: checkExistsRule,
+        error: {
+            message: (ctx) => `Custom Error: ${ctx.message})`,
+        },
+    });
 
     // Add keyword to schema for checking the invariant
     ajv.addKeyword({

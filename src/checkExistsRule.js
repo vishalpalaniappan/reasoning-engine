@@ -65,7 +65,7 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
                 if (node?.alias?.aliasName === aliasValue) {
                     if (node.alias.persist) {
                         // Alias is persisted on the narrative path and will be avilable
-                        console.log(`Alias ${aliasValue} is persisted and is available before transformation.`)
+                        console.log(`Alias ${aliasValue} is persisted and is available before primitive ${dataCxt.parentData.name}.`)
                         found = true;
                         // TODO: The alias can be removed from the world, have to verify this.
                     } else {
@@ -77,7 +77,7 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
                         const finalBehavior = await expression2.evaluate(dataCxt.rootData);
                         
                         if (nodeBehavior === finalBehavior) {
-                            console.log(`Alias ${aliasValue} exsts in behavior before transformation (is not persisted).`);
+                            console.log(`Alias ${aliasValue} exsts in behavior before primitive ${dataCxt.parentData.name}.`);
                             found = true;
                         }
                     }
@@ -86,7 +86,7 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
 
             if (!found) {
                 // Alias was not found
-                console.log(`Missing Alias: Alias ${aliasValue} was not found.`);
+                console.log(`Missing Alias: Alias ${aliasValue} was not found for primitive ${dataCxt.parentData.name}.`);
             }
             
         }

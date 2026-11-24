@@ -9,7 +9,7 @@ import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 
-const SCHEMA_PATH = path.join(__dirname, "..", "temp", "schema.json");
+const SCHEMA_PATH = path.join(__dirname, "..", "output", "schema.json");
 const schema = JSON.parse(fs.readFileSync(SCHEMA_PATH, "utf8"));
 
 /**

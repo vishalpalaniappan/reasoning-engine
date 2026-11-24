@@ -49,6 +49,8 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
         if (!narrativeInfo.isValid) continue;
         const aliasValue = await jsonata(`**[argName = '${alias}'].value`).evaluate(data);
 
+        // TODO: Check if the alias value is a constant (don't need to lookup)
+
         for (const node of narrativeInfo.narrative) {
             if (node.name === "introduce" && node.alias.aliasName === aliasValue) {
                 if (node.alias.persist) {

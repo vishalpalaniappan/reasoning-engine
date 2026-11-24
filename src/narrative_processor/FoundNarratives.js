@@ -78,6 +78,9 @@ export class FoundNarratives {
     generateReport() {
         const report = [];
         for (const narrative of this.narratives) {
+
+            if (!narrative.isValid) continue;
+            
             const narrativeInfo = {};
             const currNarrative = [];
 
@@ -97,7 +100,7 @@ export class FoundNarratives {
             }
 
             narrativeInfo.narrative = currNarrative;
-            narrativeInfo.isValid = narrative.isValid;
+            narrativeInfo.doesNotLoop = narrative.isValid;
 
             report.push(narrativeInfo);
         }

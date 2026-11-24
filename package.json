@@ -4,7 +4,9 @@
     "type": "module",
     "description": "Engine that uses schema to reason about the constructed narratives.",
     "main": "./src/index.js",
-    "scripts": {},
+    "scripts": {
+        "start": "node src/index.js"
+    },
     "repository": {
         "type": "git",
         "url": "git+https://github.com/vishalpalaniappan/reasoning-engine.git"

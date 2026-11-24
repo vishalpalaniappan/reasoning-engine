@@ -1,0 +1,12 @@
+{
+    "validaterInfo": {
+        "alias": "numItemsInCart",
+        "propertyToCheck": "structural_type",
+        "validValuesforProperty": [
+            "float",
+            "int"
+        ]
+    },
+    "message": "Missing meaning: Could not find where the alias named numItemsInCart was introduced.",
+    "narrative": null
+}

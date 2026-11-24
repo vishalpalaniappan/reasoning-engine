@@ -1,0 +1,32 @@
+{
+    "validaterInfo": {
+        "alias": "shopping_cart",
+        "propertyToCheck": "structural_type",
+        "validValuesforProperty": [
+            "list"
+        ]
+    },
+    "message": "Inconsistency identified: get_length has invalid structural type string",
+    "narrative": [
+        {
+            "doesNotLoop": true,
+            "narrative": [
+                "d3e1b6b0:introduce,Cart",
+                "09c6ddb8:terminal_display,\nWelcome to Cabbage Corp Coffee Shop.",
+                "437bc621:invoke,visitShop",
+                "2196383f:introduce,Menu",
+                "7850d543:terminal_display,menu",
+                "f908fee7:terminal_input",
+                "6305f56a:equals",
+                "b28121a6:if,condition",
+                "fd5ac1e2:equals",
+                "fb70a79f:if,condition",
+                "319c96a2:equals",
+                "d1dc6ff6:if,condition",
+                "d55b5e73:terminal_display,User chose to checkout cart.",
+                "74d523cc:invoke,checkoutCart",
+                "31a3bc09:get_length"
+            ]
+        }
+    ]
+}

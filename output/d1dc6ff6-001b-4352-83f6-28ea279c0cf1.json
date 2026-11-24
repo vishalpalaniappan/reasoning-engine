@@ -1,0 +1,19 @@
+{
+    "validaterInfo": {
+        "alias": "user_chose_checkout",
+        "propertyToCheck": "structural_type",
+        "validValuesforProperty": [
+            "boolean"
+        ]
+    },
+    "message": "Struct type boolean of alias user_chose_checkout satisfies the if primitive's structural type invariant",
+    "narrative": [
+        {
+            "doesNotLoop": true,
+            "narrative": [
+                "319c96a2:equals",
+                "d1dc6ff6:if,condition"
+            ]
+        }
+    ]
+}

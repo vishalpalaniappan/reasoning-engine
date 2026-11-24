@@ -29,7 +29,7 @@ const getSchema = async (primitiveName) => {
  */
 const writeToInspect = async (foundNode, validatorInfo, message, foundNarratives) => {
     console.log(message);
-    const OUTPUT_FILE_PATH = path.join(__dirname, "..", "temp", `${foundNode}.json`);
+    const OUTPUT_FILE_PATH = path.join(__dirname, "..", "output", `${foundNode}.json`);
     const inspect_obj = {
         validaterInfo: validatorInfo,
         message: message,

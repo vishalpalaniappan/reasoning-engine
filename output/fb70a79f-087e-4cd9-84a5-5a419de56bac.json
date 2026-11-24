@@ -1,0 +1,19 @@
+{
+    "validaterInfo": {
+        "alias": "user_chose_display",
+        "propertyToCheck": "structural_type",
+        "validValuesforProperty": [
+            "boolean"
+        ]
+    },
+    "message": "Struct type boolean of alias user_chose_display satisfies the if primitive's structural type invariant",
+    "narrative": [
+        {
+            "doesNotLoop": true,
+            "narrative": [
+                "fd5ac1e2:equals",
+                "fb70a79f:if,condition"
+            ]
+        }
+    ]
+}

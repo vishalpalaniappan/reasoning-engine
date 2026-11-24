@@ -1,0 +1,28 @@
+{
+    "validaterInfo": {
+        "alias": "shopping_cart",
+        "propertyToCheck": "structural_type",
+        "validValuesforProperty": [
+            "list"
+        ]
+    },
+    "message": "Inconsistency identified: insert_at_end_of_list has invalid structural type string",
+    "narrative": [
+        {
+            "doesNotLoop": true,
+            "narrative": [
+                "d3e1b6b0:introduce,Cart",
+                "09c6ddb8:terminal_display,\nWelcome to Cabbage Corp Coffee Shop.",
+                "437bc621:invoke,visitShop",
+                "2196383f:introduce,Menu",
+                "7850d543:terminal_display,menu",
+                "f908fee7:terminal_input",
+                "6305f56a:equals",
+                "b28121a6:if,condition",
+                "728f98fe:invoke,addCoffeeToCart",
+                "975b51e9:terminal_display,User chose to add coffee to cart.",
+                "ec3f2b66:insert_at_end_of_list"
+            ]
+        }
+    ]
+}

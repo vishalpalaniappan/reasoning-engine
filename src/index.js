@@ -25,11 +25,11 @@ const validateNarrative = async (narrative_name) => {
         throw "Unable to load schema.";
     }
     
-    const TEMP_PATH = path.join(__dirname, "..", "temp");
-    await fsExtra.emptyDir(TEMP_PATH);
-    await mkdir(TEMP_PATH, { recursive: true });
+    const OUTPUT_PATH = path.join(__dirname, "..", "output");
+    await fsExtra.emptyDir(OUTPUT_PATH);
+    await mkdir(OUTPUT_PATH, { recursive: true });
 
-    const SCHEMA_INSPECT_PATH = path.join(__dirname, "..", "temp", "schema.json");
+    const SCHEMA_INSPECT_PATH = path.join(__dirname, "..", "output", "schema.json");
     await fsPromises.writeFile(SCHEMA_INSPECT_PATH, JSON.stringify(schema, null, 4));
 
     // Add manifest keyword so strict mode won't complain
@@ -50,7 +50,8 @@ const validateNarrative = async (narrative_name) => {
     const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
 
     // Write to temp file for inspection
-    await fsPromises.writeFile("./temp/temp.json", JSON.stringify(narrative, null, 4));
+    const SCHEMA_W_ID_INSPECTION_PATH = path.join(__dirname, "..", "output", "schema_w_id.json");
+    await fsPromises.writeFile(SCHEMA_W_ID_INSPECTION_PATH, JSON.stringify(narrative, null, 4));
 
     // Validate the narrative
     const validate = ajv.compile(schema);

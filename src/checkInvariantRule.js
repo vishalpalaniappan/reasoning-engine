@@ -43,18 +43,16 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     let expression = jsonata(`args[argName = "${participantToCheck}"].value`);
     const alias = await expression.evaluate(dataCxt.parentData);
 
-    // Find when the alias was introduced
-    expression = jsonata(
-        `**[name and alias[aliasName = '${alias}' and introduce = true]]`
-    );
-    const foundNode = await expression.evaluate(dataCxt.rootData);
 
     const validaterInfo = {
         alias: alias,
         propertyToCheck: propertyToCheck,
         validValuesforProperty: validValuesforProperty
     }
-
+    
+    // Find when the alias was introduced and throw error if meaning is missing
+    expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
+    const foundNode = await expression.evaluate(dataCxt.rootData);
     if (!foundNode) {
         const msg = `Missing meaning: Could not find where the alias named ${alias} was introduced.`;
         console.log(msg);
@@ -66,6 +64,7 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
         ]);
     }
 
+    // Find the narratives
     const finder = new NarrativeFinder(
         dataCxt.rootData.narrative, foundNode.id, dataCxt.parentData.id
     );
@@ -83,8 +82,6 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
                         message: state.message
                     }
                 ]);
-            } else {
-                console.log(state.message);
             }
         }
     }

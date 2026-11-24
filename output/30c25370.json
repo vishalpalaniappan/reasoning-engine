@@ -1,18 +1,18 @@
 {
     "validaterInfo": {
-        "alias": "user_chose_coffee",
+        "alias": "payment_invalid",
         "propertyToCheck": "structural_type",
         "validValuesforProperty": [
             "boolean"
         ]
     },
-    "message": "Struct type boolean of alias user_chose_coffee satisfies the if primitive's structural type invariant",
+    "message": "Struct type boolean of alias payment_invalid satisfies the if primitive's structural type invariant",
     "narrative": [
         {
             "doesNotLoop": true,
             "narrative": [
-                "6305f56a:equals",
-                "b28121a6:if,condition"
+                "6cd14038:not_equals",
+                "30c25370:if,condition"
             ]
         }
     ]

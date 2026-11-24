@@ -11,8 +11,8 @@
         {
             "doesNotLoop": true,
             "narrative": [
-                "319c96a2:equals",
-                "d1dc6ff6:if,condition"
+                "0103afb6:equals",
+                "c5dcdb1b:if,condition"
             ]
         }
     ]

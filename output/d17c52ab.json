@@ -11,8 +11,8 @@
         {
             "doesNotLoop": true,
             "narrative": [
-                "3cbf8dcc:terminal_input",
-                "79b887b3:cast_string_to_float"
+                "57b111f6:terminal_input",
+                "d17c52ab:cast_string_to_float"
             ]
         }
     ]

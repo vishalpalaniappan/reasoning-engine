@@ -80,6 +80,10 @@ export class NarrativeFinder {
         }
 
         const currNode = this.narratives.readCurrentNarrative();
+        if (!currNode) {
+            await this.walk();
+            return;
+        }
 
         // Terminate loop if same decision is revisited
         if (this.foundNarratives.has(currNode)) {

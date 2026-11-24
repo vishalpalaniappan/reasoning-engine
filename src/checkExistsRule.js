@@ -25,7 +25,7 @@ const getSchema = async (primitiveName) => {
 }
 
 /**
- * Checks that the invariant is respected by the narrative.
+ * Checks if the specified arguments have an alias that exists in the narrative.
  * 
  * @param {Array} schema 
  * @param {Object} data 

@@ -102,7 +102,7 @@
                 {
                     "name": "terminal_input",
                     "alias": {
-                        "aliasName": "user_choice",
+                        "aliasName": "user_choicee",
                         "introduce": true
                     },
                     "args": []

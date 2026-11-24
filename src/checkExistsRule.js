@@ -34,45 +34,18 @@ const getSchema = async (primitiveName) => {
  * @returns 
  */
 export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
-    // This has to be modified in a few ways:
-    // - A participant that is mentioned has to be verified for its existence
-    // - An aliases existence isn't enough, it has to verify that the narrative leading to the
-    //   primitive transformation ensures the alias's existence
-    // - For aliases that persist, this involves checking the narrative leading to the transformation
-    // - For aliases that don't persist, the alias has to be introduced before the transformation
 
-    // Note: A clean way to ensure the alias exists on every narrative leading to the transformation
-    // is to find all unique paths from the starting node to the transformation in question, then
-    // investigate whether the alias is introduced on that path.
+    const initialBehavior = dataCxt.rootData.initialBehavior;
+    const behavior = await jsonata(`**[behaviorName= '${initialBehavior}']`).evaluate(dataCxt.rootData);
+    const startId = behavior.body[0].id;
+    const endId = dataCxt.parentData.id;
 
-    for (const arg of schema) {
-        const alias = await jsonata(`**[argName = '${arg}'].value`).evaluate(data);
-        // console.log(`Checking for the existence of ${alias}`)
 
-        const expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
-        const foundNode = await expression.evaluate(dataCxt.rootData);
+    console.log(startId, endId);
+    const finder = new NarrativeFinder(dataCxt.rootData.narrative, startId, endId);
+    await finder.run();
 
-        if (foundNode) {
-            const persists = await jsonata(`**[argName = 'persist'].value`).evaluate(foundNode);
-            if (persists) {
-                // Can be introduced anywhere in the narrative
-                console.log(`Found alias and it persists for transformation ${foundNode.name}`)
-                return true;
-            } else {
-                // TODO: Has to be introduced in the same behavior, validate
-                console.log(`Found alias and it doesn't persist for transformation ${foundNode.name}`)
-                return true;
-            }
-        } else {
-            // Failure diagnosed, alias was never introduced
-            throw new Ajv.ValidationError([
-                {
-                    keyword: "exists",
-                    message: `Alias ${alias} was not found for transformation ${foundNode.name}`
-                }
-            ]);
-        }
-    }
+    console.log(finder.foundNarratives.report);
 
     return true;
 }

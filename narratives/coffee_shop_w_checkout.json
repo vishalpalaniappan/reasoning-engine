@@ -304,8 +304,7 @@
                     "name": "get_length",
                     "alias": {
                         "aliasName": "numItemsInCart",
-                        "aliasStructuralType": "int",
-                        "introduce": true
+                        "aliasStructuralType": "int"
                     },
                     "args": [
                         {

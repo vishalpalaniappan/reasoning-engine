@@ -49,16 +49,27 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     );
     const foundNode = await expression.evaluate(dataCxt.rootData);
 
-    const finder = new NarrativeFinder(
-        dataCxt.rootData.narrative, foundNode.id, dataCxt.parentData.id
-    );
-    await finder.run();
-
     const validaterInfo = {
         alias: alias,
         propertyToCheck: propertyToCheck,
         validValuesforProperty: validValuesforProperty
     }
+
+    if (!foundNode) {
+        const msg = `Missing meaning: Could not find where the alias named ${alias} was introduced.`;
+        console.log(msg);
+        throw new Ajv.ValidationError([
+            {
+                keyword: "invariant",
+                message: msg
+            }
+        ]);
+    }
+
+    const finder = new NarrativeFinder(
+        dataCxt.rootData.narrative, foundNode.id, dataCxt.parentData.id
+    );
+    await finder.run();
 
     // Process all the found narratives to check for semantic validity
     for (const narrativeInfo of finder.foundNarratives.narratives) {

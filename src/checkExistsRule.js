@@ -86,7 +86,7 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
 
             if (!found) {
                 // Alias was not found
-                console.log(`Missing Alias: Alias ${aliasValue} was not found for primitive ${dataCxt.parentData.name}.`);
+                console.log(`Missing Meaning: Alias ${aliasValue} was not found for primitive ${dataCxt.parentData.name}.`);
             }
             
         }

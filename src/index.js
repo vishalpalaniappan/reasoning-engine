@@ -1,6 +1,7 @@
 import Ajv from "ajv/dist/2020.js";
 import fs from "node:fs";
 import fsPromises, {mkdir} from "node:fs/promises";
+import fsExtra from "fs-extra";
 import path from "path";
 import { checkInvariantRule } from "./checkInvariantRule.js";
 import { assignIdsToNodes } from "./assignIdsToNodes.js";
@@ -23,9 +24,13 @@ const validateNarrative = async (narrative_name) => {
     if (!schema) {
         throw "Unable to load schema.";
     }
+    
+    const TEMP_PATH = path.join(__dirname, "..", "temp");
+    await fsExtra.emptyDir(TEMP_PATH);
+    await mkdir(TEMP_PATH, { recursive: true });
 
-    await mkdir('./temp', { recursive: true });
-    await fsPromises.writeFile("./temp/schema.json", JSON.stringify(schema, null, 4));
+    const SCHEMA_INSPECT_PATH = path.join(__dirname, "..", "temp", "schema.json");
+    await fsPromises.writeFile(SCHEMA_INSPECT_PATH, JSON.stringify(schema, null, 4));
 
     // Add manifest keyword so strict mode won't complain
     ajv.addKeyword("manifest");

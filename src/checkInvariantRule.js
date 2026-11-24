@@ -2,6 +2,7 @@ import Ajv from "ajv/dist/2020.js";
 import jsonata from 'jsonata';
 import fs from "node:fs";
 import path from "path";
+import fsPromises, {mkdir} from "node:fs/promises";
 import { NarrativeFinder } from './narrative_processor/NarrativeFinder.js';
 
 import { fileURLToPath } from "url";
@@ -24,6 +25,23 @@ const getSchema = async (primitiveName) => {
 }
 
 /**
+ * Write output to file to inspect.
+ */
+const writeToInspect = async (foundNode, validatorInfo, message, foundNarratives) => {
+    console.log(message);
+    const OUTPUT_FILE_PATH = path.join(__dirname, "..", "temp", `${foundNode}.json`);
+    const inspect_obj = {
+        validaterInfo: validatorInfo,
+        message: message,
+        narrative: foundNarratives
+    }
+    await fsPromises.writeFile(
+        OUTPUT_FILE_PATH,
+        JSON.stringify(inspect_obj, null, 4)
+    );
+}
+
+/**
  * Checks that the invariant is respected by the narrative.
  * 
  * @param {Array} schema 
@@ -43,7 +61,6 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     let expression = jsonata(`args[argName = "${participantToCheck}"].value`);
     const alias = await expression.evaluate(dataCxt.parentData);
 
-
     const validaterInfo = {
         alias: alias,
         propertyToCheck: propertyToCheck,
@@ -55,7 +72,7 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     const foundNode = await expression.evaluate(dataCxt.rootData);
     if (!foundNode) {
         const msg = `Missing meaning: Could not find where the alias named ${alias} was introduced.`;
-        console.log(msg);
+        await writeToInspect(dataCxt.parentData.id, validaterInfo, msg, null);
         throw new Ajv.ValidationError([
             {
                 keyword: "invariant",
@@ -74,7 +91,7 @@ export const checkInvariantRule = async (schema, data, parentSchema, dataCxt) =>
     for (const narrativeInfo of finder.foundNarratives.narratives) {
         if (narrativeInfo.isValid) {
             const state = await processNarrative(narrativeInfo.narrative, validaterInfo, dataCxt.rootData);
-            console.log(state.message);
+            await writeToInspect(dataCxt.parentData.id, validaterInfo, state.message, finder.foundNarratives.report);
             if (!state.success) {
                 throw new Ajv.ValidationError([
                     {

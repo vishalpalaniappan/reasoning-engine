@@ -34,6 +34,13 @@ const getSchema = async (primitiveName) => {
  * @returns 
  */
 export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
+    // This has to be modified in a few ways:
+    // - A participant that is mentioned has to be verified for its existence
+    // - An aliases existence isn't enough, it has to verify that the narrative leading to the
+    //   primitive transformation ensures the alias's existence
+    // - For aliases that persist, this involves checking the narrative leading to the transformation
+    // - For aliases that don't persist, the alias has to be introduced before the transformation
+
     for (const arg of schema) {
         const alias = await jsonata(`**[argName = '${arg}'].value`).evaluate(data);
         // console.log(`Checking for the existence of ${alias}`)

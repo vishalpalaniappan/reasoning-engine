@@ -40,12 +40,17 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
     const startId = behavior.body[0].id;
     const endId = dataCxt.parentData.id;
 
-
-    console.log(startId, endId);
     const finder = new NarrativeFinder(dataCxt.rootData.narrative, startId, endId);
     await finder.run();
 
-    console.log(finder.foundNarratives.report);
+    for (let i = 0 ; i < finder.foundNarratives.narratives.length; i++) {
+        const narrativeInfo = finder.foundNarratives.narratives[i];
+        if (!narrativeInfo.isValid) continue;
+        const alias = await jsonata(`**[argName = '${schema[0]}'].value`).evaluate(data);
+        console.log(alias);
+        
+        // Have to validate that this alias is available for the transformation in the extracted narrative
+    }
 
     return true;
 }

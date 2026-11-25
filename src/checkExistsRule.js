@@ -4,6 +4,7 @@ import fs from "node:fs";
 import path from "path";
 import fsPromises, {mkdir} from "node:fs/promises";
 import { NarrativeFinder } from './narrative_processor/NarrativeFinder.js';
+import errorManager from "./CustomValidationError.js";
 
 import { fileURLToPath } from "url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -34,6 +35,7 @@ const getSchema = async (primitiveName) => {
  * @returns 
  */
 export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
+    const errors = [];
 
     for (const argName of schema) {
         const initialBehavior = dataCxt.rootData.initialBehavior;
@@ -86,7 +88,9 @@ export const checkExistsRule = async (schema, data, parentSchema, dataCxt) => {
 
             if (!found) {
                 // Alias was not found
-                console.log(`Missing Meaning: Alias ${aliasValue} was not found for primitive ${dataCxt.parentData.name}.`);
+                const msg = `Missing Meaning: Alias ${aliasValue} was not found for primitive ${dataCxt.parentData.name}.`;
+                console.log(msg);
+                errorManager.addError("existence check", msg);
             }
             
         }

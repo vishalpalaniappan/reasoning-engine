@@ -7,6 +7,7 @@ import { checkInvariantRule } from "./checkInvariantRule.js";
 import { assignIdsToNodes } from "./assignIdsToNodes.js";
 import { fetchArthaSchema } from "./fetchArthaSchema.js";
 import { checkExistsRule } from "./checkExistsRule.js";
+import errorManager from "./CustomValidationError.js";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -76,6 +77,9 @@ const validateNarrative = async (narrative_name) => {
             throw error;
         }
     });
+
+    console.log("\nValidation Result:")
+    console.log(errorManager.validationErrors);
     
 };
 

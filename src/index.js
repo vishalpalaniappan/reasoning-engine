@@ -3,18 +3,18 @@ import fsPromises, {mkdir} from "node:fs/promises";
 import fsExtra from "fs-extra";
 import path from "path";
 import { fetchArthaSchema } from "./fetchArthaSchema.js";
+import NarrativeValidator from "./NarrativeValidator.js";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 /**
- * Compiles the schema and validates the provided file using the schema. The results of the
- * validation are passed onto
+ * Validate the narrative.
  *
  * @param {String} Name of the narrative in the narratives folder contained in root of repo.
  */
-const validateNarrative = async (narrative_name) => {
+const validate = async (narrative_name) => {
     // Load the artha schema
     const schema = await fetchArthaSchema();
     if (!schema) {
@@ -31,6 +31,8 @@ const validateNarrative = async (narrative_name) => {
     // Load the narrative
     const NARRATIVE_PATH = path.join(__dirname, "..", "narratives", narrative_name);
     const narrative = JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8"));
+
+    new NarrativeValidator(narrative);
 };
 
-validateNarrative("coffee_shop_w_checkout.json");
+validate("coffee_shop_w_checkout.json");

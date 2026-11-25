@@ -1,4 +1,4 @@
-import ArthaSchema from "./ArthaSchema";
+import ArthaSchema from "./ArthaSchema.js";
 /**
  * Base class to validate the narratives.
  * 
@@ -14,8 +14,8 @@ class NarrativeValidator {
     /**
      * Run the validator.
      */
-    run () {
-        this.visit(this.narrativeIR.narrative);
+    async run () {
+        await this.visit(this.narrativeIR.narrative);
     }
 
     /**
@@ -24,12 +24,12 @@ class NarrativeValidator {
      * @param {Array} nodes 
      * @param {int} indent 
      */
-    visit(nodes, indent = 0) {
+    async visit(nodes, indent = 0) {
         for (const node of nodes) {
             console.log(" ".repeat(indent) + node.name);
-            this.processNode(node);
+            await this.processNode(node);
             if ("body" in node) {
-                this.visit(node["body"], indent + 2);
+                await this.visit(node["body"], indent + 2);
             }
         }
     }
@@ -39,8 +39,9 @@ class NarrativeValidator {
      * 
      * @param {Object} node 
      */
-    processNode(node) {
-        const name = node.name;
+    async processNode(node) {
+        // Load the primitive schema
+        const primSchema = await this.schema.getPrimitiveSchema(node.name);
     }
 
 }

@@ -32,8 +32,8 @@ const validate = async (narrative_name) => {
     const NARRATIVE_PATH = path.join(__dirname, "..", "narratives", narrative_name);
     const narrative = JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8"));
 
-    const validator = new NarrativeValidator(narrative);
-    validator.run();
+    const validator = new NarrativeValidator(narrative, schema);
+    await validator.run();
 };
 
 validate("coffee_shop_w_checkout.json");

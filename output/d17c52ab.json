@@ -1,0 +1,19 @@
+{
+    "validaterInfo": {
+        "alias": "user_payment",
+        "propertyToCheck": "structural_type",
+        "validValuesforProperty": [
+            "string"
+        ]
+    },
+    "message": "Struct type string of alias user_payment satisfies the cast_string_to_float primitive's structural type invariant",
+    "narrative": [
+        {
+            "doesNotLoop": true,
+            "narrative": [
+                "57b111f6:terminal_input",
+                "d17c52ab:cast_string_to_float"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,19 @@
+{
+    "validaterInfo": {
+        "alias": "user_chose_coffee",
+        "propertyToCheck": "structural_type",
+        "validValuesforProperty": [
+            "boolean"
+        ]
+    },
+    "message": "Struct type boolean of alias user_chose_coffee satisfies the if primitive's structural type invariant",
+    "narrative": [
+        {
+            "doesNotLoop": true,
+            "narrative": [
+                "89b29cb3:equals",
+                "0173a8ea:if,condition"
+            ]
+        }
+    ]
+}

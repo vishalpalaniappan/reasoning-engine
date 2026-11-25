@@ -1,4 +1,4 @@
-
+import ArthaSchema from "./ArthaSchema";
 /**
  * Base class to validate the narratives.
  * 
@@ -7,8 +7,8 @@ class NarrativeValidator {
 
     constructor (narrativeIR, schema) {
         this.narrativeIR = narrativeIR;
-        this.schema = schema;
-        this.manifest = this.schema.manifest;
+        this.schema = new ArthaSchema(schema);
+        this.manifest = this.schema.getManifest();
     }
 
     /**

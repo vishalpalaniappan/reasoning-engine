@@ -1,0 +1,119 @@
+[
+    {
+        "narrative": [
+            "a46084c2:introduce,Cart",
+            "afebdbcb:terminal_display,\nWelcome to Cabbage Corp Coffee Shop.",
+            "f0066052:invoke,visitShop",
+            "0653be88:introduce,Menu",
+            "c50a06cb:terminal_display,menu",
+            "f65df995:terminal_input",
+            "bfb5f079:equals",
+            "e8b0b010:if,condition",
+            "23915c36:invoke,addCoffeeToCart",
+            "496746c9:terminal_display,User chose to add coffee to cart.",
+            "7daea3b7:insert_at_end_of_list",
+            "3b322ddd:invoke,visitShop"
+        ],
+        "isValid": false
+    },
+    {
+        "narrative": [
+            "a46084c2:introduce,Cart",
+            "afebdbcb:terminal_display,\nWelcome to Cabbage Corp Coffee Shop.",
+            "f0066052:invoke,visitShop",
+            "0653be88:introduce,Menu",
+            "c50a06cb:terminal_display,menu",
+            "f65df995:terminal_input",
+            "bfb5f079:equals",
+            "e8b0b010:if,condition",
+            "d73b7563:equals",
+            "ee68ddb3:if,condition",
+            "0da39da8:invoke,displayCart",
+            "312347d9:terminal_display,User chose to display cart.",
+            "04c7ef71:terminal_display,shopping_cart",
+            "567deecd:invoke,visitShop"
+        ],
+        "isValid": false
+    },
+    {
+        "narrative": [
+            "a46084c2:introduce,Cart",
+            "afebdbcb:terminal_display,\nWelcome to Cabbage Corp Coffee Shop.",
+            "f0066052:invoke,visitShop",
+            "0653be88:introduce,Menu",
+            "c50a06cb:terminal_display,menu",
+            "f65df995:terminal_input",
+            "bfb5f079:equals",
+            "e8b0b010:if,condition",
+            "d73b7563:equals",
+            "ee68ddb3:if,condition",
+            "0e4b4ca6:equals",
+            "4a75a7bb:if,condition",
+            "728366f4:invoke,checkoutCart",
+            "36161b5c:terminal_display,User chose to checkout cart.",
+            "ef264a98:get_length",
+            "966ad32f:introduce,CostOfCoffee",
+            "39d26018:introduce,TotalCost",
+            "e3e3ca4e:multiply",
+            "e72ea9e4:invoke,acceptPayment",
+            "9e415b24:terminal_display,\nPlease enter the amount owed to pay bill (in CAD):",
+            "eaf651d1:terminal_display,total_cart_cost",
+            "a392bd86:terminal_input",
+            "90a8f485:cast_string_to_float",
+            "c5bd1b51:not_equals",
+            "bc0a5806:if,condition",
+            "5554a808:terminal_display,Payment invalid, try again.",
+            "4be893b8:invoke,acceptPayment"
+        ],
+        "isValid": false
+    },
+    {
+        "narrative": [
+            "a46084c2:introduce,Cart",
+            "afebdbcb:terminal_display,\nWelcome to Cabbage Corp Coffee Shop.",
+            "f0066052:invoke,visitShop",
+            "0653be88:introduce,Menu",
+            "c50a06cb:terminal_display,menu",
+            "f65df995:terminal_input",
+            "bfb5f079:equals",
+            "e8b0b010:if,condition",
+            "d73b7563:equals",
+            "ee68ddb3:if,condition",
+            "0e4b4ca6:equals",
+            "4a75a7bb:if,condition",
+            "728366f4:invoke,checkoutCart",
+            "36161b5c:terminal_display,User chose to checkout cart.",
+            "ef264a98:get_length",
+            "966ad32f:introduce,CostOfCoffee",
+            "39d26018:introduce,TotalCost",
+            "e3e3ca4e:multiply",
+            "e72ea9e4:invoke,acceptPayment",
+            "9e415b24:terminal_display,\nPlease enter the amount owed to pay bill (in CAD):",
+            "eaf651d1:terminal_display,total_cart_cost",
+            "a392bd86:terminal_input",
+            "90a8f485:cast_string_to_float",
+            "c5bd1b51:not_equals",
+            "bc0a5806:if,condition",
+            "c44c5844:terminal_display,Thanks for visiting Cabbage Corp Coffee Shop."
+        ],
+        "isValid": true
+    },
+    {
+        "narrative": [
+            "a46084c2:introduce,Cart",
+            "afebdbcb:terminal_display,\nWelcome to Cabbage Corp Coffee Shop.",
+            "f0066052:invoke,visitShop",
+            "0653be88:introduce,Menu",
+            "c50a06cb:terminal_display,menu",
+            "f65df995:terminal_input",
+            "bfb5f079:equals",
+            "e8b0b010:if,condition",
+            "d73b7563:equals",
+            "ee68ddb3:if,condition",
+            "0e4b4ca6:equals",
+            "4a75a7bb:if,condition",
+            "c44c5844:terminal_display,Thanks for visiting Cabbage Corp Coffee Shop."
+        ],
+        "isValid": true
+    }
+]

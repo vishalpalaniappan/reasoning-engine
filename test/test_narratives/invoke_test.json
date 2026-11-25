@@ -1,0 +1,97 @@
+{
+    "$schema": "https://vishalpalaniappan.github.io/artha-primitives/img/artha.schema.json",
+    "metadata": "invoke_test (narrative doesn't make sense, just testing composite behavior (stack and pop)",
+    "initialBehavior": "coffee_shop",
+    "narrative": [
+        {
+            "name": "behavior",
+            "behaviorName": "coffee_shop",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "introduce",
+                    "alias": {
+                        "aliasName": "shopping_cart",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "role",
+                            "argType": "const",
+                            "value": "Cart"
+                        },
+                        {
+                            "argName": "participant",
+                            "argType": "const",
+                            "value": "shopping_cart"
+                        }
+                    ]
+                },
+                {
+                    "name": "invoke",
+                    "behaviorName": "visitShop",
+                    "args": []
+                },
+                {
+                    "name": "insert_at_end_of_list",
+                    "args": [
+                        {
+                            "argName": "item",
+                            "argType": "const",
+                            "value": "Cart"
+                        },
+                        {
+                            "argName": "list",
+                            "argType": "const",
+                            "value": "shopping_cart"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "behavior",
+            "behaviorName": "visitShop",
+            "attributes": [],
+            "body": [
+                {
+                    "name": "terminal_display",
+                    "args": [
+                        {
+                            "argName": "message",
+                            "argType": "const",
+                            "value": "Enter c to select coffee, anything else to exit."
+                        }
+                    ]
+                },
+                {
+                    "name": "terminal_input",
+                    "alias": {
+                        "aliasName": "user_choice",
+                        "introduce": true
+                    },
+                    "args": []
+                },
+                {
+                    "name": "equals",
+                    "alias": {
+                        "aliasName": "user_chose_coffee",
+                        "introduce": true
+                    },
+                    "args": [
+                        {
+                            "argName": "value1",
+                            "argType": "name",
+                            "value": "user_choice"
+                        },
+                        {
+                            "argName": "value2",
+                            "argType": "const",
+                            "value": "c"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

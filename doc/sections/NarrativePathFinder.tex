@@ -1,0 +1,57 @@
+This section explores the algorithm to find unique narratives between two nodes in the design. In the example narrative below, each node with a purple border is a point at which the design reasons about the world and selects new meaning, it can also be called a narrative branching node.
+
+\subsection{Example Narrative}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[
+        width=0.4\linewidth
+    ]{assets/narrative.svg}
+    \caption{Example Narrative for Path Finding.}
+    \label{fig:narrative}
+\end{figure}
+
+
+\subsubsection{Path A}
+
+In this path, the narrative begins at the start node and then branches at the first conditional node B and then branches at the conditional node C. Then the path loops back to the conditional node B. At this point, the path can be terminated because there are no new decisions that can be made that will lead out of this loop. The option to take the other branches will be addressed in the other branches that are taken in the path finding algorithm from this same node.
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[
+        width=0.4\linewidth
+    ]{assets/narrative_pathA.svg}
+    \caption{Path A that terminates in a loop.}
+    \label{fig:narrative_pathA}
+\end{figure}
+
+
+\subsubsection{Path B and C}
+
+In path B, the design makes two decisions and arrives at the end node. THe narrative path is:
+
+Path B:
+Start -> B -> C -> E -> end
+
+Path C:
+Start -> B -> F -> G -> end
+
+Since all the nodes have unambiguous meaning and invariants, the semantic validity of the narrative can be estabished. 
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[
+        width=0.4\linewidth
+    ]{assets/narrative_pathB.svg}
+    \caption{Path B that terminates at end node.}
+    \label{fig:narrative_pathB}
+\end{figure}
+
+\begin{figure}[htbp]
+    \centering
+    \includesvg[
+        width=0.4\linewidth
+    ]{assets/narrative_pathC.svg}
+    \caption{Path C that terminates at end node.}
+    \label{fig:narrative_pathC}
+\end{figure}

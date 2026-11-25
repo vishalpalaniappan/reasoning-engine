@@ -46,13 +46,19 @@ class NarrativeValidator {
         // Load the primitive schema
         const primSchema = await this.schema.getPrimitiveSchema(node.name);
 
-        const invariant =  primSchema.properties.name["x-invariant-metadata"];
-
-        if (invariant) {
-            console.log(styleText('red', " ".repeat(indent) + node.name));
+        const exists = primSchema.properties.args?.$exists;
+        if (exists) {
+            console.log(styleText('green', " ".repeat(indent) + node.name));
         } else {
             console.log(" ".repeat(indent) + node.name);
         }
+
+        // const invariant =  primSchema.properties.name["x-invariant-metadata"];
+        // if (invariant) {
+        //     console.log(styleText('red', " ".repeat(indent) + node.name));
+        // } else {
+        //     console.log(" ".repeat(indent) + node.name);
+        // }
     }
 
 }

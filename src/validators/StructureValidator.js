@@ -65,13 +65,19 @@ export default class StructureValidator {
     async processBehavior() {
         const canContain = this.manifest.structure.behavior.contains;
 
+        let foundInconsistency = false;
         for (const bodyNode of this.node.body) {
             // Each primitive type contains an array called exclude for invalid types
             for (const primitiveType of Object.values(canContain)) {
                 if (primitiveType.excludes.includes(bodyNode.name)) {
                     log.info(`Inconsistency: ${bodyNode.name} node in body of behavior`);
+                    foundInconsistency = true;
                 }
             }
+        }
+
+        if (!foundInconsistency) {
+            log.info("No inconsistencies were found.")
         }
     }
 

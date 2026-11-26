@@ -91,7 +91,7 @@ class NarrativeValidator {
      */
     async processInvariant(node) {
         const primSchema = await this.schema.getPrimitiveSchema(node.name);
-        const invariant =  primSchema.properties.name["x-invariant-metadata"];
+        const invariant =  primSchema.invariants;
         if (invariant) {
             const validator = new InvariantValidator(this.narrativeIR, node, invariant, this.schema);
             await validator.run();

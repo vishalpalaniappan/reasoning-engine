@@ -635,7 +635,7 @@
                         {
                             "argName": "value",
                             "argType": "const",
-                            "value": "float"
+                            "value": "object"
                         }
                     ],
                     "id": "6cf0673f-b3c7-4340-863a-4c5c646fa2cd"

@@ -11,7 +11,7 @@ class NarrativeValidator {
         this.narrativeIR = narrativeIR;
         this.schema = new ArthaSchema(schema);
         this.manifest = this.schema.getManifest();
-        this.mode = VALIDATOR_MODES.STRUCTURAL;
+        this.mode = VALIDATOR_MODES.EXISTS;
     }
 
     /**
@@ -50,13 +50,14 @@ class NarrativeValidator {
      * Process structural node to verify correctness. 
      * 
      * Ex:
-     * - Types of nodes allowed in behaviors
+     * - Types of primitives allowed in behaviors
      * - Necessary attributes for participants
+     * - Ex. List struct must state what the list can contain
+     * - Order of primitives
+     * - Missing primitives
      * 
      * Enforce the correctness by reading the manifest and
-     * loading the rules. I could also build a schema and
-     * enforce that but I want to maintain control over the
-     * process fully so I can customize it cleanly.
+     * verify that the rules are being followed.
      * 
      * @param {Object} node 
      */

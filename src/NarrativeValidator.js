@@ -1,5 +1,6 @@
 import ArthaSchema from "./ArthaSchema.js";
 import VALIDATOR_MODES from "./VALIDATOR_MODES.js";
+import ExistenceValidator from "./validators/ExistenceValidator.js";
 
 /**
  * Base class to validate the narratives.
@@ -29,7 +30,7 @@ class NarrativeValidator {
      */
     async visit(nodes, level = 0) {
         for (const node of nodes) {
-            console.log(" ".repeat(level) + node.name);
+            // console.log(" ".repeat(level) + node.name);
 
             if (this.mode === VALIDATOR_MODES.STRUCTURAL) {
                 await this.processStructural(node);
@@ -71,7 +72,11 @@ class NarrativeValidator {
      */
     async processExists(node) {
         const primSchema = await this.schema.getPrimitiveSchema(node.name);
-        const exists = primSchema.properties.args?.$exists;
+        const existenceChecks = primSchema.properties.args?.$exists;
+        if (existenceChecks) {
+            const validator = new ExistenceValidator(this.narrativeIR, node, existenceChecks);
+            await validator.run();
+        }
     }
 
     /**

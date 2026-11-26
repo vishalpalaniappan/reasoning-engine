@@ -2,6 +2,7 @@ import ArthaSchema from "./helper/ArthaSchema.js";
 import VALIDATOR_MODES from "./VALIDATOR_MODES.js";
 import ExistenceValidator from "./validators/ExistenceValidator.js";
 import StructureValidator from "./validators/StructureValidator.js";
+import InvariantValidator from "./validators/InvariantValidator.js";
 
 /**
  * Base class to validate the narratives.
@@ -13,7 +14,7 @@ class NarrativeValidator {
         this.narrativeIR = narrativeIR;
         this.schema = new ArthaSchema(schema);
         this.manifest = this.schema.getManifest();
-        this.mode = VALIDATOR_MODES.STRUCTURAL;
+        this.mode = VALIDATOR_MODES.INVARIANT;
     }
 
     /**
@@ -38,7 +39,7 @@ class NarrativeValidator {
             } else if (this.mode === VALIDATOR_MODES.EXISTS) {
                 await this.processExists(node);
             } else if (this.mode === VALIDATOR_MODES.INVARIANT) {
-                await this.processInvariant();
+                await this.processInvariant(node);
             }
 
             if ("body" in node) {
@@ -91,6 +92,10 @@ class NarrativeValidator {
     async processInvariant(node) {
         const primSchema = await this.schema.getPrimitiveSchema(node.name);
         const invariant =  primSchema.properties.name["x-invariant-metadata"];
+        if (invariant) {
+            const validator = new InvariantValidator(this.narrativeIR, node, invariant);
+            await validator.run();
+        }
     }
 }
 

@@ -65,7 +65,7 @@ class NarrativeValidator {
      */
     async processStructural(node) {
         if (this.manifest.structuralTypes.includes(node.name)) {
-            const validator = new StructureValidator(this.narrativeIR, node);
+            const validator = new StructureValidator(this.narrativeIR, this.manifest, node);
             await validator.run();
         }
     }

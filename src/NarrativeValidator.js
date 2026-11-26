@@ -24,12 +24,12 @@ class NarrativeValidator {
     /**
      * Visit the provided nodes and recursively visit nodes in body.
      * 
-     * @param {Array} nodes 
-     * @param {int} indent 
+     * @param {Array} nodes Nodes being visited.
+     * @param {int} level Depth of the recursion (used for printing tree to console).
      */
-    async visit(nodes, indent = 0) {
+    async visit(nodes, level = 0) {
         for (const node of nodes) {
-            console.log(" ".repeat(indent) + node.name);
+            console.log(" ".repeat(level) + node.name);
 
             if (this.mode === VALIDATOR_MODES.STRUCTURAL) {
                 await this.processStructural(node);
@@ -40,7 +40,7 @@ class NarrativeValidator {
             }
 
             if ("body" in node) {
-                await this.visit(node["body"], indent + 2);
+                await this.visit(node["body"], level + 2);
             }
         }
     }
@@ -65,26 +65,23 @@ class NarrativeValidator {
     }
 
     /**
-     * Validate invariants.
-     * 
-     * @param {Object} node 
-     * @param {Number} indent
-     */
-    async processInvariant(node, indent) {
-        const primSchema = await this.schema.getPrimitiveSchema(node.name);
-        const invariant =  primSchema.properties.name["x-invariant-metadata"];
-    }
-
-
-    /**
      * Validate that meaning exists.
-     * @param {Object} node 
+     * @param {Object} node Node being processed.
      */
     async processExists(node) {
         const primSchema = await this.schema.getPrimitiveSchema(node.name);
         const exists = primSchema.properties.args?.$exists;
     }
 
+    /**
+     * Validate invariants.
+     * 
+     * @param {Object} node Node being processed.
+     */
+    async processInvariant(node) {
+        const primSchema = await this.schema.getPrimitiveSchema(node.name);
+        const invariant =  primSchema.properties.name["x-invariant-metadata"];
+    }
 }
 
 export default NarrativeValidator;

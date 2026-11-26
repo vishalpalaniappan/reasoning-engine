@@ -34,6 +34,17 @@
                     "id": "4b286759-d727-4b4f-b4d9-508124dd3c53"
                 },
                 {
+                    "name": "structural_type",
+                    "args": [
+                        {
+                            "argName": "value",
+                            "argType": "const",
+                            "value": "float"
+                        }
+                    ],
+                    "id": "0e45bf60-cfce-4288-bd37-70015ff6ef3b"
+                },
+                {
                     "name": "terminal_display",
                     "args": [
                         {

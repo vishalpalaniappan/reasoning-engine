@@ -1,3 +1,6 @@
+import jsonata from "jsonata";
+import { NarrativeFinder } from "../narrative_processor/NarrativeFinder.js";
+
 /**
  * Validate the existence of the relevant alias in the narrative.
  *
@@ -7,23 +10,34 @@
  */
 export default class ExistenceValidator {
 
-    constructor (narrative, node, existenceChecks) {
-        this.narrative = narrative;
+    constructor (narrativeIR, node, existenceChecks) {
+        this.narrativeIR = narrativeIR;
         this.node = node;
         this.existenceChecks = existenceChecks;
     }
 
     async run() {
+        console.log("");
+        console.log("============================================");
         console.log("Running the existence validator:", this.node.name);
+        console.log("============================================");
         for (const check of this.existenceChecks) {
-            this.validate(check);
+            await this.validate(check);
         }
     }
 
-    validate(arg) {
+    async validate(arg) {
         console.log("Validating:", arg);
+        
+        const initialBehavior = this.narrativeIR.initialBehavior;
+        const behavior = await jsonata(`**[behaviorName= '${initialBehavior}']`).evaluate(this.narrativeIR);
+        const startId = behavior.body[0].id;
+        const endId = this.node.id;
 
+        const finder = new NarrativeFinder(this.narrativeIR.narrative, startId, endId);
+        await finder.run();
+
+        console.log(finder.foundNarratives.report);
     }
-
 
 }

@@ -2,7 +2,7 @@ import jsonata from "jsonata";
 import { NarrativeFinder } from "../narrative_processor/NarrativeFinder.js";
 import { getLogger } from '../logger/logger.js';
 
-const log = getLogger('existence');
+const log = getLogger('invariant');
 /**
  * Validate that the narrative respects the invariant. Automatically place
  * the invariant at the place where the design makes the decision to engage
@@ -46,10 +46,17 @@ export default class InvariantValidator {
         const foundNode = await expression.evaluate(this.narrativeIR.narrative);
 
         if(!foundNode) {
-            log.info(`Could not find the node which introduces the alias.`)
+            log.info(`Missing meaning: Could not find the node which introduces the alias.`)
+            return;
         } else {
             log.info(`Found node which introduces alias: ${foundNode.name}`);
         }
+
+        // Find the narratives
+        const finder = new NarrativeFinder(this.narrativeIR.narrative, foundNode.id, this.node.id);
+        await finder.run();
+
+        log.info(JSON.stringify(finder.foundNarratives.report, null ,2));
     }
 
 }

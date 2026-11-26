@@ -15,7 +15,7 @@ export default class StructureValidator {
     async run() {
         log.info("");
         log.info("============================================");
-        log.info(`Running the structure validator`);
+        log.info(`Running the structure validator: ${this.node.name}`);
         log.info("============================================");
         await this.validate(this.node);
     }

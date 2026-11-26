@@ -1,6 +1,7 @@
 import ArthaSchema from "./helper/ArthaSchema.js";
 import VALIDATOR_MODES from "./VALIDATOR_MODES.js";
 import ExistenceValidator from "./validators/ExistenceValidator.js";
+import StructureValidator from "./validators/StructureValidator.js";
 
 /**
  * Base class to validate the narratives.
@@ -12,7 +13,7 @@ class NarrativeValidator {
         this.narrativeIR = narrativeIR;
         this.schema = new ArthaSchema(schema);
         this.manifest = this.schema.getManifest();
-        this.mode = VALIDATOR_MODES.EXISTS;
+        this.mode = VALIDATOR_MODES.STRUCTURAL;
     }
 
     /**
@@ -63,7 +64,10 @@ class NarrativeValidator {
      * @param {Object} node 
      */
     async processStructural(node) {
-
+        if (this.manifest.structuralTypes.includes(node.name)) {
+            const validator = new StructureValidator(this.narrativeIR, node);
+            await validator.run();
+        }
     }
 
     /**

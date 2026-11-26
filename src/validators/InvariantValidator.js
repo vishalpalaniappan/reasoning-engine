@@ -41,6 +41,15 @@ export default class InvariantValidator {
         const alias = await expression.evaluate(this.node);
 
         log.info(`Checking alias ${alias} for property ${propertyToCheck} and valid values ${validValuesforProperty}`);
+
+        expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
+        const foundNode = await expression.evaluate(this.narrativeIR.narrative);
+
+        if(!foundNode) {
+            log.info(`Could not find the node which introduces the alias.`)
+        } else {
+            log.info(`Found node which introduces alias: ${foundNode.name}`);
+        }
     }
 
 }

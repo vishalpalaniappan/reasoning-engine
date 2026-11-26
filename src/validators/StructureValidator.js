@@ -78,6 +78,7 @@ export default class StructureValidator {
     async processParticipant() {
         // TODO: Check if nodes in participant satisfy manifest structure
         // TODO: For specific structural types, check if necessary attributes exist
+        // TODO: Check if initial value of participant matches its structural type
     }
 
     async processImport() {

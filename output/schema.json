@@ -478,26 +478,7 @@
                                     "name": {
                                         "type": "string",
                                         "description": "Name of the primitive.",
-                                        "const": "cast_string_to_float",
-                                        "x-invariant-metadata": [
-                                            {
-                                                "id": "1",
-                                                "participants": [
-                                                    "str"
-                                                ],
-                                                "property": "structural_type",
-                                                "condition": [
-                                                    "string"
-                                                ],
-                                                "description": "str must have a structural_type string.",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": "num_value",
-                                                        "description": "A number is provided as string participant"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                        "const": "cast_string_to_float"
                                     },
                                     "id": {
                                         "type": "string"
@@ -562,7 +543,26 @@
                                             }
                                         }
                                     }
-                                }
+                                },
+                                "invariants": [
+                                    {
+                                        "id": "1",
+                                        "participants": [
+                                            "str"
+                                        ],
+                                        "property": "structural_type",
+                                        "condition": [
+                                            "string"
+                                        ],
+                                        "description": "str must have a structural_type string.",
+                                        "invalidValues": [
+                                            {
+                                                "value": "num_value",
+                                                "description": "A number is provided as string participant"
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         },
                         {
@@ -595,26 +595,7 @@
                                     "name": {
                                         "type": "string",
                                         "description": "Name of the primitive.",
-                                        "const": "clear_list",
-                                        "x-invariant-metadata": [
-                                            {
-                                                "id": "1",
-                                                "participants": [
-                                                    "list"
-                                                ],
-                                                "property": "structural_type",
-                                                "condition": [
-                                                    "list"
-                                                ],
-                                                "description": "list must have structural_type List.",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": "string_value",
-                                                        "description": "A string is provided as list participant"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                        "const": "clear_list"
                                     },
                                     "id": {
                                         "type": "string"
@@ -657,7 +638,26 @@
                                             }
                                         ]
                                     }
-                                }
+                                },
+                                "invariants": [
+                                    {
+                                        "id": "1",
+                                        "participants": [
+                                            "list"
+                                        ],
+                                        "property": "structural_type",
+                                        "condition": [
+                                            "list"
+                                        ],
+                                        "description": "list must have structural_type List.",
+                                        "invalidValues": [
+                                            {
+                                                "value": "string_value",
+                                                "description": "A string is provided as list participant"
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         },
                         {
@@ -816,26 +816,7 @@
                                     "name": {
                                         "type": "string",
                                         "description": "Name of the primitive.",
-                                        "const": "get_length",
-                                        "x-invariant-metadata": [
-                                            {
-                                                "id": "1",
-                                                "participants": [
-                                                    "list"
-                                                ],
-                                                "property": "structural_type",
-                                                "condition": [
-                                                    "list"
-                                                ],
-                                                "description": "list must have structural_type List.",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": "string_value",
-                                                        "description": "A string is provided as list participant"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                        "const": "get_length"
                                     },
                                     "id": {
                                         "type": "string"
@@ -905,7 +886,26 @@
                                             }
                                         }
                                     }
-                                }
+                                },
+                                "invariants": [
+                                    {
+                                        "id": "1",
+                                        "participants": [
+                                            "list"
+                                        ],
+                                        "property": "structural_type",
+                                        "condition": [
+                                            "list"
+                                        ],
+                                        "description": "list must have structural_type List.",
+                                        "invalidValues": [
+                                            {
+                                                "value": "string_value",
+                                                "description": "A string is provided as list participant"
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         },
                         {
@@ -938,26 +938,7 @@
                                     "name": {
                                         "type": "string",
                                         "description": "Name of the primitive.",
-                                        "const": "insert_at_end_of_list",
-                                        "x-invariant-metadata": [
-                                            {
-                                                "id": "1",
-                                                "participants": [
-                                                    "list"
-                                                ],
-                                                "property": "structural_type",
-                                                "condition": [
-                                                    "list"
-                                                ],
-                                                "description": "list must have structural_type List.",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": "string_value",
-                                                        "description": "A string is provided as list participant"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                        "const": "insert_at_end_of_list"
                                     },
                                     "id": {
                                         "type": "string"
@@ -1022,6 +1003,31 @@
                                             }
                                         ]
                                     }
+                                },
+                                "invariants": [
+                                    {
+                                        "id": "1",
+                                        "participants": [
+                                            "list"
+                                        ],
+                                        "property": "structural_type",
+                                        "condition": [
+                                            "list"
+                                        ],
+                                        "description": "list must have structural_type List.",
+                                        "invalidValues": [
+                                            {
+                                                "value": "string_value",
+                                                "description": "A string is provided as list participant"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "modifies": {
+                                    "length": {
+                                        "operation": "add",
+                                        "value": 1
+                                    }
                                 }
                             }
                         },
@@ -1055,45 +1061,7 @@
                                     "name": {
                                         "type": "string",
                                         "description": "Name of the primitive.",
-                                        "const": "multiply",
-                                        "x-invariant-metadata": [
-                                            {
-                                                "id": "1",
-                                                "participants": [
-                                                    "multiplicand"
-                                                ],
-                                                "property": "structural_type",
-                                                "condition": [
-                                                    "float",
-                                                    "int"
-                                                ],
-                                                "description": "multiplicand must have structural_type float or int.",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": "string_value",
-                                                        "description": "A string is provided as multiplicand participant"
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "id": "2",
-                                                "participants": [
-                                                    "multiplier"
-                                                ],
-                                                "property": "structural_type",
-                                                "condition": [
-                                                    "float",
-                                                    "int"
-                                                ],
-                                                "description": "multiplier must have structural_type float or int.",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": "string_value",
-                                                        "description": "A string is provided as multiplier participant"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                        "const": "multiply"
                                     },
                                     "id": {
                                         "type": "string"
@@ -1186,7 +1154,45 @@
                                             }
                                         }
                                     }
-                                }
+                                },
+                                "invariants": [
+                                    {
+                                        "id": "1",
+                                        "participants": [
+                                            "multiplicand"
+                                        ],
+                                        "property": "structural_type",
+                                        "condition": [
+                                            "float",
+                                            "int"
+                                        ],
+                                        "description": "multiplicand must have structural_type float or int.",
+                                        "invalidValues": [
+                                            {
+                                                "value": "string_value",
+                                                "description": "A string is provided as multiplicand participant"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "2",
+                                        "participants": [
+                                            "multiplier"
+                                        ],
+                                        "property": "structural_type",
+                                        "condition": [
+                                            "float",
+                                            "int"
+                                        ],
+                                        "description": "multiplier must have structural_type float or int.",
+                                        "invalidValues": [
+                                            {
+                                                "value": "string_value",
+                                                "description": "A string is provided as multiplier participant"
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         },
                         {
@@ -1341,46 +1347,7 @@
                                     "name": {
                                         "type": "string",
                                         "description": "Name of the primitive.",
-                                        "const": "remove_from_end_of_list",
-                                        "x-invariant-metadata": [
-                                            {
-                                                "id": "1",
-                                                "participants": [
-                                                    "list"
-                                                ],
-                                                "property": "structural_type",
-                                                "condition": [
-                                                    "list"
-                                                ],
-                                                "description": "list must have structural_type List.",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": "string_value",
-                                                        "description": "A string is provided as list participant"
-                                                    }
-                                                ]
-                                            },
-                                            {
-                                                "id": "2",
-                                                "participants": [
-                                                    "list"
-                                                ],
-                                                "property": "length",
-                                                "condition": [
-                                                    {
-                                                        "operation": "greaterThan",
-                                                        "value": 0
-                                                    }
-                                                ],
-                                                "description": "list must have length greater than zero.",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": 0,
-                                                        "description": "A string is provided as list participant"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                        "const": "remove_from_end_of_list"
                                     },
                                     "id": {
                                         "type": "string"
@@ -1421,6 +1388,51 @@
                                             }
                                         ]
                                     }
+                                },
+                                "invariants": [
+                                    {
+                                        "id": "1",
+                                        "participants": [
+                                            "list"
+                                        ],
+                                        "property": "structural_type",
+                                        "condition": [
+                                            "list"
+                                        ],
+                                        "description": "list must have structural_type List.",
+                                        "invalidValues": [
+                                            {
+                                                "value": "string_value",
+                                                "description": "A string is provided as list participant"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": "2",
+                                        "participants": [
+                                            "list"
+                                        ],
+                                        "property": "length",
+                                        "condition": [
+                                            {
+                                                "operation": "greaterThan",
+                                                "value": 0
+                                            }
+                                        ],
+                                        "description": "list must have length greater than zero.",
+                                        "invalidValues": [
+                                            {
+                                                "value": 0,
+                                                "description": "A string is provided as list participant"
+                                            }
+                                        ]
+                                    }
+                                ],
+                                "modifies": {
+                                    "length": {
+                                        "operation": "subtract",
+                                        "value": 1
+                                    }
                                 }
                             }
                         },
@@ -1455,26 +1467,7 @@
                                     "name": {
                                         "type": "string",
                                         "description": "Name of the primitive.",
-                                        "const": "if",
-                                        "x-invariant-metadata": [
-                                            {
-                                                "id": "inv_1",
-                                                "participants": [
-                                                    "condition"
-                                                ],
-                                                "property": "structural_type",
-                                                "condition": [
-                                                    "boolean"
-                                                ],
-                                                "description": "the condition must be a boolean value",
-                                                "invalidValues": [
-                                                    {
-                                                        "value": "string_value",
-                                                        "description": "A string is provided as the condition"
-                                                    }
-                                                ]
-                                            }
-                                        ]
+                                        "const": "if"
                                     },
                                     "id": {
                                         "type": "string"
@@ -1520,7 +1513,26 @@
                                     "body": {
                                         "type": "array"
                                     }
-                                }
+                                },
+                                "invariants": [
+                                    {
+                                        "id": "inv_1",
+                                        "participants": [
+                                            "condition"
+                                        ],
+                                        "property": "structural_type",
+                                        "condition": [
+                                            "boolean"
+                                        ],
+                                        "description": "the condition must be a boolean value",
+                                        "invalidValues": [
+                                            {
+                                                "value": "string_value",
+                                                "description": "A string is provided as the condition"
+                                            }
+                                        ]
+                                    }
+                                ]
                             }
                         },
                         {

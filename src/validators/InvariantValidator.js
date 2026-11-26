@@ -69,8 +69,7 @@ export default class InvariantValidator {
         // Process all the found narratives to check for semantic validity
         for (const narrativeInfo of finder.foundNarratives.narratives) {
             if (narrativeInfo.isValid) {
-                const state = await this.processNarrative(narrativeInfo.narrative, validaterInfo, this.narrativeIR);
-                log.info(state.message);
+                await this.processNarrative(narrativeInfo.narrative, validaterInfo, this.narrativeIR);
             }
         }
     }
@@ -122,15 +121,9 @@ export default class InvariantValidator {
                 const structType = await jsonata(query).evaluate(design);
 
                 if (validaterInfo.validValuesforProperty.includes(structType)) {
-                    return {
-                        success: true,
-                        message: `Struct type ${structType} of alias ${validaterInfo.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`
-                    }
+                    log.info(`Struct type ${structType} of alias ${validaterInfo.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
                 } else {
-                    return {
-                        success: false,
-                        message: `Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`
-                    }
+                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`);
                 }
             } else {
                 // Have to get the structural type from the node type
@@ -140,15 +133,9 @@ export default class InvariantValidator {
                 const structType = schema.properties.alias.properties.aliasStructuralType.const;
                 
                 if (validaterInfo.validValuesforProperty.includes(structType)){
-                    return {
-                        success: true,
-                        message: `Struct type ${structType} of alias ${validaterInfo.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`
-                    }
+                    log.info(`Struct type ${structType} of alias ${validaterInfo.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
                 } else {
-                    return {
-                        success: false,
-                        message: `Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`
-                    }
+                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`);
                 }
             }
         }

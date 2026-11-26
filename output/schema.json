@@ -2034,7 +2034,9 @@
                     "list": [
                         "structural_type",
                         "list_contains"
-                    ]
+                    ],
+                    "string": [],
+                    "float": []
                 }
             },
             "import": {}

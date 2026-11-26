@@ -26,9 +26,9 @@ export default class StructureValidator {
 
     async run() {
         log.info("");
-        log.info("============================================");
+        log.info("=======================================================");
         log.info(`Running the structure validator: ${this.node.name}`);
-        log.info("============================================");
+        log.info("=======================================================");
         await this.validate(this.node);
     }
 
@@ -79,6 +79,30 @@ export default class StructureValidator {
         // TODO: Check if nodes in participant satisfy manifest structure
         // TODO: For specific structural types, check if necessary attributes exist
         // TODO: Check if initial value of participant matches its structural type
+
+        log.info(`Participant Name: ${this.node.participantName}`);
+
+        const initial_value = await jsonata(`**[name = 'initial_value'].args[0].value`).evaluate(this.node);
+        const structural_type = await jsonata(`**[name = 'structural_type'].args[0].value`).evaluate(this.node);
+        
+        if (initial_value) {
+            await this.validateInitialValue(typeof initial_value, structural_type);
+        }
+    }
+
+    async validateInitialValue(initial_value_type, structural_type) {
+        let isInvalid = false;
+        if (initial_value_type === "number" && ( structural_type !== "float" && structural_type !== "int")) {
+            isInvalid = true;
+        } else if (initial_value_type === "number" && structural_type !== "string") {
+            isInvalid = true;
+        } else if (initial_value_type === "array" && structural_type !== "list") {
+            isInvalid = true;
+        }
+
+        if (isInvalid) {
+            log.info(`Inconsistency: Initial value type ${initial_value_type} doesn't match structural type ${structural_type}`);
+        }
     }
 
     async processImport() {

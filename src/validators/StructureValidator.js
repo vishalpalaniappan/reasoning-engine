@@ -76,18 +76,23 @@ export default class StructureValidator {
     }
 
     async processParticipant() {
-        // TODO: Check if nodes in participant satisfy manifest structure
-        // TODO: For specific structural types, check if necessary attributes exist
-        // TODO: Check if initial value of participant matches its structural type
-
         log.info(`Participant Name: ${this.node.participantName}`);
 
         const initial_value = await jsonata(`**[name = 'initial_value'].args[0].value`).evaluate(this.node);
         const structural_type = await jsonata(`**[name = 'structural_type'].args[0].value`).evaluate(this.node);
+
+        // Check if the structural type is included in the manifest
+        const structural_types = Object.keys(this.manifest.structure.participant.types);
+        if (!structural_types.includes(structural_type)) {
+            log.info(`Unknown meaning: Structural type is not included in the manifest.`)
+        }
         
+        // Check if the initial value is the correct type
         if (initial_value) {
             await this.validateInitialValue(typeof initial_value, structural_type);
         }
+
+        // TODO: For specific structural types, check if necessary attributes exist
     }
 
     async validateInitialValue(initial_value_type, structural_type) {

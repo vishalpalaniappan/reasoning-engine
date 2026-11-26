@@ -21,7 +21,7 @@ export default class ExistenceValidator {
     async run() {
         log.info("");
         log.info("============================================");
-        log.info("Running the existence validator:", this.node.name);
+        log.info(`Running the existence validator: ${this.node.name}`);
         log.info("============================================");
         for (const check of this.existenceChecks) {
             await this.validate(check);
@@ -29,7 +29,7 @@ export default class ExistenceValidator {
     }
 
     async validate(argName) {
-        log.info("Validating:", argName);
+        log.info(`Validating arg: ${argName}`);
         
         // Start at the first node in the narrative and end at the node
         const initialBehavior = this.narrativeIR.initialBehavior;

@@ -2,7 +2,7 @@ import fs from "node:fs";
 import fsPromises, {mkdir} from "node:fs/promises";
 import fsExtra from "fs-extra";
 import path from "path";
-import { fetchArthaSchema } from "./fetchArthaSchema.js";
+import { fetchArthaSchema } from "./helper/fetchArthaSchema.js";
 import NarrativeValidator from "./NarrativeValidator.js";
 
 import { fileURLToPath } from "url";

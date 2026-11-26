@@ -1,4 +1,4 @@
-import ArthaSchema from "./ArthaSchema.js";
+import ArthaSchema from "./helper/ArthaSchema.js";
 import VALIDATOR_MODES from "./VALIDATOR_MODES.js";
 import ExistenceValidator from "./validators/ExistenceValidator.js";
 

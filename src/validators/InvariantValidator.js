@@ -123,7 +123,7 @@ export default class InvariantValidator {
                 if (validaterInfo.validValuesforProperty.includes(structType)) {
                     log.info(`Struct type ${structType} of alias ${validaterInfo.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
                 } else {
-                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`);
+                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${validaterInfo.alias}`);
                 }
             } else {
                 // Have to get the structural type from the node type
@@ -135,7 +135,7 @@ export default class InvariantValidator {
                 if (validaterInfo.validValuesforProperty.includes(structType)){
                     log.info(`Struct type ${structType} of alias ${validaterInfo.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
                 } else {
-                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType}`);
+                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${validaterInfo.alias}`);
                 }
             }
         }

@@ -1,6 +1,5 @@
-import jsonata from "jsonata";
 import ArthaSchema from "./ArthaSchema.js";
-import { styleText } from 'node:util';
+import VALIDATOR_MODES from "./VALIDATOR_MODES.js";
 
 /**
  * Base class to validate the narratives.
@@ -12,6 +11,7 @@ class NarrativeValidator {
         this.narrativeIR = narrativeIR;
         this.schema = new ArthaSchema(schema);
         this.manifest = this.schema.getManifest();
+        this.mode = VALIDATOR_MODES.STRUCTURAL;
     }
 
     /**
@@ -29,36 +29,60 @@ class NarrativeValidator {
      */
     async visit(nodes, indent = 0) {
         for (const node of nodes) {
-            await this.processNode(node, indent);
+            console.log(" ".repeat(indent) + node.name);
+
+            if (this.mode === VALIDATOR_MODES.STRUCTURAL) {
+                await this.processStructural(node);
+            } else if (this.mode === VALIDATOR_MODES.EXISTS) {
+                await this.processExists(node);
+            } else if (this.mode === VALIDATOR_MODES.INVARIANT) {
+                await this.processInvariant();
+            }
+
             if ("body" in node) {
                 await this.visit(node["body"], indent + 2);
             }
         }
     }
 
+
     /**
-     * Validate the node.
+     * Process structural node to verify correctness. 
+     * 
+     * Ex:
+     * - Types of nodes allowed in behaviors
+     * - Necessary attributes for participants
+     * 
+     * Enforce the correctness by reading the manifest and
+     * loading the rules. I could also build a schema and
+     * enforce that but I want to maintain control over the
+     * process fully so I can customize it cleanly.
+     * 
+     * @param {Object} node 
+     */
+    async processStructural(node) {
+
+    }
+
+    /**
+     * Validate invariants.
      * 
      * @param {Object} node 
      * @param {Number} indent
      */
-    async processNode(node, indent) {
-        // Load the primitive schema
+    async processInvariant(node, indent) {
         const primSchema = await this.schema.getPrimitiveSchema(node.name);
+        const invariant =  primSchema.properties.name["x-invariant-metadata"];
+    }
 
+
+    /**
+     * Validate that meaning exists.
+     * @param {Object} node 
+     */
+    async processExists(node) {
+        const primSchema = await this.schema.getPrimitiveSchema(node.name);
         const exists = primSchema.properties.args?.$exists;
-        if (exists) {
-            console.log(styleText('green', " ".repeat(indent) + node.name));
-        } else {
-            console.log(" ".repeat(indent) + node.name);
-        }
-
-        // const invariant =  primSchema.properties.name["x-invariant-metadata"];
-        // if (invariant) {
-        //     console.log(styleText('red', " ".repeat(indent) + node.name));
-        // } else {
-        //     console.log(" ".repeat(indent) + node.name);
-        // }
     }
 
 }

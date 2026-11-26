@@ -1,4 +1,6 @@
+import jsonata from 'jsonata';
 import { getLogger } from '../logger/logger.js';
+import { loggers } from 'winston';
 
 const log = getLogger('structure');
 /**
@@ -35,18 +37,25 @@ export default class StructureValidator {
      */
     async validate() {
         if (this.node.name === "behavior") {
-            this.processBehavior();
+            await this.processBehavior();
         } else if (this.node.name === "participant") {
-            this.processParticipant();
+            await this.processParticipant();
         } else if (this.node.name === "import") {
-            this.processImport();
+            await this.processImport();
         } else if (this.node.name === "invoke") {
-            this.processInvoke();
+            await this.processInvoke();
         }
     }
 
     async processInvoke() {
         // TODO: Check if behavior being invoked exists
+        const expression1 = jsonata(`**[name='behavior' and behaviorName='${this.node.behaviorName}']`);
+        const nodeBehavior = await expression1.evaluate(this.narrativeIR.narrative);
+        if (nodeBehavior) {
+            log.info(`${this.node.behaviorName} exists.`)
+        } else {
+            log.info(`Missing meaning: Behavior named ${this.node.behaviorName} does not exist.`)
+        }
     }
 
     /**

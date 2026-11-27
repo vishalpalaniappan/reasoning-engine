@@ -83,35 +83,8 @@ export default class InvariantValidator {
      * @param {Object} validatorMetadata 
      */
     async processNarrative(narrative, validatorMetadata) {
-        // Find the last time this alias was updated in the narrative
-        let aliasNode = null;
-        const invariantNode = narrative.pop();
-        for (const node of narrative) {
-            if ("alias" in node && node.alias.aliasName === validatorMetadata.alias) {
-                aliasNode = node;
-            }
-        }
-
-        /**
-         * Note: in the previous step I find the last time that the alias was updated
-         * but in reality, I should be checking for the last time the relevant property
-         * was modified. So for example, in the case of structural type, when an alias
-         * is introduced, its structural type gets modified. In other cases, a particular
-         * property of an alias can get updated, for example, the length of an alias. In
-         * this case, the node that is relevant is the last one that modified the relevant
-         * property. I'll make these changes later.
-         */
-
-        /**
-         * Note: I can make this more modular by establishing rules in documents and loading them
-         * to validate. In the same way that I create definitions for primitives, I can also create
-         * ways that each invariant type will have to be validated. I will explore this more when 
-         * I get there but the principle is the same and for now its fine to hardcode it. It would
-         * actually be kind of cool to allow the validation sequence itself to be scripted. It would
-         * create a very modular approach.
-         */
         if (validatorMetadata.propertyToCheck === "structural_type") {
-            this.processStructuralType(aliasNode, invariantNode, validatorMetadata)
+            this.processStructuralType(narrative, validatorMetadata)
         } else if (validatorMetadata.propertyToCheck === "length") {
             // Identify all the transformations that modify this property
             // Introduce assigns initial value that gives it a length
@@ -130,11 +103,18 @@ export default class InvariantValidator {
     /**
      * Process the structural type invariant.
      * 
-     * @param {Object} aliasNode Node which introduces the alias.
-     * @param {Object} invariantNode The node which establishes the invariant.
+     * @param {Array} narrative The narrative being validated.
      * @param {Object} validatorMetadata Metadata about the invariant (alias, validValuesforProperty and propertyToCheck)
      */
-    async processStructuralType(aliasNode, invariantNode, validatorMetadata) {
+    async processStructuralType(narrative, validatorMetadata) {
+        // Find the last time this alias was updated in the narrative
+        let aliasNode = null;
+        const invariantNode = narrative.pop();
+        for (const node of narrative) {
+            if ("alias" in node && node.alias.aliasName === validatorMetadata.alias) {
+                aliasNode = node;
+            }
+        }
 
         if (aliasNode.name === "introduce") {
             const participantName = await jsonata(`**[argName= 'participant'].value`).evaluate(aliasNode);

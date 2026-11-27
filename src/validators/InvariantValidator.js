@@ -73,19 +73,50 @@ export default class InvariantValidator {
             let foundIndex;
             for (let i = 0; i < narrativeInfo.narrative.length; i++) {
                 const node = narrativeInfo.narrative[i];
-                if (node.name === "introduce" && node.alias.aliasName === alias) {
+
+                if (!("alias" in node) || node.alias.aliasName !== alias) continue;
+
+                if (node.name === "introduce" && node?.alias?.aliasName === alias) {
                     foundIndex = i;
-                } else if (node?.alias?.aliasName === alias){
-                    const schema = await this.schema.getPrimitiveSchema(node.name);
-                    if (!("modifies" in schema)) continue;
-                    if (Object.keys(schema["modifies"]).includes(propertyToCheck)) {
-                        foundIndex = i;
-                    }
+                    continue
+                } 
+            
+                const schema = await this.schema.getPrimitiveSchema(node.name);
+
+                if (!("modifies" in schema)) {
+                    continue;
+                };
+
+                if (Object.keys(schema["modifies"]).includes(propertyToCheck)) {
+                    foundIndex = i;
                 }
             }
 
             const foundNode = narrativeInfo.narrative[foundIndex];
-            console.log(foundNode);
+
+            // TODO: The initial value could also violate the invariant
+            
+            let decisionNode, impulseNode;
+            for (const node of narrativeInfo.narrative.reverse()) {
+                if (node.name === "if") {
+                    log.info(`Decision node: ${node.args[0].value}`);
+                    decisionNode = node;
+                    break;
+                }
+            }
+            for (const node of narrativeInfo.narrative.reverse()) {
+                const schema = await this.schema.getPrimitiveSchema(node.name);
+                if (schema.impulse ) {
+                    log.info(`Impulse node: ${node.name}`);
+                    impulseNode = node;
+                    break;
+                }
+            }
+
+            // Now we have the decision node and the impulse node, the invariant can
+            // be placed at the decision node and semantic validity can be restored
+            // by selecting a semantically valid narrative and returning to the
+            // impulse node.
         }
         
     }

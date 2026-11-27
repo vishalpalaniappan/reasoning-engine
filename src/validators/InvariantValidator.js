@@ -59,17 +59,33 @@ export default class InvariantValidator {
         const startId = behavior.body[0].id;
         const endId = this.node.id;
 
+        const alias = await jsonata(`args[argName = "${participantToCheck}"].value`).evaluate(this.node);
+
         // Find the narratives
         const finder = new NarrativeFinder(this.narrativeIR.narrative, startId, endId);
         await finder.run();
 
         for (const narrativeInfo of finder.foundNarratives.narratives) {
-            for (const node of narrativeInfo.narrative) {
-                const schema = await this.schema.getPrimitiveSchema(node.name);
-                if ("modifies" in schema && Object.keys(schema["modifies"]).includes(propertyToCheck)) {
-                    console.log(schema["modifies"]);
+            if (!narrativeInfo.isValid) continue;
+
+            const invariantNode = narrativeInfo.narrative.pop();
+            
+            let foundIndex;
+            for (let i = 0; i < narrativeInfo.narrative.length; i++) {
+                const node = narrativeInfo.narrative[i];
+                if (node.name === "introduce" && node.alias.aliasName === alias) {
+                    foundIndex = i;
+                } else if (node?.alias?.aliasName === alias){
+                    const schema = await this.schema.getPrimitiveSchema(node.name);
+                    if (!("modifies" in schema)) continue;
+                    if (Object.keys(schema["modifies"]).includes(propertyToCheck)) {
+                        foundIndex = i;
+                    }
                 }
             }
+
+            const foundNode = narrativeInfo.narrative[foundIndex];
+            console.log(foundNode);
         }
         
     }

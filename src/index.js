@@ -4,6 +4,7 @@ import fsExtra from "fs-extra";
 import path from "path";
 import { fetchArthaSchema } from "./helper/fetchArthaSchema.js";
 import NarrativeValidator from "./NarrativeValidator.js";
+import { assignIdsToNodes } from "./assignIdToNodes.js";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -37,7 +38,7 @@ const validate = async (narrative_name) => {
     
     // Load the narrative
     const NARRATIVE_PATH = path.join(__dirname, "..", "narratives", narrative_name);
-    const narrative = JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8"));
+    const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
     log.info("Loaded narrative.");
 
     const validator = new NarrativeValidator(narrative, schema);

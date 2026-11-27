@@ -29,9 +29,7 @@ export default class InvariantValidator {
     async validate() {
         for (const invariant of this.invariant) {
             log.info("");
-            log.info("-------------------------------------------");
             log.info(`Processing invariant: ${invariant.property}`);
-            log.info("-------------------------------------------");
             await this.processInvariant(invariant);
         }
     }
@@ -80,12 +78,14 @@ export default class InvariantValidator {
         const finder = new NarrativeFinder(this.narrativeIR.narrative, startId, endId);
         await finder.run();
 
-        log.info(JSON.stringify(finder.foundNarratives.report, null ,2));
+        // log.info(JSON.stringify(finder.foundNarratives.report, null ,2));
         
         // Process all the found narratives to check for semantic validity
+        let validNarrativeCount = 0;
         for (const narrativeInfo of finder.foundNarratives.narratives) {
             if (!narrativeInfo.isValid) continue;
 
+            log.info(`  Valid Narrative ${++validNarrativeCount}`);
             const invariantNode = narrativeInfo.narrative.pop();
             
             // Find the last time this alias was updated in the narrative
@@ -104,9 +104,9 @@ export default class InvariantValidator {
             }
                 
             if (validValuesforProperty.includes(structType)){
-                log.info(`Struct type ${structType} of alias ${alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
+                log.info(`  Struct type ${structType} of alias ${alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
             } else {
-                log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${alias}`);
+                log.info(`  Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${alias}`);
             }
         }
     }

@@ -138,6 +138,17 @@ export default class InvariantValidator {
                     log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${validaterInfo.alias}`);
                 }
             }
+        } else if (validaterInfo.propertyToCheck === "length") {
+            // Identify all the transformations that modify this property
+            // Introduce assigns initial value that gives it a length
+            // Get From List and Add To List both modify length relatively
+
+            // relative changes needs the design to reason about the world and pick semantically valid narrative
+            // the reasoning has to be placed at the point where the design will inevitably make the decision to
+            // go down the a path that will lead to the protected primitive
+
+            // the automated testing will test that the reasoning selects a valid narrative under invalid conditions
+            console.log("Validating length invariant");
         }
     }
 

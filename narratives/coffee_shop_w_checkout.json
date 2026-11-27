@@ -360,7 +360,8 @@
                     "name": "get_length",
                     "alias": {
                         "aliasName": "numItemsInCart",
-                        "aliasStructuralType": "int"
+                        "aliasStructuralType": "int",
+                        "introduce": true
                     },
                     "args": [
                         {
@@ -461,7 +462,8 @@
                     "name": "terminal_input",
                     "alias": {
                         "aliasName": "user_payment",
-                        "aliasStructuralType": "string"
+                        "aliasStructuralType": "string",
+                        "introduce": true
                     },
                     "args": []
                 },
@@ -482,7 +484,8 @@
                     "name": "not_equals",
                     "alias": {
                         "aliasName": "payment_invalid",
-                        "aliasStructuralType": "boolean"
+                        "aliasStructuralType": "boolean",
+                        "introduce": true
                     },
                     "args": [
                         {

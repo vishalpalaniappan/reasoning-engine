@@ -85,7 +85,7 @@ export default class InvariantValidator {
         for (const narrativeInfo of finder.foundNarratives.narratives) {
             if (!narrativeInfo.isValid) continue;
 
-            log.info(`  Valid Narrative ${++validNarrativeCount}`);
+            log.info(`  Narrative ${++validNarrativeCount}`);
             const invariantNode = narrativeInfo.narrative.pop();
             
             // Find the last time this alias was updated in the narrative

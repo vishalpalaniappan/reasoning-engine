@@ -78,7 +78,7 @@ export default class InvariantValidator {
         const foundNode = await expression.evaluate(this.narrativeIR.narrative);
 
         if(!foundNode) {
-            log.info(`Missing meaning: Could not find the node which introduces the alias.`)
+            log.info(`Missing meaning: Could not find the node which introduces the alias ${alias}.`)
             return;
         } else {
             log.info(`Found node which introduces alias: ${foundNode.name}`);

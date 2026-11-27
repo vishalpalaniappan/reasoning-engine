@@ -81,9 +81,8 @@ export default class InvariantValidator {
      * 
      * @param {Array} narrative 
      * @param {Object} validatorMetadata 
-     * @param {Object} design
      */
-    async processNarrative(narrative, validatorMetadata, design) {
+    async processNarrative(narrative, validatorMetadata) {
         // Find the last time this alias was updated in the narrative
         let aliasNode = null;
         const invariantNode = narrative.pop();

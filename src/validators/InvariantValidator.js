@@ -68,24 +68,16 @@ export default class InvariantValidator {
         const propertyToCheck = invariant.property;
         const validValuesforProperty = invariant.condition;
 
+        const initialBehavior = this.narrativeIR.initialBehavior;
+        const behavior = await jsonata(`**[behaviorName= '${initialBehavior}']`).evaluate(this.narrativeIR);
+        const startId = behavior.body[0].id;
+        const endId = this.node.id;
+
         // Get the alias for the property being evaluated
-        let expression = jsonata(`args[argName = "${participantToCheck}"].value`);
-        const alias = await expression.evaluate(this.node);
-
-        log.info(`Checking alias ${alias} for property ${propertyToCheck} and valid values ${JSON.stringify(validValuesforProperty)}`);
-
-        expression = jsonata(`**[name and alias[aliasName = '${alias}' and introduce = true]]`);
-        const foundNode = await expression.evaluate(this.narrativeIR.narrative);
-
-        if(!foundNode) {
-            log.info(`Missing meaning: Could not find the node which introduces the alias ${alias}.`)
-            return;
-        } else {
-            log.info(`Found node which introduces alias: ${foundNode.name}`);
-        }
+        const alias = await jsonata(`args[argName = "${participantToCheck}"].value`).evaluate(this.node);
 
         // Find the narratives
-        const finder = new NarrativeFinder(this.narrativeIR.narrative, foundNode.id, this.node.id);
+        const finder = new NarrativeFinder(this.narrativeIR.narrative, startId, endId);
         await finder.run();
 
         log.info(JSON.stringify(finder.foundNarratives.report, null ,2));
@@ -94,41 +86,27 @@ export default class InvariantValidator {
         for (const narrativeInfo of finder.foundNarratives.narratives) {
             if (!narrativeInfo.isValid) continue;
 
-            const narrative = narrativeInfo.narrative;
-
+            const invariantNode = narrativeInfo.narrative.pop();
+            
             // Find the last time this alias was updated in the narrative
-            let aliasNode = null;
-            const invariantNode = narrative.pop();
-            for (const node of narrative) {
-                if ("alias" in node && node.alias.aliasName === alias) {
-                    aliasNode = node;
-                }
-            }
+            let aliasNode = narrativeInfo.narrative.reverse().find((n) => "alias" in n && n.alias.aliasName === alias);
 
+            let structType;
             if (aliasNode.name === "introduce") {
-                const participantName = await jsonata(`**[argName= 'participant'].value`).evaluate(aliasNode);
-                
                 // Query narrative for participant name and get the structural type argument
+                const participantName = await jsonata(`**[argName= 'participant'].value`).evaluate(aliasNode);
                 const query = `narrative[participantName='${participantName}'].body[name='${propertyToCheck}'].args[argName='value'].value`;
-                const structType = await jsonata(query).evaluate(this.narrativeIR);
-
-                if (validValuesforProperty.includes(structType)) {
-                    log.info(`Struct type ${structType} of alias ${alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
-                } else {
-                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${alias}`);
-                }
+                structType = await jsonata(query).evaluate(this.narrativeIR);
             } else {
-                // Have to get the structural type from the node type
-                // Ex. An add operation will result in an alias that has
-                // the structural type float or int
+                // Get the structural type from the primitive (Ex. Add prim results in alias that has the structural type float or int)
                 const schema = await this.schema.getPrimitiveSchema(aliasNode.name);
-                const structType = schema.properties.alias.properties.aliasStructuralType.const;
+                structType = schema.properties.alias.properties.aliasStructuralType.const;
+            }
                 
-                if (validValuesforProperty.includes(structType)){
-                    log.info(`Struct type ${structType} of alias ${alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
-                } else {
-                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${alias}`);
-                }
+            if (validValuesforProperty.includes(structType)){
+                log.info(`Struct type ${structType} of alias ${alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
+            } else {
+                log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${alias}`);
             }
         }
     }

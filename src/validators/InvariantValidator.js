@@ -53,6 +53,25 @@ export default class InvariantValidator {
         const participantToCheck = invariant.participants[0];
         const propertyToCheck = invariant.property;
         const validValuesforProperty = invariant.condition;
+
+        const initialBehavior = this.narrativeIR.initialBehavior;
+        const behavior = await jsonata(`**[behaviorName= '${initialBehavior}']`).evaluate(this.narrativeIR);
+        const startId = behavior.body[0].id;
+        const endId = this.node.id;
+
+        // Find the narratives
+        const finder = new NarrativeFinder(this.narrativeIR.narrative, startId, endId);
+        await finder.run();
+
+        for (const narrativeInfo of finder.foundNarratives.narratives) {
+            for (const node of narrativeInfo.narrative) {
+                const schema = await this.schema.getPrimitiveSchema(node.name);
+                if ("modifies" in schema && Object.keys(schema["modifies"]).includes(propertyToCheck)) {
+                    console.log(schema["modifies"]);
+                }
+            }
+        }
+        
     }
 
 

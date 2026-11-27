@@ -90,12 +90,6 @@ export default class InvariantValidator {
 
         log.info(JSON.stringify(finder.foundNarratives.report, null ,2));
         
-        const validatorMetadata = {
-            alias: alias,
-            propertyToCheck: propertyToCheck,
-            validValuesforProperty: validValuesforProperty
-        }
-        
         // Process all the found narratives to check for semantic validity
         for (const narrativeInfo of finder.foundNarratives.narratives) {
             if (!narrativeInfo.isValid) continue;
@@ -106,7 +100,7 @@ export default class InvariantValidator {
             let aliasNode = null;
             const invariantNode = narrative.pop();
             for (const node of narrative) {
-                if ("alias" in node && node.alias.aliasName === validatorMetadata.alias) {
+                if ("alias" in node && node.alias.aliasName === alias) {
                     aliasNode = node;
                 }
             }
@@ -115,13 +109,13 @@ export default class InvariantValidator {
                 const participantName = await jsonata(`**[argName= 'participant'].value`).evaluate(aliasNode);
                 
                 // Query narrative for participant name and get the structural type argument
-                const query = `narrative[participantName='${participantName}'].body[name='${validatorMetadata.propertyToCheck}'].args[argName='value'].value`;
+                const query = `narrative[participantName='${participantName}'].body[name='${propertyToCheck}'].args[argName='value'].value`;
                 const structType = await jsonata(query).evaluate(this.narrativeIR);
 
-                if (validatorMetadata.validValuesforProperty.includes(structType)) {
-                    log.info(`Struct type ${structType} of alias ${validatorMetadata.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
+                if (validValuesforProperty.includes(structType)) {
+                    log.info(`Struct type ${structType} of alias ${alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
                 } else {
-                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${validatorMetadata.alias}`);
+                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${alias}`);
                 }
             } else {
                 // Have to get the structural type from the node type
@@ -130,10 +124,10 @@ export default class InvariantValidator {
                 const schema = await this.schema.getPrimitiveSchema(aliasNode.name);
                 const structType = schema.properties.alias.properties.aliasStructuralType.const;
                 
-                if (validatorMetadata.validValuesforProperty.includes(structType)){
-                    log.info(`Struct type ${structType} of alias ${validatorMetadata.alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
+                if (validValuesforProperty.includes(structType)){
+                    log.info(`Struct type ${structType} of alias ${alias} satisfies the ${invariantNode.name} primitive's structural type invariant`);
                 } else {
-                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${validatorMetadata.alias}`);
+                    log.info(`Inconsistency identified: ${invariantNode.name} has invalid structural type ${structType} for alias ${alias}`);
                 }
             }
         }

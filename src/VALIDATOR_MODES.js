@@ -1,0 +1,8 @@
+let VALIDATOR_MODES = {
+    STRUCTURAL: 0,
+    EXISTS: 1,
+    INVARIANT: 2
+};
+VALIDATOR_MODES = Object.freeze(VALIDATOR_MODES);
+
+export default VALIDATOR_MODES;

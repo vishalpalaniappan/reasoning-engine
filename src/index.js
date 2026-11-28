@@ -5,6 +5,7 @@ import path from "path";
 import { fetchArthaSchema } from "./helper/fetchArthaSchema.js";
 import NarrativeValidator from "./NarrativeValidator.js";
 import { assignIdsToNodes } from "./assignIdToNodes.js";
+import VALIDATOR_MODES from "./VALIDATOR_MODES.js";
 
 import { fileURLToPath } from "url";
 const __filename = fileURLToPath(import.meta.url);
@@ -41,8 +42,14 @@ const validate = async (narrative_name) => {
     const narrative = assignIdsToNodes(JSON.parse(fs.readFileSync(NARRATIVE_PATH, "utf8")));
     log.info("Loaded narrative.");
 
-    const validator = new NarrativeValidator(narrative, schema);
-    await validator.run();
+    // TODO: Modify to validate in stages and move onto next stage after previous stage is clear.
+    // Order: structural, existence and then invariant
+
+    for (const [mode, value] of Object.entries(VALIDATOR_MODES)) {
+        log.info(`Running validator in mode: ${mode}`)
+        const validator = new NarrativeValidator({...narrative}, schema, value);
+        await validator.run();
+    }
 };
 
 validate("coffee_shop_w_checkout.json");

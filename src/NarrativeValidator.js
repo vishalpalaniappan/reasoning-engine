@@ -10,11 +10,11 @@ import InvariantValidator from "./validators/InvariantValidator.js";
  */
 class NarrativeValidator {
 
-    constructor (narrativeIR, schema) {
+    constructor (narrativeIR, schema, mode) {
         this.narrativeIR = narrativeIR;
         this.schema = new ArthaSchema(schema);
         this.manifest = this.schema.getManifest();
-        this.mode = VALIDATOR_MODES.INVARIANT;
+        this.mode = mode;
     }
 
     /**
